@@ -5,7 +5,7 @@ supporting character-level conversion, phrase-level conversion for java.
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.houbb/opencc4j/badge.svg)](http://mvnrepository.com/artifact/com.github.houbb/opencc4j)
 [![Build Status](https://www.travis-ci.org/houbb/opencc4j.svg?branch=master)](https://www.travis-ci.org/houbb/opencc4j)
-[![Coverage Status](https://coveralls.io/repos/github/houbb/opencc4j/badge.svg?branch=master)](https://coveralls.io/github/houbb/opencc4j?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/houbb/opencc4j/badge.svg)](https://coveralls.io/github/houbb/opencc4j)
 
 ## Features 特點
 
