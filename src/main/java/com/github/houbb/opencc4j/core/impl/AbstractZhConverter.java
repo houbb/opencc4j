@@ -16,38 +16,70 @@ public abstract class AbstractZhConverter implements ZhConverter {
     /**
      * StringBuffer 信息
      */
-    protected StringBuffer stringBuffer;
+    protected StringBuilder stringBuilder;
 
     /**
      * 配置信息
      */
     protected Config config;
 
+    /**    
+     * set config    
+     *    
+     * @param config config    
+     * @return com.github.houbb.opencc4j.core.ZhConverter    
+     */    
     @Override
     public ZhConverter setConfig(Config config) {
         this.config = config;
         return this;
     }
 
+    /**    
+     * set original    
+     *    
+     * @param stringBuilder  string builder
+     * @return com.github.houbb.opencc4j.core.ZhConverter    
+     */    
     @Override
-    public ZhConverter setOriginal(StringBuffer stringBuffer) {
-        this.stringBuffer = stringBuffer;
+    public ZhConverter setOriginal(StringBuilder stringBuilder) {
+        this.stringBuilder = stringBuilder;
         return this;
     }
 
+    /**    
+     * set original    
+     *    
+     * @param string string    
+     * @return com.github.houbb.opencc4j.core.ZhConverter    
+     */    
     @Override
     public ZhConverter setOriginal(String string) {
-        return this.setOriginal(new StringBuffer(string));
+        StringBuilder stringBuilder = string == null ? null : new StringBuilder(string);
+        return this.setOriginal(stringBuilder);
     }
 
+    /**    
+     * clear    
+     *    
+     * @return com.github.houbb.opencc4j.core.ZhConverter    
+     */    
     @Override
     public ZhConverter clear() {
-        this.stringBuffer = null;
+        this.stringBuilder = null;
         return this;
     }
 
+    /**    
+     * get result    
+     *    
+     * @return java.lang.String    
+     */    
     @Override
     public String getResult() {
-        return stringBuffer.toString();
+        if(null == stringBuilder) {
+            return null;
+        }
+        return stringBuilder.toString();
     }
 }

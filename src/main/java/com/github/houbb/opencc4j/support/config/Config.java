@@ -1,5 +1,11 @@
 package com.github.houbb.opencc4j.support.config;
 
+/**
+ *  config
+ * @author bbhou
+ * @version 1.0.0
+ * @since 1.0.0, 2018/02/09
+ */
 public interface Config {
 
     /**

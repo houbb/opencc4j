@@ -2,6 +2,12 @@ package com.github.houbb.opencc4j.support.config;
 
 import com.github.houbb.opencc4j.constant.AppConstant;
 
+/**
+ *  default config
+ * @author bbhou
+ * @version 1.0.0
+ * @since 1.0.0, 2018/02/09
+ */
 public class DefaultConfig implements Config {
 
     /**
@@ -26,6 +32,14 @@ public class DefaultConfig implements Config {
      */
     protected String targetCharset;
 
+    /**    
+     *  default config    
+     *    
+     * @param charPath char path    
+     * @param phrasePath phrase path    
+     * @param originalCharset original charset    
+     * @param targetCharset target charset    
+     */    
     public DefaultConfig(String charPath, String phrasePath, String originalCharset, String targetCharset) {
         this.charPath = charPath;
         this.phrasePath = phrasePath;
@@ -33,29 +47,59 @@ public class DefaultConfig implements Config {
         this.targetCharset = targetCharset;
     }
 
+    /**    
+     *  default config    
+     *    
+     * @param charPath char path    
+     * @param phrasePath phrase path    
+     */    
     public DefaultConfig(String charPath, String phrasePath) {
         this(charPath, phrasePath, AppConstant.DEFAULT_CHARSET,
                 AppConstant.DEFAULT_CHARSET);
     }
 
+    /**    
+     *  default config    
+     */    
     public DefaultConfig() {
+        //This is just an empty constructor
     }
 
+    /**    
+     * char path    
+     *    
+     * @return java.lang.String    
+     */    
     @Override
     public String charPath() {
         return this.charPath;
     }
 
+    /**    
+     * phrase path    
+     *    
+     * @return java.lang.String    
+     */    
     @Override
     public String phrasePath() {
         return this.phrasePath;
     }
 
+    /**    
+     * original charset    
+     *    
+     * @return java.lang.String    
+     */    
     @Override
     public String originalCharset() {
         return this.originalCharset;
     }
 
+    /**    
+     * target charset    
+     *    
+     * @return java.lang.String    
+     */    
     @Override
     public String targetCharset() {
         return this.targetCharset;
