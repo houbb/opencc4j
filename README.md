@@ -1,11 +1,12 @@
 # opencc4j
 
-Open Chinese Convert (OpenCC, 開放中文轉換) is an opensource project for conversion between Traditional Chinese and Simplified Chinese, 
-supporting character-level conversion, phrase-level conversion for java.
+Opencc4j 支持中文繁简体转换，考虑到词组级别。
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.houbb/opencc4j/badge.svg)](http://mvnrepository.com/artifact/com.github.houbb/opencc4j)
 [![Build Status](https://www.travis-ci.org/houbb/opencc4j.svg?branch=master)](https://www.travis-ci.org/houbb/opencc4j)
 [![Coverage Status](https://coveralls.io/repos/github/houbb/opencc4j/badge.svg)](https://coveralls.io/github/houbb/opencc4j)
+
+> [English Readme](README-ENGLISH.md)
 
 ## Features 特點
 
@@ -22,7 +23,11 @@ supporting character-level conversion, phrase-level conversion for java.
 
 ## 创作缘由
 
-OpenCC 的思想非常优秀，做的也特别棒。但是没有特别为 java 提供的工具。
+- OpenCC
+
+[OpenCC](https://github.com/BYVoid/OpenCC) 的思想非常优秀，做的也特别棒。但是没有特别为 java 提供的工具。
+
+- jopencc
 
 [jopencc](https://github.com/carlostse/jopencc) 没有提供分词功能。
 
