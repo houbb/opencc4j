@@ -2,6 +2,8 @@ package com.github.houbb.opencc4j.core.impl;
 
 import com.github.houbb.opencc4j.constant.AppConstant;
 import com.github.houbb.opencc4j.core.ZhConverter;
+import com.github.houbb.opencc4j.support.segmentation.Segmentation;
+import com.github.houbb.opencc4j.support.segmentation.impl.JiebaAnalysisSegmentation;
 import com.github.houbb.opencc4j.util.DataFileUtil;
 import com.github.houbb.paradise.common.util.StringUtil;
 import com.huaban.analysis.jieba.JiebaSegmenter;
@@ -9,6 +11,7 @@ import com.huaban.analysis.jieba.JiebaSegmenter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 默认中文转换
@@ -21,14 +24,13 @@ public class DefaultZhConverter extends AbstractZhConverter {
     /**    
      * char map    
      */    
-    private Map<String, String> charMap = new HashMap<>();
+    private Map<String, String> charMap = new ConcurrentHashMap<>();
     /**    
      * phrase map    
      */    
-    private Map<String, String> phraseMap = new HashMap<>();
+    private Map<String, String> phraseMap = new ConcurrentHashMap<>();
 
-
-    /**    
+    /**
      * convert    
      *    
      * @return com.github.houbb.opencc4j.core.ZhConverter    
@@ -42,8 +44,8 @@ public class DefaultZhConverter extends AbstractZhConverter {
         initMap();
 
         //1. 原始内容转换 暂时先不考虑编码问题
-        JiebaSegmenter jiebaSegmenter = new JiebaSegmenter();
-        List<String> stringList = jiebaSegmenter.sentenceProcess(stringBuilder.toString());
+        Segmentation segmentation = new JiebaAnalysisSegmentation();
+        List<String> stringList = segmentation.segmentate(stringBuilder.toString());
         StringBuilder stringBuilder = new StringBuilder();
         for(String string : stringList) {
             String result = getTransResult(string);
@@ -54,12 +56,13 @@ public class DefaultZhConverter extends AbstractZhConverter {
         return this;
     }
 
-    /**    
-     * initialize map    
+    /**
+     * 初始化 map
+     * initialize map
      */    
     private void initMap() {
-        charMap = DataFileUtil.buildDataMap(config.charPath());
-        phraseMap = DataFileUtil.buildDataMap(config.phrasePath());
+        charMap = DataFileUtil.getDataMap(config.charPath());
+        phraseMap = DataFileUtil.getDataMap(config.phrasePath());
     }
 
 

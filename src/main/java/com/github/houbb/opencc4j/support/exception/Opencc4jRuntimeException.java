@@ -2,7 +2,7 @@ package com.github.houbb.opencc4j.support.exception;
 
 /**
  * 2018/2/11
- *
+ * 运行时异常
  * @author houbinbin
  * @version 1.0
  * @since 1.7

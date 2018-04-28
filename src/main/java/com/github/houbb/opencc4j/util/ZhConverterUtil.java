@@ -18,7 +18,7 @@ public final class ZhConverterUtil {
     /**    
      * zh converter    
      */    
-    private static final ZhConverter zhConverter = new DefaultZhConverter();
+//    private static final ZhConverter zhConverter = new DefaultZhConverter();
 
     /**    
      *  zh converter util    
@@ -33,7 +33,12 @@ public final class ZhConverterUtil {
     public static String convertToSimple(String original) {
         Config config = new DefaultConfig(AppConstant.TraditionalToSimple.CHAR_PATH,
                 AppConstant.TraditionalToSimple.PHRASE_PATH);
-        return zhConverter.setOriginal(original).setConfig(config).convert().getResult();
+        ZhConverter zhConverter = new DefaultZhConverter();
+        return zhConverter
+                .setOriginal(original)
+                .setConfig(config)
+                .convert()
+                .getResult();
     }
 
     /**
@@ -53,6 +58,7 @@ public final class ZhConverterUtil {
     public static String convertToTraditional(String original){
         Config config = new DefaultConfig(AppConstant.SimpleToTraditional.CHAR_PATH,
                 AppConstant.SimpleToTraditional.PHRASE_PATH);
+        ZhConverter zhConverter = new DefaultZhConverter();
         return zhConverter.setOriginal(original).setConfig(config).convert().getResult();
     }
 

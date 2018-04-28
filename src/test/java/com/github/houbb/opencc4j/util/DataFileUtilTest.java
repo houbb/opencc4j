@@ -13,7 +13,7 @@ public class DataFileUtilTest {
 
     /**
     *
-    * Method: buildDataMap(path)
+    * Method: getDataMap(path)
     */
     @Test
     public void buildDataMapTest() throws Exception {
