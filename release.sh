@@ -2,8 +2,8 @@
 echo "============================= RELEASE START..."
 
 ## 版本号信息(需要手动指定)
-version="1.1.3"
-newVersion="1.1.4"
+version="1.0.1"
+newVersion="1.0.2"
 projectName="opencc4j"
 
 # release 项目版本
