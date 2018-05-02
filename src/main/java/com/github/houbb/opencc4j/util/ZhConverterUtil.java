@@ -15,12 +15,7 @@ import com.github.houbb.opencc4j.support.config.DefaultConfig;
  */
 public final class ZhConverterUtil {
 
-    /**    
-     * zh converter    
-     */    
-//    private static final ZhConverter zhConverter = new DefaultZhConverter();
-
-    /**    
+    /**
      *  zh converter util    
      */    
     private ZhConverterUtil(){}
