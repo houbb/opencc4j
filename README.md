@@ -39,7 +39,7 @@ Opencc4j 支持中文繁简体转换，考虑到词组级别。
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 

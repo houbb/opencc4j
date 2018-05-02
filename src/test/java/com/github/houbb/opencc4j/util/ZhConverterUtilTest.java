@@ -24,7 +24,7 @@ public class ZhConverterUtilTest {
 
         original = null;
         result = ZhConverterUtil.convertToSimple(original);
-        Assert.assertEquals(null, result);
+        Assert.assertNull(result);
     }
 
     /**

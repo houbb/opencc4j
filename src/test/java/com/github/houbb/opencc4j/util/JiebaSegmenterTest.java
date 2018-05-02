@@ -5,10 +5,8 @@ import com.huaban.analysis.jieba.JiebaSegmenter;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 
 /**
  * <p> </p>
@@ -18,7 +16,7 @@ import java.util.concurrent.ThreadFactory;
  *
  * @author Administrator
  * @version 1.0
- * @since JDK 1.8
+ * @since JDK 1.7
  */
 public class JiebaSegmenterTest {
 

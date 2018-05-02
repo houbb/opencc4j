@@ -1,7 +1,6 @@
 package com.github.houbb.opencc4j.support.segmentation;
 
 import com.github.houbb.opencc4j.support.segmentation.impl.JiebaAnalysisSegmentation;
-import com.huaban.analysis.jieba.JiebaSegmenter;
 
 import org.junit.Ignore;
 import org.junit.Test;
