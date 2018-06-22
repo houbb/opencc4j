@@ -43,6 +43,23 @@ Opencc4j 支持中文繁简体转换，考虑到词组级别。
 </dependency>
 ```
 
+PS: 此处还需要额外引入2个依赖， release_1.0.2 将默认依赖。
+
+```xml
+<dependencies>
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>paradise-common</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.huaban</groupId>
+            <artifactId>jieba-analysis</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+</dependencies>
+```
+
 ## 转为简体
 
 ```java
