@@ -38,12 +38,13 @@ public class ZhConverterUtilTest {
     }
 
     /**
+     * 使用简单的单词分开
      * Method: convertToSimple(original)
      */
     @Test
-    public void convertToSimpleOriginalTest() throws Exception {
+    public void convertToSimpleCharsTest() throws Exception {
         String original = "生命不息，奮鬥不止";
-        String result = ZhConverterUtil.convertToSimple(new StringBuilder(original));
+        String result = ZhConverterUtil.convertToSimple(original, false);
         Assert.assertEquals("生命不息，奋斗不止", result);
     }
 
@@ -75,11 +76,10 @@ public class ZhConverterUtilTest {
      * Method: convertToTraditional(original)
      */
     @Test
-    public void convertToTraditionalOriginalTest() throws Exception {
-        StringBuilder original = new StringBuilder("生命不息，奋斗不止");
-        String result = ZhConverterUtil.convertToTraditional(original);
+    public void convertToTraditionalCharsTest() throws Exception {
+        String original = "生命不息，奋斗不止";
+        String result = ZhConverterUtil.convertToTraditional(original, false);
         Assert.assertEquals("生命不息，奮鬥不止", result);
     }
-
 
 }

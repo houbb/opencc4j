@@ -39,7 +39,7 @@ supporting character-level conversion, phrase-level conversion for java.
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
@@ -69,11 +69,6 @@ the result is:
 生命不息，奮鬥不止
 ```
 
-## Other support
-
-You can also use `StringBuilder` for argument when you use the two methods.
-
-More details，you can see [ZhConverterUtilTest.java](src/test/java/com/github/houbb/opencc4j/util/ZhConverterUtilTest.java)
 
 
 # Thanks

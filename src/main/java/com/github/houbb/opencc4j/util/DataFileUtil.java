@@ -1,8 +1,7 @@
 package com.github.houbb.opencc4j.util;
 
 import com.github.houbb.opencc4j.constant.AppConstant;
-import com.github.houbb.opencc4j.support.exception.Opencc4jRuntimeException;
-import com.github.houbb.paradise.common.util.MapUtil;
+import com.github.houbb.opencc4j.exception.Opencc4jRuntimeException;
 import com.github.houbb.paradise.common.util.StringUtil;
 
 import java.io.BufferedReader;
@@ -12,35 +11,45 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 2018/2/11
  *
+ * 数据文件工具类
+ * 1. 为了保证性能，在项目启动的时候，将词组文件加载到内存中去，且只加载一次。
+ * 2. 此处不用分词，性能更好。
  * @author houbinbin
  * @version 1.0
  * @since 1.7
  */
 public final class DataFileUtil {
 
-    /**
-     * 对于数据的加载是固定的
-     */
-    private static Map<String, Map<String, String>> DATA_MAP = new ConcurrentHashMap<>();
-
     private DataFileUtil(){}
 
     /**
-     * 构建数据 map
-     * @param path 文件路径
-     * @return 数据 map
+     * 简写=》繁写 字符 Map
      */
-    public static Map<String, String> getDataMap(final String path) {
-        Map<String, String> map = DATA_MAP.get(path);
-        if(MapUtil.isNotEmpty(map)) {
-            return map;
+    private static Map<String, String> S2T_CHAR_MAP;
+    /**
+     * 简写=》繁写 词组 Map
+     */
+    private static Map<String, String> S2T_PHASE_MAP;
+    /**
+     * 繁写=》简写 字符 Map
+     */
+    private static Map<String, String> T2S_CHAR_MAP;
+    /**
+     * 繁写=》简写 词组 Map
+     */
+    private static Map<String, String> T2S_PHASE_MAP;
+
+    static {
+        synchronized (DataFileUtil.class) {
+            S2T_CHAR_MAP = buildDataMap(AppConstant.SimpleToTraditional.CHAR_PATH);
+            S2T_PHASE_MAP = buildDataMap(AppConstant.SimpleToTraditional.PHRASE_PATH);
+            T2S_CHAR_MAP = buildDataMap(AppConstant.TraditionalToSimple.CHAR_PATH);
+            T2S_PHASE_MAP = buildDataMap(AppConstant.TraditionalToSimple.PHRASE_PATH);
         }
-        return buildDataMap(path);
     }
 
     /**
@@ -63,12 +72,71 @@ public final class DataFileUtil {
                 String[] strings = StringUtil.splitByAnyBlank(entry);
                 map.put(strings[0], strings[1]);
             }
-
-            DATA_MAP.put(path, map);
             return map;
         } catch (IOException e) {
-            throw new Opencc4jRuntimeException(e);
+            throw new Opencc4jRuntimeException("Dict 数据加载失败!", e);
         }
+    }
+
+
+    /**
+     * 获取简体=》繁体的转换结果
+     * @param original 原始信息
+     * @return 繁体
+     */
+    public static String getS2TResult(final String original) {
+        return getPhaseResult(original, S2T_PHASE_MAP, S2T_CHAR_MAP);
+    }
+
+    /**
+     * 获取繁体=》简体的转换结果
+     * @param original 原始信息
+     * @return 简体
+     */
+    public static String getT2SResult(final String original) {
+        return getPhaseResult(original, T2S_PHASE_MAP, T2S_CHAR_MAP);
+    }
+
+
+    /**
+     * 对于词组的转换
+     *
+     * @param original original
+     * @return java.lang.String
+     */
+    private static String getPhaseResult(final String original,
+                                  final Map<String, String> phraseMap,
+                                  final Map<String, String> charMap) {
+        String phrase = phraseMap.get(original);
+        if(StringUtil.isNotEmpty(phrase)
+                && !AppConstant.EMPTY_RESULT.equals(phrase)) {
+            return phrase;
+        }
+
+        char[] chars = original.toCharArray();
+        StringBuilder stringBuilder = new StringBuilder();
+        for(char c : chars) {
+            String result = getCharResult(Character.toString(c), charMap);
+            stringBuilder.append(result);
+        }
+
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 对于单个生词的转换
+     *
+     * @param original original
+     * @param charMap 字符集合
+     * @return java.lang.String
+     */
+    private static String getCharResult(final String original, final Map<String, String> charMap) {
+        String c = charMap.get(original);
+        if(StringUtil.isNotEmpty(c)
+                && !AppConstant.EMPTY_RESULT.equals(c)) {
+            return c;
+        }
+        return original;
     }
 
 }

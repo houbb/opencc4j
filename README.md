@@ -71,10 +71,18 @@ String result = ZhConverterUtil.convertToTraditional(original);
 
 ## 其他支持
 
-上述 2 个方法，都支持 `StringBuilder` 作为入参。
+上述两个方法都默认使用的花瓣分词，都有第二个参数，是否启用花瓣分词。
+如果不启用，则默认使用普通的一个 char 作为一个转换的对象。(不建议，唯一的优势性能好一点，但是准确性不行)
 
-更多详情，可参见测试用例 [ZhConverterUtilTest.java](src/test/java/com/github/houbb/opencc4j/util/ZhConverterUtilTest.java)
-
+```java
+/**
+ * 转换为简体
+ * @param original 原始内容
+ * @param huabanSegment 是否花瓣分词
+ * @return 转换后的内容
+ */
+public static String convertToSimple(String original, boolean huabanSegment);
+```
 
 # 技术鸣谢
 

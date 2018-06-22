@@ -1,4 +1,4 @@
-package com.github.houbb.opencc4j.support.exception;
+package com.github.houbb.opencc4j.exception;
 
 /**
  * 2018/2/11
@@ -9,7 +9,9 @@ package com.github.houbb.opencc4j.support.exception;
  */
 public class Opencc4jRuntimeException extends RuntimeException {
 
-    /**    
+    private static final long serialVersionUID = -208874364243906193L;
+
+    /**
      *  opencc4j runtime exception    
      */    
     public Opencc4jRuntimeException() {
