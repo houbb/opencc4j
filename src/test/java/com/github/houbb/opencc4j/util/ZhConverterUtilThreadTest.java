@@ -1,6 +1,5 @@
 package com.github.houbb.opencc4j.util;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Random;
@@ -17,30 +16,19 @@ import java.util.concurrent.Executors;
 public class ZhConverterUtilThreadTest {
 
     /**
-     * Method: convertToSimple(original)
-     */
-    @Test
-    @Ignore
-    public void convertToSimpleTest() throws Exception {
-    }
-
-    /**
      * Method: convertToTraditional(original)
      */
     @Test
-    @Ignore
     public void convertToTraditionalTest() throws Exception {
         ExecutorService ts = Executors.newFixedThreadPool(8);
-        for (;;) {
-            ts.execute(new Thread() {
-                @Override
-                public void run() {
-                    final String randomStr = buildRandomString();
-                    String result = ZhConverterUtil.convertToTraditional(randomStr);
-                    System.out.println(result);
-                }
-            });
-        }
+        ts.execute(new Thread() {
+            @Override
+            public void run() {
+                final String randomStr = buildRandomString();
+                String result = ZhConverterUtil.convertToTraditional(randomStr);
+                System.out.println(result);
+            }
+        });
     }
 
     private static synchronized String buildRandomString() {
