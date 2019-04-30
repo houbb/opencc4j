@@ -1,7 +1,5 @@
 package com.github.houbb.opencc4j.util;
 
-import com.github.houbb.paradise.common.util.ObjectUtil;
-import com.github.houbb.paradise.common.util.StringUtil;
 import com.huaban.analysis.jieba.JiebaSegmenter;
 
 import java.util.Collections;

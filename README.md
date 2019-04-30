@@ -98,20 +98,6 @@ public static String convertToSimple(String original, boolean huabanSegment);
 
 [需求和 BUG](https://github.com/houbb/opencc4j/issues) 在这里，欢迎提供宝贵的建议。
 
-# 支持作者
-
-一颗糖，一杯咖啡。
-
-## 支付宝
-
-![AliPay](img/alipay.jpg)
-
-## 微信
-
-![WeChat](img/wechat.jpg)
-
-
-
 
 
 

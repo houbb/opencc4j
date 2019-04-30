@@ -6,8 +6,6 @@ import com.github.houbb.opencc4j.core.impl.CharSegment;
 import com.github.houbb.opencc4j.core.impl.HuabanSegment;
 import com.github.houbb.opencc4j.core.impl.ToSimpleZhConvert;
 import com.github.houbb.opencc4j.core.impl.ToTraditonZhConvert;
-import com.github.houbb.paradise.common.util.CollectionUtil;
-import com.github.houbb.paradise.common.util.StringUtil;
 
 import java.util.List;
 

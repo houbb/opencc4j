@@ -1,7 +1,7 @@
 package com.github.houbb.opencc4j.core.impl;
 
 import com.github.houbb.opencc4j.core.Segment;
-import com.github.houbb.paradise.common.util.StringUtil;
+import com.github.houbb.opencc4j.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
