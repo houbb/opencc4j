@@ -20,12 +20,6 @@ Opencc4j 支持中文繁简体转换，考虑到词组级别。
 
 - 兼容 Windows、Linux、Mac 平臺。
 
-### 1.0.3 变化
-
-1. 移除 paradise 依赖
-
-2. 使用 jdk7 重新编译上传 
-
 ## 创作缘由
 
 - OpenCC
@@ -44,7 +38,7 @@ Opencc4j 支持中文繁简体转换，考虑到词组级别。
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.0.2</version>
+    <version>${最新版本}</version>
 </dependency>
 ```
 
