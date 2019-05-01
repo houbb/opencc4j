@@ -85,19 +85,6 @@ the result is:
 
 [Issues & Bugs](https://github.com/houbb/opencc4j/issues), welcome to provide valuable suggestions.
 
-# Donate
-
-One cup of tea.
-
-## AliPay
-
-![AliPay](img/alipay.jpg)
-
-## WeChat
-
-![WeChat](img/wechat.jpg)
-
-
 
 
 

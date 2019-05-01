@@ -20,6 +20,11 @@ Opencc4j 支持中文繁简体转换，考虑到词组级别。
 
 - 兼容 Windows、Linux、Mac 平臺。
 
+### 1.0.3 变化
+
+1. 移除 paradise 依赖
+
+2. 使用 jdk7 重新编译上传 
 
 ## 创作缘由
 
@@ -97,3 +102,7 @@ public static String convertToSimple(String original, boolean huabanSegment);
 # Issues & Bugs
 
 [需求和 BUG](https://github.com/houbb/opencc4j/issues) 在这里，欢迎提供宝贵的建议。
+
+
+
+

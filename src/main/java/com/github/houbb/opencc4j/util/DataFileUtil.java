@@ -2,7 +2,6 @@ package com.github.houbb.opencc4j.util;
 
 import com.github.houbb.opencc4j.constant.AppConstant;
 import com.github.houbb.opencc4j.exception.Opencc4jRuntimeException;
-import com.github.houbb.paradise.common.util.StringUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,19 +28,19 @@ public final class DataFileUtil {
     /**
      * 简写=》繁写 字符 Map
      */
-    private static Map<String, String> S2T_CHAR_MAP;
+    private static final Map<String, String> S2T_CHAR_MAP;
     /**
      * 简写=》繁写 词组 Map
      */
-    private static Map<String, String> S2T_PHASE_MAP;
+    private static final Map<String, String> S2T_PHASE_MAP;
     /**
      * 繁写=》简写 字符 Map
      */
-    private static Map<String, String> T2S_CHAR_MAP;
+    private static final Map<String, String> T2S_CHAR_MAP;
     /**
      * 繁写=》简写 词组 Map
      */
-    private static Map<String, String> T2S_PHASE_MAP;
+    private static final Map<String, String> T2S_PHASE_MAP;
 
     static {
         synchronized (DataFileUtil.class) {

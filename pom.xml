@@ -6,7 +6,7 @@
 
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 
     <properties>
         <!--============================== All PLUGINS START ==============================-->
@@ -38,10 +38,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.github.houbb</groupId>
-            <artifactId>paradise-common</artifactId>
-            <version>${paradise-common.version}</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>com.huaban</groupId>
             <artifactId>jieba-analysis</artifactId>

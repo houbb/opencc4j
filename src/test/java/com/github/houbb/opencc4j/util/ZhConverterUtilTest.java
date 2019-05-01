@@ -59,7 +59,7 @@ public class ZhConverterUtilTest {
 
         original = null;
         result = ZhConverterUtil.convertToTraditional(original);
-        Assert.assertEquals(null, result);
+        Assert.assertNull(result);
     }
 
     /**

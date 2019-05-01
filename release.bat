@@ -10,9 +10,9 @@ ECHO "============================= RELEASE START..."
 
 :: 版本号信息(需要手动指定)
 :::: 旧版本名称
-SET version=1.0.0
+SET version=1.0.3
 :::: 新版本名称
-SET newVersion=1.0.1
+SET newVersion=1.1.0
 :::: 组织名称
 SET groupName=com.github.houbb
 :::: 项目名称
@@ -38,39 +38,5 @@ git status
 
 ECHO "2. PUSH TO GITHUB DONE."
 
-:: 合并到 master 分支
-:::: 分支名称
-SET branchName="release_"%version%
-git checkout master
-git pull
-git checkout %branchName%
-git rebase master
-git checkout master
-git merge %branchName%
-git push
-
-ECHO "3. MERGE TO MASTER DONE."
-
-
-:: 拉取新的分支
-SET newBranchName="release_"%newVersion%
-git branch %newBranchName%
-git checkout %newBranchName%
-git push --set-upstream origin %newBranchName%
-
-ECHO "4. NEW BRANCH DONE."
-
-:: 修改新分支的版本号
-SET snapshot_new_version=%newVersion%"-SNAPSHOT"
-call mvn versions:set -DgroupId=%groupName% -DartifactId=%projectName% -DoldVersion=%release_version% -DnewVersion=%snapshot_new_version%
-call mvn -N versions:update-child-modules
-call mvn versions:commit
-
-git add .
-git commit -m "modify branch %release_version% TO %snapshot_new_version%"
-git push
-git status
-ECHO "5. MODIFY %release_version% TO %snapshot_new_version% DONE."
-
-ECHO "============================= RELEASE END..."
-
+:: 发布到 maven 中央仓库
+mvn clean deploy -P release

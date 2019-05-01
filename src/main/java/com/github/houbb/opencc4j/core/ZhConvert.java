@@ -1,7 +1,7 @@
 package com.github.houbb.opencc4j.core;
 
 /**
- * <p> </p>
+ * <p> 中文转换接口 </p>
  *
  * <pre> Created: 2018/6/22 下午2:42  </pre>
  * <pre> Project: opencc4j  </pre>

@@ -3,7 +3,7 @@ package com.github.houbb.opencc4j.core;
 import java.util.List;
 
 /**
- * <p> </p>
+ * <p> 分词接口 </p>
  *
  * <pre> Created: 2018/6/22 下午2:41  </pre>
  * <pre> Project: opencc4j  </pre>
