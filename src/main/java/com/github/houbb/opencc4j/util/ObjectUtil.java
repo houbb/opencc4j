@@ -3,7 +3,6 @@ package com.github.houbb.opencc4j.util;
 /**
  * 对象工具类
  * @author binbin.hou
- * @date 2019/4/30
  * @since 1.0.3
  */
 public final class ObjectUtil {

@@ -4,7 +4,6 @@ package com.github.houbb.opencc4j.util;
  * 字符串工具类
  * 1. 为了移除外部依赖。
  * @author binbin.hou
- * @date 2019/4/30
  * @since 1.0.3
  */
 public final class StringUtil {

@@ -5,7 +5,6 @@ import java.util.Collection;
 /**
  * 集合工具类
  * @author binbin.hou
- * @date 2019/4/30
  * @since 1.0.3
  */
 public final class CollectionUtil {

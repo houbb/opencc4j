@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * <p> </p>
+ * <p> 分词工具类 </p>
  * 使用 ThreadLocal 保证数据的准确性，同时兼顾性能
  * <pre> Created: 2018/6/22 下午1:41  </pre>
  * <pre> Project: opencc4j  </pre>
