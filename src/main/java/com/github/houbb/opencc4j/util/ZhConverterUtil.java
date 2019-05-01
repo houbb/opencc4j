@@ -49,10 +49,24 @@ public final class ZhConverterUtil {
      * @param original 原始内容
      * @param huabanSegment 是否花瓣分词
      * @return 转换后的内容
+     * @deprecated since 1.1.0
      */
+    @Deprecated
     public static String convertToSimple(String original, boolean huabanSegment) {
         ZhConvert zhConvert = new ToSimpleZhConvert();
         Segment segment = getSegment(huabanSegment);
+        return convert(original, segment, zhConvert);
+    }
+
+    /**
+     * 转换为简体
+     * @param original 原始内容
+     * @param segment 分词实现，允许用户自定义实现。默认有 {@link CharSegment} 和 {@link HuabanSegment}
+     * @return 转换后的内容
+     * @since 1.1.0
+     */
+    public static String convertToSimple(final String original, final Segment segment) {
+        ZhConvert zhConvert = new ToSimpleZhConvert();
         return convert(original, segment, zhConvert);
     }
 
@@ -61,13 +75,26 @@ public final class ZhConverterUtil {
      * @param original 原始内容
      * @param huabanSegment 是否花瓣分词
      * @return 转换后的内容
+     * @deprecated since 1.1.0
      */
+    @Deprecated
     public static String convertToTraditional(String original, boolean huabanSegment){
         ZhConvert zhConvert = new ToTraditonZhConvert();
         Segment segment = getSegment(huabanSegment);
         return convert(original, segment, zhConvert);
     }
 
+    /**
+     * 转换为繁体
+     * @param original 原始内容
+     * @param segment 分词实现，允许用户自定义实现。默认有 {@link CharSegment} 和 {@link HuabanSegment}
+     * @return 转换后的内容
+     * @since 1.1.0
+     */
+    public static String convertToTraditional(final String original, final Segment segment) {
+        ZhConvert zhConvert = new ToTraditonZhConvert();
+        return convert(original, segment, zhConvert);
+    }
 
 
     /**
