@@ -5,7 +5,7 @@ package com.github.houbb.opencc4j.exception;
  * 运行时异常
  * @author houbinbin
  * @version 1.0
- * @since 1.7
+ * @since 1.0.0
  */
 public class Opencc4jRuntimeException extends RuntimeException {
 

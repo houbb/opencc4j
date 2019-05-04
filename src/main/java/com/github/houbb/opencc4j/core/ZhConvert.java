@@ -7,16 +7,8 @@ package com.github.houbb.opencc4j.core;
  * <pre> Project: opencc4j  </pre>
  *
  * @author houbinbin
- * @version 1.0
- * @since JDK 1.7
+ * @version 1.1.0
+ * @since 1.1.0
  */
-public interface ZhConvert {
-
-    /**
-     * 对中文进行转化
-     * @param original 原始信息
-     * @return 转换后的信息
-     */
-    String convert(final String original);
-
+public interface ZhConvert extends SimpleZhConvert, TraditionalZhConvert {
 }

@@ -1,10 +1,9 @@
-package com.github.houbb.opencc4j.core.impl;
+package com.github.houbb.opencc4j.support.segment.impl;
 
-import com.github.houbb.opencc4j.core.Segment;
-import com.github.houbb.opencc4j.util.StringUtil;
+import com.github.houbb.opencc4j.annotation.ThreadSafe;
+import com.github.houbb.opencc4j.support.segment.Segment;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,14 +16,11 @@ import java.util.List;
  * @version 1.0
  * @since JDK 1.7
  */
-public class CharSegment implements Segment {
+@ThreadSafe
+public class CharSegment extends AbstractSegment {
 
     @Override
-    public List<String> seg(String original) {
-        if(StringUtil.isEmpty(original)) {
-            return Collections.emptyList();
-        }
-
+    protected List<String> doSeg(final String original) {
         char[] chars = original.toCharArray();
         List<String> stringList = new ArrayList<>();
         for(char c : chars) {

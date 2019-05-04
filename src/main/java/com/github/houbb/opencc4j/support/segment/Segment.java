@@ -1,4 +1,4 @@
-package com.github.houbb.opencc4j.core;
+package com.github.houbb.opencc4j.support.segment;
 
 import java.util.List;
 

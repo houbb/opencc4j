@@ -1,22 +1,22 @@
 package com.github.houbb.opencc4j.util;
 
-import com.github.houbb.opencc4j.core.Segment;
-import com.github.houbb.opencc4j.core.ZhConvert;
-import com.github.houbb.opencc4j.core.impl.CharSegment;
-import com.github.houbb.opencc4j.core.impl.HuabanSegment;
-import com.github.houbb.opencc4j.core.impl.ToSimpleZhConvert;
-import com.github.houbb.opencc4j.core.impl.ToTraditonZhConvert;
-
-import java.util.List;
+import com.github.houbb.opencc4j.annotation.ThreadSafe;
+import com.github.houbb.opencc4j.core.impl.ZhConvertBootstrap;
+import com.github.houbb.opencc4j.support.instance.impl.InstanceFactory;
+import com.github.houbb.opencc4j.support.segment.Segment;
+import com.github.houbb.opencc4j.support.segment.impl.CharSegment;
+import com.github.houbb.opencc4j.support.segment.impl.HuaBanSegment;
 
 /**
  * 中文转换工具类
- * 1. 编码问题
- * 本工具类，默认支持的为 UTF-8 格式的字符串。如果格式不统一，自行处理
+ * 1. 编码问题本工具类，默认支持的为 UTF-8 格式的字符串。如果格式不统一，自行处理
+ * 2. 使用 threadLocal 保证线程安全性
+ * 3. 建议使用 {@link ZhConvertBootstrap} 来代替当前工具类。
  * @author bbhou
  * @version 1.0.0
  * @since 1.0.0, 2018/02/09
  */
+@ThreadSafe
 public final class ZhConverterUtil {
 
     /**
@@ -49,25 +49,14 @@ public final class ZhConverterUtil {
      * @param original 原始内容
      * @param huabanSegment 是否花瓣分词
      * @return 转换后的内容
-     * @deprecated since 1.1.0
      */
-    @Deprecated
     public static String convertToSimple(String original, boolean huabanSegment) {
-        ZhConvert zhConvert = new ToSimpleZhConvert();
+        final ZhConvertBootstrap zhConvertBootstrap = InstanceFactory.getInstance()
+                .threadLocal(ZhConvertBootstrap.class);
         Segment segment = getSegment(huabanSegment);
-        return convert(original, segment, zhConvert);
-    }
 
-    /**
-     * 转换为简体
-     * @param original 原始内容
-     * @param segment 分词实现，允许用户自定义实现。默认有 {@link CharSegment} 和 {@link HuabanSegment}
-     * @return 转换后的内容
-     * @since 1.1.0
-     */
-    public static String convertToSimple(final String original, final Segment segment) {
-        ZhConvert zhConvert = new ToSimpleZhConvert();
-        return convert(original, segment, zhConvert);
+        return zhConvertBootstrap.segment(segment)
+                .toSimple(original);
     }
 
     /**
@@ -75,27 +64,15 @@ public final class ZhConverterUtil {
      * @param original 原始内容
      * @param huabanSegment 是否花瓣分词
      * @return 转换后的内容
-     * @deprecated since 1.1.0
      */
-    @Deprecated
     public static String convertToTraditional(String original, boolean huabanSegment){
-        ZhConvert zhConvert = new ToTraditonZhConvert();
+        final ZhConvertBootstrap zhConvertBootstrap = InstanceFactory.getInstance()
+                .threadLocal(ZhConvertBootstrap.class);
         Segment segment = getSegment(huabanSegment);
-        return convert(original, segment, zhConvert);
-    }
 
-    /**
-     * 转换为繁体
-     * @param original 原始内容
-     * @param segment 分词实现，允许用户自定义实现。默认有 {@link CharSegment} 和 {@link HuabanSegment}
-     * @return 转换后的内容
-     * @since 1.1.0
-     */
-    public static String convertToTraditional(final String original, final Segment segment) {
-        ZhConvert zhConvert = new ToTraditonZhConvert();
-        return convert(original, segment, zhConvert);
+        return zhConvertBootstrap.segment(segment)
+                .toTraditional(original);
     }
-
 
     /**
      * 获取分词器
@@ -104,36 +81,9 @@ public final class ZhConverterUtil {
      */
     private static Segment getSegment(boolean huabanSegment) {
         if(huabanSegment) {
-            return new HuabanSegment();
+            return new HuaBanSegment();
         }
         return new CharSegment();
-    }
-
-
-    /**
-     * 转换处理
-     * @param original 原始信息
-     * @param segment 分词方式
-     * @param zhConvert 中文转换方式
-     * @return 转换结果
-     */
-    private static String convert(final String original, Segment segment, ZhConvert zhConvert) {
-        //1. fast-fail
-        if(StringUtil.isEmpty(original)) {
-            return original;
-        }
-        List<String> stringList = segment.seg(original);
-        if(CollectionUtil.isEmpty(stringList)) {
-            return original;
-        }
-
-        //2. 构建结果
-        StringBuilder stringBuilder = new StringBuilder();
-        for(String string : stringList) {
-            String result = zhConvert.convert(string);
-            stringBuilder.append(result);
-        }
-        return stringBuilder.toString();
     }
 
 }
