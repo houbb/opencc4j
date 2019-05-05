@@ -1,7 +1,7 @@
 package com.github.houbb.opencc4j.util;
 
-import com.github.houbb.opencc4j.annotation.ThreadSafe;
 import com.github.houbb.opencc4j.core.impl.ZhConvertBootstrap;
+import com.github.houbb.opencc4j.support.instance.Instance;
 import com.github.houbb.opencc4j.support.instance.impl.InstanceFactory;
 import com.github.houbb.opencc4j.support.segment.Segment;
 import com.github.houbb.opencc4j.support.segment.impl.CharSegment;
@@ -10,13 +10,12 @@ import com.github.houbb.opencc4j.support.segment.impl.HuaBanSegment;
 /**
  * 中文转换工具类
  * 1. 编码问题本工具类，默认支持的为 UTF-8 格式的字符串。如果格式不统一，自行处理
- * 2. 使用 threadLocal 保证线程安全性
+ * 2. 每次都 new 一个对象保证线程安全性
  * 3. 建议使用 {@link ZhConvertBootstrap} 来代替当前工具类。
  * @author bbhou
  * @version 1.0.0
  * @since 1.0.0, 2018/02/09
  */
-@ThreadSafe
 public final class ZhConverterUtil {
 
     /**
@@ -52,7 +51,7 @@ public final class ZhConverterUtil {
      */
     public static String convertToSimple(String original, boolean huabanSegment) {
         final ZhConvertBootstrap zhConvertBootstrap = InstanceFactory.getInstance()
-                .threadLocal(ZhConvertBootstrap.class);
+                .multiple(ZhConvertBootstrap.class);
         Segment segment = getSegment(huabanSegment);
 
         return zhConvertBootstrap.segment(segment)
@@ -67,7 +66,7 @@ public final class ZhConverterUtil {
      */
     public static String convertToTraditional(String original, boolean huabanSegment){
         final ZhConvertBootstrap zhConvertBootstrap = InstanceFactory.getInstance()
-                .threadLocal(ZhConvertBootstrap.class);
+                .multiple(ZhConvertBootstrap.class);
         Segment segment = getSegment(huabanSegment);
 
         return zhConvertBootstrap.segment(segment)
@@ -80,10 +79,11 @@ public final class ZhConverterUtil {
      * @return 分词器
      */
     private static Segment getSegment(boolean huabanSegment) {
+        final Instance instance = InstanceFactory.getInstance();
         if(huabanSegment) {
-            return new HuaBanSegment();
+            return instance.singleton(HuaBanSegment.class);
         }
-        return new CharSegment();
+        return instance.singleton(CharSegment.class);
     }
 
 }

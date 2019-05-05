@@ -21,7 +21,8 @@ public class HuaBanSegment extends AbstractSegment {
 
     @Override
     protected List<String> doSeg(String original) {
-        JiebaSegmenter segmenter = InstanceFactory.getInstance().threadLocal(JiebaSegmenter.class);
+        //线程安全：https://github.com/huaban/jieba-analysis/issues/65
+        JiebaSegmenter segmenter = InstanceFactory.getInstance().singleton(JiebaSegmenter.class);
         return segmenter.sentenceProcess(original);
     }
 

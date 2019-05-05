@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,8 +28,12 @@ final class DataUtil {
 
     /**
      * 构建数据集合
+     *
+     * 后期考虑：是否允许用户自定义字典？
+     * 目前不支持这些操作。后期如果需要，再把这些限制放开。
      * @param path 文件路径
      * @return 返回数据集合
+     * @see Collections#unmodifiableMap(Map) 保证字典数据不被外部修改
      */
     static Map<String, String> buildDataMap(final String path) {
         try {
@@ -45,7 +50,7 @@ final class DataUtil {
                 String[] strings = StringUtil.splitByAnyBlank(entry);
                 map.put(strings[0], strings[1]);
             }
-            return map;
+            return Collections.unmodifiableMap(map);
         } catch (IOException e) {
             throw new Opencc4jRuntimeException("Dict 数据加载失败!", e);
         }

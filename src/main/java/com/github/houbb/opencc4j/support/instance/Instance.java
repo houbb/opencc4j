@@ -19,18 +19,15 @@ public interface Instance {
 
     /**
      * 获取每个线程内唯一的实例化对象
+     * 注意：可能会内存泄漏的场景。
+     * (1) 只要这个线程对象被gc回收，就不会出现内存泄露，但在threadLocal设为null和线程结束这段时间不会被回收的，就发生了我们认为的内存泄露。
+     * 最要命的是线程对象不被回收的情况，这就发生了真正意义上的内存泄露。比如使用线程池的时候，线程结束是不会销毁的，会再次使用的。就可能出现内存泄露。　
+     * 参考资料：https://www.cnblogs.com/onlywujun/p/3524675.html
      * @param tClass class 类型
      * @return 实例化对象
+     * @see java.lang.ref.WeakReference 弱引用
      */
     <T> T threadLocal(final Class<T> tClass);
-
-    /**
-     * 清空当前线程信息
-     * ps: 在线程池的场景下，重复创建会导致内存占中比较大。最后执行完，可以手动执行。
-     * 当然，个人的理解是 ThreadLocal 基于弱引用，即使不清理也问题不大。
-     * TODO: 此处存疑，后续验证。
-     */
-    void threadLocalClear();
 
     /**
      * 多例对象，每次都是全新的创建

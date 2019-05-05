@@ -66,6 +66,12 @@ public class ZhConvertBootstrap implements ZhConvert {
         return this;
     }
 
+    /**
+     * 实现上的代码冗余
+     * TODO: 这个类和下面的 {@link #toTraditional(String)} 重复地方如果使用函数式编程可以很好地消除，暂时不做优化。
+     * @param original 原始字符串
+     * @return 结果
+     */
     @Override
     public String toSimple(String original) {
         //1. fast-fail

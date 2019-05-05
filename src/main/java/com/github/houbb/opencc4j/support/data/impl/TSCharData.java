@@ -1,18 +1,17 @@
 package com.github.houbb.opencc4j.support.data.impl;
 
 import com.github.houbb.opencc4j.annotation.ThreadSafe;
-import com.github.houbb.opencc4j.constant.AppConstant;
 import com.github.houbb.opencc4j.model.data.DataInfo;
 
 import java.util.Map;
 
 /**
- * 简写=》繁写 词组
+ * 繁体=》简体 字符
  * @author binbin.hou
  * @since 1.1.0
  */
 @ThreadSafe
-public class S2TPhaseData extends AbstractData {
+public class TSCharData extends AbstractData {
 
     /**
      * 数据对象
@@ -20,12 +19,12 @@ public class S2TPhaseData extends AbstractData {
     private static DataInfo dataInfo;
 
     static {
-        synchronized (S2TPhaseData.class) {
+        synchronized (TSCharData.class) {
             dataInfo = new DataInfo();
 
-            Map<String, String> data = DataUtil.buildDataMap("/data/dictionary/STPhrases.txt");
+            Map<String, String> data = DataUtil.buildDataMap("/data/dictionary/TSCharacters.txt");
             dataInfo.setDataMap(data);
-            dataInfo.setName("简体转繁体词组数据");
+            dataInfo.setName("繁体转简体字符数据");
         }
     }
 

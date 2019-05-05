@@ -1,8 +1,8 @@
 package com.github.houbb.opencc4j.core.impl;
 
 import com.github.houbb.opencc4j.annotation.ThreadSafe;
-import com.github.houbb.opencc4j.support.data.impl.T2SCharData;
-import com.github.houbb.opencc4j.support.data.impl.T2SPhaseData;
+import com.github.houbb.opencc4j.support.data.impl.TSCharData;
+import com.github.houbb.opencc4j.support.data.impl.TSPhaseData;
 import com.github.houbb.opencc4j.support.instance.Instance;
 import com.github.houbb.opencc4j.support.instance.impl.InstanceFactory;
 
@@ -25,9 +25,9 @@ public class DefaultSimpleZhConvert extends AbstractZhConvert {
     public String toSimple(String original) {
         final Instance instance = InstanceFactory.getInstance();
         final Map<String, String> t2sPhaseMap = instance
-                .singleton(T2SPhaseData.class).data().getDataMap();
+                .singleton(TSPhaseData.class).data().getDataMap();
         final Map<String, String> t2sCharMap = instance
-                .singleton(T2SCharData.class).data().getDataMap();
+                .singleton(TSCharData.class).data().getDataMap();
         return super.getPhaseResult(original, t2sPhaseMap, t2sCharMap);
     }
 

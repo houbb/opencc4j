@@ -48,14 +48,14 @@ public final class InstanceFactory implements Instance {
     @Override
     @SuppressWarnings("unchecked")
     public <T> T singleton(Class<T> tClass) {
-        ArgUtil.notNull(tClass, "class");
+        this.notNull(tClass);
 
         return this.getSingleton(tClass, singletonMap);
     }
 
     @Override
     public <T> T threadLocal(Class<T> tClass) {
-        ArgUtil.notNull(tClass, "class");
+        this.notNull(tClass);
 
         //1. 校验 map 是否存在
         Map<String, Object> map = mapThreadLocal.get();
@@ -73,13 +73,8 @@ public final class InstanceFactory implements Instance {
     }
 
     @Override
-    public void threadLocalClear() {
-        mapThreadLocal.remove();
-    }
-
-    @Override
     public <T> T multiple(Class<T> tClass) {
-        ArgUtil.notNull(tClass, "class");
+        this.notNull(tClass);
 
         try {
             return tClass.newInstance();
@@ -96,7 +91,7 @@ public final class InstanceFactory implements Instance {
      */
     @SuppressWarnings("unchecked")
     private <T> T getSingleton(final Class<T> tClass, final Map<String, Object> instanceMap) {
-        ArgUtil.notNull(tClass, "class");
+        this.notNull(tClass);
 
         final String fullClassName = tClass.getName();
         T instance = (T) instanceMap.get(fullClassName);
@@ -108,5 +103,12 @@ public final class InstanceFactory implements Instance {
     }
 
 
+    /**
+     * 断言参数不可为 null
+     * @param tClass class 信息
+     */
+    private void notNull(final Class tClass) {
+        ArgUtil.notNull(tClass, "class");
+    }
 
 }
