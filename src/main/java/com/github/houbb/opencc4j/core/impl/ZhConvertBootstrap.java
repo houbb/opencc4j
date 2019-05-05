@@ -22,7 +22,6 @@ import java.util.Map;
  * 中文转换器引导类
  * 1. 可以指定分词类型（后期陆续添加其他特性）
  * 2. 支持 fluent 语法
- * 3. 暂时不开放自定义繁简体的转换实现，因为没有提供词组数据。后期繁简体转换接口可能会调整。
  * @author binbin.hou
  * @since 1.1.0
  */
@@ -34,6 +33,14 @@ public class ZhConvertBootstrap implements ZhConvert {
      */
     private Segment segment = InstanceFactory.getInstance()
             .singleton(HuaBanSegment.class);
+
+    /**
+     * 每次获取全新的对象
+     * @return 引导类对象
+     */
+    public static ZhConvertBootstrap newInstance() {
+        return InstanceFactory.getInstance().multiple(ZhConvertBootstrap.class);
+    }
 
     /**
      * 分词实现
