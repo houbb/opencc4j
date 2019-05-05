@@ -11,7 +11,7 @@ import java.util.Map;
  * @since 1.1.0
  */
 @ThreadSafe
-public class STPhaseData extends AbstractData {
+public class STPhraseData extends AbstractData {
 
     /**
      * 数据对象
@@ -19,7 +19,7 @@ public class STPhaseData extends AbstractData {
     private static DataInfo dataInfo;
 
     static {
-        synchronized (STPhaseData.class) {
+        synchronized (STPhraseData.class) {
             dataInfo = new DataInfo();
 
             Map<String, String> data = DataUtil.buildDataMap("/data/dictionary/STPhrases.txt");

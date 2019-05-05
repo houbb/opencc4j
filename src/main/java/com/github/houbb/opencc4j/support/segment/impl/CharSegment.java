@@ -1,7 +1,6 @@
 package com.github.houbb.opencc4j.support.segment.impl;
 
 import com.github.houbb.opencc4j.annotation.ThreadSafe;
-import com.github.houbb.opencc4j.support.segment.Segment;
 
 import java.util.ArrayList;
 import java.util.List;

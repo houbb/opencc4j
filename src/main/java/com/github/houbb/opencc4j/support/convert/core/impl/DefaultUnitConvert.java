@@ -1,37 +1,40 @@
-package com.github.houbb.opencc4j.core.impl;
+package com.github.houbb.opencc4j.support.convert.core.impl;
 
+import com.github.houbb.opencc4j.annotation.ThreadSafe;
 import com.github.houbb.opencc4j.constant.AppConstant;
-import com.github.houbb.opencc4j.core.ZhConvert;
+import com.github.houbb.opencc4j.support.convert.context.UnitConvertContext;
+import com.github.houbb.opencc4j.support.convert.core.UnitConvert;
 import com.github.houbb.opencc4j.util.StringUtil;
 
 import java.util.Map;
 
 /**
- * 中文转换抽象类
+ * 默认的中文单个词组/单词转换实现
  * @author binbin.hou
  * @since 1.1.0
  */
-public abstract class AbstractZhConvert implements ZhConvert {
+@ThreadSafe
+public class DefaultUnitConvert implements UnitConvert {
 
     @Override
-    public String toSimple(String original) {
-        return original;
-    }
-
-    @Override
-    public String toTraditional(String original) {
-        return original;
+    public String convert(UnitConvertContext context) {
+        final String unit = context.getUnit();
+        final Map<String, String> charMap = context.getCharData();
+        final Map<String, String> phaseMap = context.getPhraseData();
+        return this.getPhraseResult(unit, phaseMap, charMap);
     }
 
     /**
      * 对于词组的转换
      *
      * @param original original
+     * @param phraseMap 词组集合
+     * @param charMap  单个单词集合
      * @return java.lang.String
      */
-    protected String getPhaseResult(final String original,
-                                         final Map<String, String> phraseMap,
-                                         final Map<String, String> charMap) {
+    private String getPhraseResult(final String original,
+                                   final Map<String, String> phraseMap,
+                                   final Map<String, String> charMap) {
         String phrase = phraseMap.get(original);
         if(StringUtil.isNotEmpty(phrase)
                 && !AppConstant.EMPTY_RESULT.equals(phrase)) {
