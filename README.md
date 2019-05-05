@@ -6,7 +6,7 @@ Opencc4j 支持中文繁简体转换，考虑到词组级别。
 [![Build Status](https://www.travis-ci.org/houbb/opencc4j.svg?branch=master)](https://www.travis-ci.org/houbb/opencc4j)
 [![Coverage Status](https://coveralls.io/repos/github/houbb/opencc4j/badge.svg)](https://coveralls.io/github/houbb/opencc4j)
 
-> [English Readme](README-ENGLISH.md)
+> [变更日志](CHANGELOG.md)
 
 ## Features 特點
 
@@ -24,7 +24,7 @@ Opencc4j 支持中文繁简体转换，考虑到词组级别。
 
 - 支持 jdk1.7(v1.0.3)
 
-- 支持自定义分词类型(v1.1.0)
+- 支持自定义分词(v1.1.0)
 
 ## 创作缘由
 
@@ -35,6 +35,8 @@ Opencc4j 支持中文繁简体转换，考虑到词组级别。
 - jopencc
 
 [jopencc](https://github.com/carlostse/jopencc) 没有提供分词功能。
+
+
 
 # 快速开始
 
@@ -88,6 +90,10 @@ String result = ZhConverterUtil.convertToTraditional(original);
  */
 public static String convertToSimple(String original, boolean huabanSegment);
 ```
+
+# 更多支持
+
+[自定义分词方式](doc/user/自定义分词.md)
 
 # 技术鸣谢
 
