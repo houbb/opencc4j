@@ -9,7 +9,7 @@ import java.util.List;
  * 一个最简单的分词实现。
  * 注意：仅仅做演示，不可实际使用。
  * @author binbin.hou
- * @since 1.0.0
+ * @since 1.1.0
  */
 public class FooSegment implements Segment {
     @Override

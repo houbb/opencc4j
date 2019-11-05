@@ -1,8 +1,8 @@
 package com.github.houbb.opencc4j.support.data.impl;
 
+import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.opencc4j.constant.AppConstant;
 import com.github.houbb.opencc4j.exception.Opencc4jRuntimeException;
-import com.github.houbb.opencc4j.util.StringUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;

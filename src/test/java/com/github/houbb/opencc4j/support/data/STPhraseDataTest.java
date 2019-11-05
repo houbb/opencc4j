@@ -1,8 +1,8 @@
 package com.github.houbb.opencc4j.support.data;
 
+import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.opencc4j.model.data.DataInfo;
 import com.github.houbb.opencc4j.support.data.impl.STPhraseData;
-import com.github.houbb.opencc4j.support.instance.impl.InstanceFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,7 +14,7 @@ public class STPhraseDataTest {
 
     @Test
     public void singletonTest() {
-        DataInfo dataInfo = InstanceFactory.getInstance().singleton(STPhraseData.class).data();
+        DataInfo dataInfo = Instances.singleton(STPhraseData.class).data();
         Assert.assertEquals(48933, dataInfo.getDataMap().size());
     }
 

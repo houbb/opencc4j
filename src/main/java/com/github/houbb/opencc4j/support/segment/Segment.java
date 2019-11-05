@@ -9,8 +9,8 @@ import java.util.List;
  * <pre> Project: opencc4j  </pre>
  *
  * @author houbinbin
- * @version 1.0
- * @since JDK 1.7
+ * @version 1.1.0
+ * @since 1.1.0
  */
 public interface Segment {
 
@@ -18,6 +18,7 @@ public interface Segment {
      * 分词
      * @param original 原始信息
      * @return 分词后的列表
+     * @since 1.0.0
      */
     List<String> seg(final String original);
 

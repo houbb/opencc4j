@@ -1,10 +1,10 @@
 package com.github.houbb.opencc4j.support.convert.core.impl;
 
-import com.github.houbb.opencc4j.annotation.ThreadSafe;
+import com.github.houbb.heaven.annotation.ThreadSafe;
+import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.opencc4j.constant.AppConstant;
 import com.github.houbb.opencc4j.support.convert.context.UnitConvertContext;
 import com.github.houbb.opencc4j.support.convert.core.UnitConvert;
-import com.github.houbb.opencc4j.util.StringUtil;
 
 import java.util.Map;
 

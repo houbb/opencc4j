@@ -1,6 +1,6 @@
 package com.github.houbb.opencc4j.support.segment.impl;
 
-import com.github.houbb.opencc4j.annotation.ThreadSafe;
+import com.github.houbb.heaven.annotation.ThreadSafe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +12,8 @@ import java.util.List;
  * <pre> Project: opencc4j  </pre>
  *
  * @author houbinbin
- * @version 1.0
- * @since JDK 1.7
+ * @version 1.1.0
+ * @since 1.1.0
  */
 @ThreadSafe
 public class CharSegment extends AbstractSegment {

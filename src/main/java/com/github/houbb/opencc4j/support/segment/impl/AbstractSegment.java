@@ -1,7 +1,7 @@
 package com.github.houbb.opencc4j.support.segment.impl;
 
+import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.opencc4j.support.segment.Segment;
-import com.github.houbb.opencc4j.util.StringUtil;
 
 import java.util.Collections;
 import java.util.List;

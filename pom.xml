@@ -27,16 +27,23 @@
         <!--============================== MAIN START ==============================-->
 
         <!--============================== JAR START ==============================-->
-        <jieba-analysis.version>1.0.2</jieba-analysis.version>
-        <paradise-common.version>1.1.3</paradise-common.version>
+        <!--inter-->
+        <heaven.version>0.1.37</heaven.version>
 
-        <!--test-->
+        <!--other-->
+        <jieba-analysis.version>1.0.2</jieba-analysis.version>
         <junit.version>4.12</junit.version>
-        <junitperf.version>1.0.1</junitperf.version>
-        <!--============================== JAR START ==============================-->
     </properties>
 
     <dependencies>
+        <!--============================== INTER ==============================-->
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>heaven</artifactId>
+            <version>${heaven.version}</version>
+        </dependency>
+
+        <!--============================== OTHER ==============================-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -75,17 +82,6 @@
                     <configuration>
                         <skipTests>${plugin.surefire.skip-it}</skipTests>
                         <testFailureIgnore>${plugin.surefire.ignore-failure}</testFailureIgnore>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>com.github.houbb</groupId>
-                    <artifactId>gen-maven-plugin</artifactId>
-                    <version>1.0.2</version>
-                    <configuration>
-                        <isCommentWhenNetworkBroken>false</isCommentWhenNetworkBroken>
-                        <isOverwriteWhenExists>false</isOverwriteWhenExists>
-                        <encoding>utf-8</encoding>
                     </configuration>
                 </plugin>
 
@@ -134,11 +130,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>com.github.houbb</groupId>
-                <artifactId>gen-maven-plugin</artifactId>
             </plugin>
 
             <!--mvn clean install sonar:sonar -Dmaven.test.skip=true -Dsonar.host.url=http://localhost:9000-->

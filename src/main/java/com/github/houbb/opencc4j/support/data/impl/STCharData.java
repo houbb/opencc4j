@@ -1,7 +1,6 @@
 package com.github.houbb.opencc4j.support.data.impl;
 
-import com.github.houbb.opencc4j.annotation.ThreadSafe;
-import com.github.houbb.opencc4j.constant.AppConstant;
+import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.opencc4j.model.data.DataInfo;
 
 import java.util.Map;

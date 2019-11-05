@@ -1,8 +1,7 @@
 package com.github.houbb.opencc4j.util;
 
+import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.opencc4j.core.impl.ZhConvertBootstrap;
-import com.github.houbb.opencc4j.support.instance.Instance;
-import com.github.houbb.opencc4j.support.instance.impl.InstanceFactory;
 import com.github.houbb.opencc4j.support.segment.Segment;
 import com.github.houbb.opencc4j.support.segment.impl.CharSegment;
 import com.github.houbb.opencc4j.support.segment.impl.HuaBanSegment;
@@ -19,7 +18,8 @@ import com.github.houbb.opencc4j.support.segment.impl.HuaBanSegment;
 public final class ZhConverterUtil {
 
     /**
-     *  zh converter util    
+     *  zh converter util
+     * @since 1.0.0
      */    
     private ZhConverterUtil(){}
 
@@ -28,6 +28,7 @@ public final class ZhConverterUtil {
      * 1. 默认使用花瓣分词
      * @param original 原始内容
      * @return 转换后的内容
+     * @since 1.0.0
      */
     public static String convertToSimple(String original) {
         return convertToSimple(original, true);
@@ -38,6 +39,7 @@ public final class ZhConverterUtil {
      * 1. 默认使用花瓣分词
      * @param original 原始内容
      * @return 转换后的内容
+     * @since 1.0.0
      */
     public static String convertToTraditional(String original){
         return convertToTraditional(original, true);
@@ -48,14 +50,13 @@ public final class ZhConverterUtil {
      * @param original 原始内容
      * @param huabanSegment 是否花瓣分词
      * @return 转换后的内容
+     * @since 1.0.0
      */
     public static String convertToSimple(String original, boolean huabanSegment) {
-        final ZhConvertBootstrap zhConvertBootstrap = InstanceFactory.getInstance()
-                .multiple(ZhConvertBootstrap.class);
         Segment segment = getSegment(huabanSegment);
+        final ZhConvertBootstrap zhConvertBootstrap = ZhConvertBootstrap.newInstance(segment);
 
-        return zhConvertBootstrap.segment(segment)
-                .toSimple(original);
+        return zhConvertBootstrap.toSimple(original);
     }
 
     /**
@@ -63,27 +64,26 @@ public final class ZhConverterUtil {
      * @param original 原始内容
      * @param huabanSegment 是否花瓣分词
      * @return 转换后的内容
+     * @since 1.0.0
      */
     public static String convertToTraditional(String original, boolean huabanSegment){
-        final ZhConvertBootstrap zhConvertBootstrap = InstanceFactory.getInstance()
-                .multiple(ZhConvertBootstrap.class);
         Segment segment = getSegment(huabanSegment);
+        final ZhConvertBootstrap zhConvertBootstrap = ZhConvertBootstrap.newInstance(segment);
 
-        return zhConvertBootstrap.segment(segment)
-                .toTraditional(original);
+        return zhConvertBootstrap.toTraditional(original);
     }
 
     /**
      * 获取分词器
      * @param huabanSegment 是否使用花瓣分词
      * @return 分词器
+     * @since 1.0.0
      */
     private static Segment getSegment(boolean huabanSegment) {
-        final Instance instance = InstanceFactory.getInstance();
         if(huabanSegment) {
-            return instance.singleton(HuaBanSegment.class);
+            return Instances.singleton(HuaBanSegment.class);
         }
-        return instance.singleton(CharSegment.class);
+        return Instances.singleton(CharSegment.class);
     }
 
 }
