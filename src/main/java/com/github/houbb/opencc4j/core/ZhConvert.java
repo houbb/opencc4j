@@ -50,7 +50,7 @@ public interface ZhConvert {
 
     /**
      * 返回繁体字列表
-     * 说明：返回 {@link #doSeg(String)} 列表中符合 {@link #isTraditional(String) 的字符串列表
+     * 说明：返回 {@link #doSeg(String)} 列表中符合 {@link #isTraditional(String)} 的字符串列表
      * @param original 原始字符串列表
      * @return 包含的繁体字符的列表
      * @since 1.2.0
