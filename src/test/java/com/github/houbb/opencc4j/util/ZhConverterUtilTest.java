@@ -28,12 +28,39 @@ public class ZhConverterUtilTest {
     }
 
     /**
+     * 空内容测试
+     * Method: toSimple(original)
+     * @since 1.3.0
+     */
+    @Test
+    public void toSimpleEmptyTest() throws Exception {
+        String original = "";
+        String result = ZhConverterUtil.toSimple(original);
+        Assert.assertEquals("", result);
+
+        original = null;
+        result = ZhConverterUtil.toSimple(original);
+        Assert.assertNull(result);
+    }
+
+    /**
      * Method: convertToSimple(original)
      */
     @Test
     public void convertToSimpleTest() throws Exception {
         String original = "生命不息，奮鬥不止";
         String result = ZhConverterUtil.convertToSimple(original);
+        Assert.assertEquals("生命不息，奋斗不止", result);
+    }
+
+    /**
+     * Method: toSimple(original)
+     * @since 1.3.0
+     */
+    @Test
+    public void toSimpleTest() throws Exception {
+        String original = "生命不息，奮鬥不止";
+        String result = ZhConverterUtil.toSimple(original);
         Assert.assertEquals("生命不息，奋斗不止", result);
     }
 
@@ -63,12 +90,38 @@ public class ZhConverterUtilTest {
     }
 
     /**
+     * Method: toTraditional(original)
+     * @since 1.3.0
+     */
+    @Test
+    public void toTraditionalEmptyTest() throws Exception {
+        String original = "";
+        String result = ZhConverterUtil.toTraditional(original);
+        Assert.assertEquals("", result);
+
+        original = null;
+        result = ZhConverterUtil.toTraditional(original);
+        Assert.assertNull(result);
+    }
+
+    /**
      * Method: convertToTraditional(original)
      */
     @Test
     public void convertToTraditionalTest() throws Exception {
         String original = "生命不息，奋斗不止";
         String result = ZhConverterUtil.convertToTraditional(original);
+        Assert.assertEquals("生命不息，奮鬥不止", result);
+    }
+
+    /**
+     * Method: toTraditional(original)
+     * @since 1.3.0
+     */
+    @Test
+    public void toTraditionalTest() throws Exception {
+        String original = "生命不息，奋斗不止";
+        String result = ZhConverterUtil.toTraditional(original);
         Assert.assertEquals("生命不息，奮鬥不止", result);
     }
 

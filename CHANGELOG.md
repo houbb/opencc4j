@@ -39,3 +39,17 @@
 | Optimize | 使用 heaven 公共组件代替自定义的各种组件 | 2019-11-5 18:45:52 | 便于后期拓展 |
 | Remove | 移除 gen-maven-plugin | 2019-11-5 18:45:52 | 感觉不需要，移除 |
 | Feature | 添加 ZhConvertBootstrap 方法 | 2019-11-5 18:45:52 | 新增特性 |
+
+# release_1.3.0
+
+| 类型 | 变化 | 时间 | 备注 |
+|:---|:---|:---|:---|
+| R | 移除 junit 依赖传递 | 2020-1-12 14:42:30 | |
+| U | 更新 heaven 版本 | 2020-1-12 14:42:30 | |
+| D | 废弃 ZhConverterUtil#convertToSimple(String) | 2020-1-12 14:42:30 | |
+| D | 废弃 ZhConverterUtil#convertToTraditional(String) | 2020-1-12 14:42:30 | |
+| D | 废弃 ZhConverterUtil#convertToSimple(String, boolean) | 2020-1-12 14:42:30 | |
+| D | 废弃 ZhConverterUtil#convertToTraditional(String, boolean) | 2020-1-12 14:42:30 | |
+| A | 新增 ZhConverterUtil#toSimple(String) | 2020-1-12 14:42:30 | |
+| A | 新增 ZhConverterUtil#toTraditional(String) | 2020-1-12 14:42:30 | |
+| O | 优化 ZhConverterUtil 获取转换实例为单例 | 2020-1-12 14:42:30 | |

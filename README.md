@@ -3,8 +3,9 @@
 Opencc4j 支持中文繁简体转换，考虑到词组级别。
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.houbb/opencc4j/badge.svg)](http://mvnrepository.com/artifact/com.github.houbb/opencc4j)
-[![Build Status](https://www.travis-ci.org/houbb/opencc4j.svg?branch=master)](https://www.travis-ci.org/houbb/opencc4j)
 [![Coverage Status](https://coveralls.io/repos/github/houbb/opencc4j/badge.svg)](https://coveralls.io/github/houbb/opencc4j)
+[![](https://img.shields.io/badge/license-Apache2-FF0080.svg)](https://github.com/houbb/opencc4j/blob/master/LICENSE.txt)
+
 
 > [变更日志](CHANGELOG.md)
 
@@ -20,11 +21,7 @@ Opencc4j 支持中文繁简体转换，考虑到词组级别。
 
 - 兼容 Windows、Linux、Mac 平臺。
 
-- 支持 jdk1.7(v1.0.3)
-
-- 支持自定义分词(v1.1.0)
-
-## V1.2.0 版本新特性
+- 支持自定义分词
 
 - 支持判断单个字（词）是否为简体/繁体
 
@@ -56,7 +53,7 @@ Opencc4j 支持中文繁简体转换，考虑到词组级别。
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.2.0</version>
+    <version>1.3.0</version>
 </dependency>
 ```
 
@@ -64,7 +61,7 @@ Opencc4j 支持中文繁简体转换，考虑到词组级别。
 
 ```java
 String original = "生命不息，奮鬥不止";
-String result = ZhConverterUtil.convertToSimple(original);
+String result = ZhConverterUtil.toSimple(original);
 ```
 
 结果为
@@ -77,28 +74,13 @@ String result = ZhConverterUtil.convertToSimple(original);
 
 ```java
 String original = "生命不息，奋斗不止";
-String result = ZhConverterUtil.convertToTraditional(original);
+String result = ZhConverterUtil.toTraditional(original);
 ```
 
 结果为
 
 ```
 生命不息，奮鬥不止
-```
-
-## 其他支持
-
-上述两个方法都默认使用的花瓣分词，都有第二个参数，是否启用花瓣分词。
-如果不启用，则默认使用普通的一个 char 作为一个转换的对象。(不建议，唯一的优势性能好一点，但是准确性不行)
-
-```java
-/**
- * 转换为简体
- * @param original 原始内容
- * @param huabanSegment 是否花瓣分词
- * @return 转换后的内容
- */
-public static String convertToSimple(String original, boolean huabanSegment);
 ```
 
 # 引导类方式

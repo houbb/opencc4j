@@ -1,5 +1,6 @@
 package com.github.houbb.opencc4j.util;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Random;
@@ -29,6 +30,26 @@ public class ZhConverterUtilThreadTest {
                 System.out.println(result);
             }
         });
+    }
+
+    /**
+     * Method: toTraditional(original)
+     * @since 1.3.0
+     */
+    @Test
+    @Ignore
+    public void toTraditionalTest() throws Exception {
+        ExecutorService ts = Executors.newFixedThreadPool(8);
+        while (true) {
+            ts.execute(new Thread() {
+                @Override
+                public void run() {
+                    final String randomStr = buildRandomString();
+                    String result = ZhConverterUtil.toTraditional(randomStr);
+                    System.out.println(result);
+                }
+            });
+        }
     }
 
     private static synchronized String buildRandomString() {
