@@ -71,12 +71,7 @@
 ```java
 String original = "生命不息，奮鬥不止";
 String result = ZhConverterUtil.toSimple(original);
-```
-
-结果为
-
-```
-生命不息，奋斗不止
+Assert.assertEquals("生命不息，奋斗不止", result);
 ```
 
 ### 转为繁体
@@ -84,12 +79,7 @@ String result = ZhConverterUtil.toSimple(original);
 ```java
 String original = "生命不息，奋斗不止";
 String result = ZhConverterUtil.toTraditional(original);
-```
-
-结果为
-
-```
-生命不息，奮鬥不止
+Assert.assertEquals("生命不息，奮鬥不止", result);
 ```
 
 ## 繁简体判断
