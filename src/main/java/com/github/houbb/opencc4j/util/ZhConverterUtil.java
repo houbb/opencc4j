@@ -6,6 +6,8 @@ import com.github.houbb.opencc4j.support.segment.Segment;
 import com.github.houbb.opencc4j.support.segment.impl.CharSegment;
 import com.github.houbb.opencc4j.support.segment.impl.HuaBanSegment;
 
+import java.util.List;
+
 /**
  * 中文转换工具类
  * 1. 编码问题本工具类，默认支持的为 UTF-8 格式的字符串。如果格式不统一，自行处理
@@ -36,6 +38,46 @@ public final class ZhConverterUtil {
      * @since 1.0.0
      */    
     private ZhConverterUtil(){}
+
+    /**
+     * 是否为简体
+     * @param charOrPhrase 单个字或者词组
+     * @return 是否
+     * @since 1.4.0
+     */
+    public static boolean isSimple(final String charOrPhrase) {
+        return HUABAN_BS.isSimple(charOrPhrase);
+    }
+
+    /**
+     * 是否为繁体
+     * @param charOrPhrase 单个字或者词组
+     * @return 是否
+     * @since 1.4.0
+     */
+    public static boolean isTraditional(final String charOrPhrase) {
+        return HUABAN_BS.isTraditional(charOrPhrase);
+    }
+
+    /**
+     * 简体字符列表
+     * @param original 原始字符串
+     * @return 简体字符列表
+     * @since 1.4.0
+     */
+    public static List<String> simpleList(final String original) {
+        return HUABAN_BS.simpleList(original);
+    }
+
+    /**
+     * 繁体字符列表
+     * @param original 原始字符串
+     * @return 繁体字符列表
+     * @since 1.4.0
+     */
+    public static List<String> traditionalList(final String original) {
+        return HUABAN_BS.traditionalList(original);
+    }
 
     /**
      * 转换为简体

@@ -17,6 +17,7 @@ import com.github.houbb.opencc4j.support.data.impl.TSPhraseData;
 import com.github.houbb.opencc4j.support.segment.Segment;
 import com.github.houbb.opencc4j.support.segment.impl.CharSegment;
 import com.github.houbb.opencc4j.support.segment.impl.HuaBanSegment;
+import com.github.houbb.opencc4j.support.segment.impl.Segments;
 
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,7 @@ public class ZhConvertBootstrap implements ZhConvert {
      * 1. 默认使用花瓣分词。
      * @since 1.1.0
      */
-    private Segment segment = Instances.singleton(HuaBanSegment.class);
+    private Segment segment = Segments.defaults();
 
     /**
      * 构造器私有化
@@ -55,10 +56,12 @@ public class ZhConvertBootstrap implements ZhConvert {
 
     /**
      * 创建分词实例，并且制定分词实现
+     * （1）不是很建议使用，后期配置属性较多时，这样显然不够优雅。
      * @param segment 分词类
      * @return this
      * @since 1.2.0
      */
+    @Deprecated
     public static ZhConvertBootstrap newInstance(final Segment segment) {
         ZhConvertBootstrap bs = newInstance();
         bs.segment(segment);

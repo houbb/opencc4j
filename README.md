@@ -1,11 +1,12 @@
 # opencc4j
 
-Opencc4j 支持中文繁简体转换，考虑到词组级别。
+[Opencc4j](https://github.com/houbb/opencc4j) 支持中文繁简体转换，考虑到词组级别。
 
+[![Build Status](https://travis-ci.com/houbb/opencc4j.svg?branch=master)](https://travis-ci.com/houbb/opencc4j)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.houbb/opencc4j/badge.svg)](http://mvnrepository.com/artifact/com.github.houbb/opencc4j)
 [![Coverage Status](https://coveralls.io/repos/github/houbb/opencc4j/badge.svg)](https://coveralls.io/github/houbb/opencc4j)
 [![](https://img.shields.io/badge/license-Apache2-FF0080.svg)](https://github.com/houbb/opencc4j/blob/master/LICENSE.txt)
-
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/houbb/opencc4j)
 
 > [变更日志](CHANGELOG.md)
 
@@ -28,6 +29,10 @@ Opencc4j 支持中文繁简体转换，考虑到词组级别。
 - 支持返回分词后的列表信息
 
 - 支持返回字符串中简体/繁体的列表信息 
+
+### 最新版本特性
+
+- 新增工具类常用方法
 
 ## 测试代码
 
@@ -53,11 +58,17 @@ Opencc4j 支持中文繁简体转换，考虑到词组级别。
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
 </dependency>
 ```
 
-## 转为简体
+## 使用示例
+
+## 繁简体转换
+
+对字符串进行繁简体转换，默认支持中文分词。
+
+### 转为简体
 
 ```java
 String original = "生命不息，奮鬥不止";
@@ -70,7 +81,7 @@ String result = ZhConverterUtil.toSimple(original);
 生命不息，奋斗不止
 ```
 
-## 转为繁体
+### 转为繁体
 
 ```java
 String original = "生命不息，奋斗不止";
@@ -81,6 +92,60 @@ String result = ZhConverterUtil.toTraditional(original);
 
 ```
 生命不息，奮鬥不止
+```
+
+## 繁简体判断
+
+对单个字符或者词组进行繁简体判断。
+
+### 是否为简体
+
+```java
+final String simpleChar = "奋";
+final String simplePhrase = "奋斗";
+final String traditionalChar = "奮";
+final String traditionalPhrase = "奮鬥";
+
+Assert.assertTrue(ZhConverterUtil.isSimple(simpleChar));
+Assert.assertTrue(ZhConverterUtil.isSimple(simplePhrase));
+Assert.assertFalse(ZhConverterUtil.isSimple(traditionalChar));
+Assert.assertFalse(ZhConverterUtil.isSimple(traditionalPhrase));
+```
+
+### 是否为繁体
+
+```java
+final String simpleChar = "奋";
+final String simplePhrase = "奋斗";
+final String traditionalChar = "奮";
+final String traditionalPhrase = "奮鬥";
+
+Assert.assertTrue(ZhConverterUtil.isTraditional(traditionalChar));
+Assert.assertTrue(ZhConverterUtil.isTraditional(traditionalPhrase));
+Assert.assertFalse(ZhConverterUtil.isTraditional(simpleChar));
+Assert.assertFalse(ZhConverterUtil.isTraditional(simplePhrase));
+```
+
+## 繁简体列表返回
+
+返回字符串中繁简体对应的词、字列表，默认支持中文分词。
+
+### 简体列表
+
+```java
+final String original = "生命不息奋斗不止";
+final List<String> resultList = ZhConverterUtil.simpleList(original);
+
+Assert.assertEquals("[生命不息, 奋斗, 不止]", resultList.toString());
+```
+
+### 繁体列表
+
+```java
+final String original = "生命不息奮鬥不止";
+final List<String> resultList = ZhConverterUtil.traditionalList(original);
+
+Assert.assertEquals("[奮鬥]", resultList.toString());
 ```
 
 # 引导类方式
@@ -101,7 +166,9 @@ v1.1.0 之后引入了类 [ZhConvertBootstrap](https://github.com/houbb/opencc4j
 
 ## 引导类使用案例
 
-和工具类类似。
+和工具类保持相同的 api，降低学习成本。
+
+此处演示其中一个功能。
 
 - 转为简体
 
@@ -110,18 +177,18 @@ final String original = "生命不息，奮鬥不止";
 final String result = ZhConvertBootstrap.newInstance().toSimple(original);
 Assert.assertEquals("生命不息，奋斗不止", result);
 ```
-
-- 转为繁体
-
-```java
-final String original = "生命不息，奋斗不止";
-final String result = ZhConvertBootstrap.newInstance().toTraditional(original);
-Assert.assertEquals("生命不息，奮鬥不止", result);
-```
-
 # 自定义分词方式
 
-## 用途
+## 系统内置分词方式
+
+你可以通过 `Segments` 工具类获取系统内置的分词实现。
+
+| 序号 | 方法 | 准确性 | 性能 | 备注 |
+|:---|:---|:---|:---|:---|
+| 1 | defaults() | 高 | 一般 | 默认分词形式，暂时为结巴分词。 |
+| 2 | chars() | 低 | 高 | 将字符串转换为单个字符列表，一般不建议使用。 |
+
+## 应用场景
 
 你有时候可能除了上述的两种分词方式，会有更加适合自己业务的分词实现。
 
@@ -146,7 +213,7 @@ public interface Segment {
 }
 ```
 
-备注： 默认使用的是 [花瓣分词](https://github.com/houbb/opencc4j/blob/master/src/main/java/com/github/houbb/opencc4j/support/segment/impl/HuaBanSegment.java)
+备注： 暂时默认使用的是 [花瓣分词](https://github.com/houbb/opencc4j/blob/master/src/main/java/com/github/houbb/opencc4j/support/segment/impl/HuaBanSegment.java)
 
 ## 测试代码
 
@@ -174,161 +241,6 @@ public class FooSegment implements Segment {
 ```java
 final String result2 = ZhConvertBootstrap.newInstance().segment(new FooSegment()).toTraditional(original);
 Assert.assertEquals("寥落古行宮，宮花寂寞紅。白頭宮女在，閒坐說玄宗。測試", result2);
-```
-
-- 创建时指定分词器
-
-你可以在创建引导类的时候，直接指定分词器实现。
-
-```java
-final String original = "寥落古行宫，宫花寂寞红。白头宫女在，闲坐说玄宗。";
-final String result = ZhConvertBootstrap.newInstance(new FooSegment()).toTraditional(original);
-Assert.assertEquals("寥落古行宮，宮花寂寞紅。白頭宮女在，閒坐說玄宗。測試", result);
-```
-
-# V1.2.0 新特性使用说明
-
-## 获取分词列表
-
-- 方法
-
-```java
-/**
- * 获取分词后的字符串列表
- * （1）如果原始字符串为空，则返回空列表
- * @param original 原始字符串
- * @return 字符串列表
- * @since 1.2.0
- */
-List<String> doSeg(final String original);
-```
-
-- 测试
-
-```java
-final String original = "生命不息奋斗不止";
-final List<String> resultList = ZhConvertBootstrap.newInstance().doSeg(original);
-
-String expectToString = "[生命不息, 奋斗, 不止]";
-Assert.assertEquals(expectToString, resultList.toString());
-```
-
-## 判断是否为繁体
-
-- 方法
-
-```java
-/**
- * 是否为繁体
- * 1. 原始字符串为空，直接返回 false
- * 2. 如果长度为1，则根据繁体字列表中是否存在，直接返回结果
- * 3. 如果长度大于1，则判断繁体词组类表中是否存在，如果为 true，则直接返回。
- * 4. 如果 3 为 false，则继续判断分成单个字进行判断，如果每一个字都是繁体，则认为是繁体。
- * @param charOrPhrase 单个字或者词组
- * @return true: 是; false: 否
- * @since 1.2.0
- */
-boolean isTraditional(final String charOrPhrase);
-```
-
-- 测试
-
-```java
-final String simpleChar = "奋";
-final String simplePhrase = "奋斗";
-final String traditionalChar = "奮";
-final String traditionalPhrase = "奮鬥";
-
-ZhConvertBootstrap convertBootstrap = ZhConvertBootstrap.newInstance();
-
-Assert.assertTrue(convertBootstrap.isTraditional(traditionalChar));
-Assert.assertTrue(convertBootstrap.isTraditional(traditionalPhrase));
-Assert.assertFalse(convertBootstrap.isTraditional(simpleChar));
-Assert.assertFalse(convertBootstrap.isTraditional(simplePhrase));
-```
-
-## 判断是否为简体
-
-- 方法
-
-```java
-/**
- * 是否为简体
- * （1）原始字符串为空，直接返回 false
- * （2）其他情况，则和 {@link #isTraditional(String)} 取反
- * @param charOrPhrase 单个字或者词组
- * @return true: 是; false: 否
- * @since 1.2.0
- */
-boolean isSimple(final String charOrPhrase);
-```
-
-- 测试
-
-```java
-final String simpleChar = "奋";
-final String simplePhrase = "奋斗";
-final String traditionalChar = "奮";
-final String traditionalPhrase = "奮鬥";
-
-ZhConvertBootstrap convertBootstrap = ZhConvertBootstrap.newInstance();
-
-Assert.assertTrue(convertBootstrap.isSimple(simpleChar));
-Assert.assertTrue(convertBootstrap.isSimple(simplePhrase));
-Assert.assertFalse(convertBootstrap.isSimple(traditionalChar));
-Assert.assertFalse(convertBootstrap.isSimple(traditionalPhrase));
-```
-
-## 返回简体字符串列表
-
-- 方法
-
-```java
-/**
- * 返回简体字列表
- * 说明：返回 {@link #doSeg(String)} 列表中符合 {@link #isSimple(String)} 的字符串列表
- * @param original 原始字符串列表
- * @return 包含的简体字符串列表
- * @since 1.2.0
- */
-List<String> simpleList(final String original);
-```
-
-- 测试
-
-```java
-final String original = "生命不息奋斗不止";
-ZhConvertBootstrap zhConvertBootstrap = ZhConvertBootstrap.newInstance();
-final List<String> resultList = zhConvertBootstrap.simpleList(original);
-
-String expectToString = "[生命不息, 奋斗, 不止]";
-Assert.assertEquals(expectToString, resultList.toString());
-```
-
-## 返回繁体字符串列表
-
-- 方法
-
-```java
-/**
- * 返回繁体字列表
- * 说明：返回 {@link #doSeg(String)} 列表中符合 {@link #isTraditional(String)} 的字符串列表
- * @param original 原始字符串列表
- * @return 包含的繁体字符的列表
- * @since 1.2.0
- */
-List<String> traditionalList(final String original);
-```
-
-- 测试
-
-```java
-final String original = "生命不息奮鬥不止";
-ZhConvertBootstrap zhConvertBootstrap = ZhConvertBootstrap.newInstance();
-final List<String> resultList = zhConvertBootstrap.traditionalList(original);
-
-String expectToString = "[奮鬥]";
-Assert.assertEquals(expectToString, resultList.toString());
 ```
 
 # 技术鸣谢

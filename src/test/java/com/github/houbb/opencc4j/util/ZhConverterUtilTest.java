@@ -3,6 +3,8 @@ package com.github.houbb.opencc4j.util;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.List;
+
 /**
  * ZhConverterUtil Tester.
  *
@@ -133,6 +135,75 @@ public class ZhConverterUtilTest {
         String original = "生命不息，奋斗不止";
         String result = ZhConverterUtil.convertToTraditional(original, false);
         Assert.assertEquals("生命不息，奮鬥不止", result);
+    }
+
+    /**
+     * 转换测试
+     * @since 1.4.0
+     */
+    @Test
+    public void toTraditionalTest2() {
+        final String text = "这是一个伸手不见五指的黑夜";
+        String result = ZhConverterUtil.toTraditional(text);
+        Assert.assertEquals("這是一個伸手不見五指的黑夜", result);
+    }
+
+    /**
+     * 是否为简体测试
+     * @since 1.4.0
+     */
+    @Test
+    public void isSimpleTest() {
+        final String simpleChar = "奋";
+        final String simplePhrase = "奋斗";
+        final String traditionalChar = "奮";
+        final String traditionalPhrase = "奮鬥";
+
+        Assert.assertTrue(ZhConverterUtil.isSimple(simpleChar));
+        Assert.assertTrue(ZhConverterUtil.isSimple(simplePhrase));
+        Assert.assertFalse(ZhConverterUtil.isSimple(traditionalChar));
+        Assert.assertFalse(ZhConverterUtil.isSimple(traditionalPhrase));
+    }
+
+    /**
+     * 是否为繁体测试
+     * @since 1.4.0
+     */
+    @Test
+    public void isTraditional() {
+        final String simpleChar = "奋";
+        final String simplePhrase = "奋斗";
+        final String traditionalChar = "奮";
+        final String traditionalPhrase = "奮鬥";
+
+        Assert.assertTrue(ZhConverterUtil.isTraditional(traditionalChar));
+        Assert.assertTrue(ZhConverterUtil.isTraditional(traditionalPhrase));
+        Assert.assertFalse(ZhConverterUtil.isTraditional(simpleChar));
+        Assert.assertFalse(ZhConverterUtil.isTraditional(simplePhrase));
+    }
+
+    /**
+     * 获取简体字（词）列表
+     * @since 1.4.0
+     */
+    @Test
+    public void simpleListTest() {
+        final String original = "生命不息奋斗不止";
+        final List<String> resultList = ZhConverterUtil.simpleList(original);
+
+        Assert.assertEquals("[生命不息, 奋斗, 不止]", resultList.toString());
+    }
+
+    /**
+     * 获取繁体字（词）列表
+     * @since 1.4.0
+     */
+    @Test
+    public void traditionalListTest() {
+        final String original = "生命不息奮鬥不止";
+        final List<String> resultList = ZhConverterUtil.traditionalList(original);
+
+        Assert.assertEquals("[奮鬥]", resultList.toString());
     }
 
 }

@@ -53,3 +53,11 @@
 | A | 新增 ZhConverterUtil#toSimple(String) | 2020-1-12 14:42:30 | |
 | A | 新增 ZhConverterUtil#toTraditional(String) | 2020-1-12 14:42:30 | |
 | O | 优化 ZhConverterUtil 获取转换实例为单例 | 2020-1-12 14:42:30 | |
+
+# release_1.4.0
+
+| 类型 | 变化 | 时间 | 备注 |
+|:---|:---|:---|:---|
+| A | 新增 ZhConverterUtil#isSimple()/#isTraditional() | 2020-2-2 13:04:58 | |
+| A | 新增 ZhConverterUtil#simpleList()/#traditionalList() | 2020-2-2 13:04:58 | |
+
