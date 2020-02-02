@@ -60,4 +60,5 @@
 |:---|:---|:---|:---|
 | A | 新增 ZhConverterUtil#isSimple()/#isTraditional() | 2020-2-2 13:04:58 | |
 | A | 新增 ZhConverterUtil#simpleList()/#traditionalList() | 2020-2-2 13:04:58 | |
+| O | 文档优化 | 2020-2-2 13:04:58 | |
 

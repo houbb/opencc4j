@@ -150,7 +150,7 @@ v1.1.0 之后引入了类 [ZhConvertBootstrap](https://github.com/houbb/opencc4j
 
 建议用户根据 ZhConvertBootstrap 灵活创建属于自己的工具类。
 
-## 引导类使用案例
+## 引导类使用
 
 和工具类保持相同的 api，降低学习成本。
 
@@ -178,9 +178,7 @@ Assert.assertEquals("生命不息，奋斗不止", result);
 
 你有时候可能除了上述的两种分词方式，会有更加适合自己业务的分词实现。
 
-Opencc4j 支持自定义分词实现。
-
-只需要实现分词接口 [Segment](https://github.com/houbb/opencc4j/blob/master/src/main/java/com/github/houbb/opencc4j/support/segment/Segment.java)
+Opencc4j 支持自定义分词实现，只需要实现分词接口 [Segment](https://github.com/houbb/opencc4j/blob/master/src/main/java/com/github/houbb/opencc4j/support/segment/Segment.java)
 
 - 接口内容
 
@@ -238,3 +236,5 @@ Assert.assertEquals("寥落古行宮，宮花寂寞紅。白頭宮女在，閒�
 # Issues & Bugs
 
 [需求和 BUG](https://github.com/houbb/opencc4j/issues) 在这里，欢迎提供宝贵的建议。
+
+如果对您有帮助，欢迎 Star 鼓励作者。
