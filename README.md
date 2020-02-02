@@ -62,8 +62,6 @@
 </dependency>
 ```
 
-## 使用示例
-
 ## 繁简体转换
 
 对字符串进行繁简体转换，默认支持中文分词。
@@ -152,11 +150,9 @@ Assert.assertEquals("[奮鬥]", resultList.toString());
 
 ## 为什么需要引导类
 
-v1.1.0 之后引入了类 [ZhConvertBootstrap](https://github.com/houbb/opencc4j/blob/release_1.1.0/src/main/java/com/github/houbb/opencc4j/core/impl/ZhConvertBootstrap.java)
+v1.1.0 之后引入了类 [ZhConvertBootstrap](https://github.com/houbb/opencc4j/blob/master/src/main/java/com/github/houbb/opencc4j/core/impl/ZhConvertBootstrap.java) 可以提供更加灵活的功能，支持 fluent 语法。
 
-可以提供更加灵活的功能，支持 fluent 语法。
-
-## 对比静态方法的优势
+### 对比静态方法的优势
 
 工具类的静态方法使用起来很方便，但是不是很利于拓展变化。
 
@@ -170,7 +166,7 @@ v1.1.0 之后引入了类 [ZhConvertBootstrap](https://github.com/houbb/opencc4j
 
 此处演示其中一个功能。
 
-- 转为简体
+### 转为简体
 
 ```java
 final String original = "生命不息，奮鬥不止";
@@ -188,15 +184,13 @@ Assert.assertEquals("生命不息，奋斗不止", result);
 | 1 | defaults() | 高 | 一般 | 默认分词形式，暂时为结巴分词。 |
 | 2 | chars() | 低 | 高 | 将字符串转换为单个字符列表，一般不建议使用。 |
 
-## 应用场景
+## 自定义
 
 你有时候可能除了上述的两种分词方式，会有更加适合自己业务的分词实现。
 
 Opencc4j 支持自定义分词实现。
 
-## 自定义
-
-只需要实现分词接口 [Segment](https://github.com/houbb/opencc4j/blob/release_1.1.0/src/main/java/com/github/houbb/opencc4j/support/segment/Segment.java)
+只需要实现分词接口 [Segment](https://github.com/houbb/opencc4j/blob/master/src/main/java/com/github/houbb/opencc4j/support/segment/Segment.java)
 
 - 接口内容
 
@@ -213,11 +207,9 @@ public interface Segment {
 }
 ```
 
-备注： 暂时默认使用的是 [花瓣分词](https://github.com/houbb/opencc4j/blob/master/src/main/java/com/github/houbb/opencc4j/support/segment/impl/HuaBanSegment.java)
-
 ## 测试代码
 
-- 自定义分词实现类
+### 自定义分词实现类
 
 ```java
 /**
@@ -234,7 +226,7 @@ public class FooSegment implements Segment {
 }
 ```
 
-- 分词测试
+### 分词测试
 
 我们自定义的分词，直接在默认添加“测试”这样的信息。
 
