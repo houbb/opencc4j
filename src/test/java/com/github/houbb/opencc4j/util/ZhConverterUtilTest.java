@@ -206,4 +206,16 @@ public class ZhConverterUtilTest {
         Assert.assertEquals("[奮鬥]", resultList.toString());
     }
 
+    /**
+     * 分词导致的问题
+     * @since 0.1.5
+     */
+    @Test
+    public void bug11Test() {
+        final String t = "項鍊";
+        final String s = "项链";
+
+        Assert.assertEquals(s, ZhConverterUtil.toSimple(t));
+    }
+
 }
