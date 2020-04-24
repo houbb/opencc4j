@@ -28,7 +28,8 @@
 
         <!--============================== JAR START ==============================-->
         <!--inter-->
-        <heaven.version>0.1.70</heaven.version>
+        <heaven.version>0.1.101</heaven.version>
+        <nlp-common.version>0.0.2</nlp-common.version>
 
         <!--other-->
         <jieba-analysis.version>1.0.2</jieba-analysis.version>
@@ -41,6 +42,11 @@
             <groupId>com.github.houbb</groupId>
             <artifactId>heaven</artifactId>
             <version>${heaven.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>nlp-common</artifactId>
+            <version>${nlp-common.version}</version>
         </dependency>
 
         <!--============================== OTHER ==============================-->
@@ -56,7 +62,9 @@
             <groupId>com.huaban</groupId>
             <artifactId>jieba-analysis</artifactId>
             <version>${jieba-analysis.version}</version>
+            <optional>true</optional>
         </dependency>
+
     </dependencies>
 
     <build>

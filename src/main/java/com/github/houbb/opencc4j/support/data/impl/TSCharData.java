@@ -16,21 +16,21 @@ public class TSCharData extends AbstractData {
     /**
      * 数据对象
      */
-    private static DataInfo dataInfo;
+    private static final DataInfo DATA_INFO;
 
     static {
         synchronized (TSCharData.class) {
-            dataInfo = new DataInfo();
+            DATA_INFO = new DataInfo();
 
             Map<String, String> data = DataUtil.buildDataMap("/data/dictionary/TSCharacters.txt");
-            dataInfo.setDataMap(data);
-            dataInfo.setName("繁体转简体字符数据");
+            DATA_INFO.setDataMap(data);
+            DATA_INFO.setName("繁体转简体字符数据");
         }
     }
 
     @Override
     public DataInfo data() {
-        return dataInfo;
+        return DATA_INFO;
     }
 
 }

@@ -16,21 +16,21 @@ public class STPhraseData extends AbstractData {
     /**
      * 数据对象
      */
-    private static DataInfo dataInfo;
+    private static final DataInfo DATA_INFO;
 
     static {
         synchronized (STPhraseData.class) {
-            dataInfo = new DataInfo();
+            DATA_INFO = new DataInfo();
 
             Map<String, String> data = DataUtil.buildDataMap("/data/dictionary/STPhrases.txt");
-            dataInfo.setDataMap(data);
-            dataInfo.setName("简体转繁体词组数据");
+            DATA_INFO.setDataMap(data);
+            DATA_INFO.setName("简体转繁体词组数据");
         }
     }
 
     @Override
     public DataInfo data() {
-        return dataInfo;
+        return DATA_INFO;
     }
 
 }

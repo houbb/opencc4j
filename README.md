@@ -1,4 +1,4 @@
-# opencc4j
+# Opencc4j
 
 [Opencc4j](https://github.com/houbb/opencc4j) 支持中文繁简体转换，考虑到词组级别。
 
@@ -7,8 +7,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/houbb/opencc4j/badge.svg)](https://coveralls.io/github/houbb/opencc4j)
 [![](https://img.shields.io/badge/license-Apache2-FF0080.svg)](https://github.com/houbb/opencc4j/blob/master/LICENSE.txt)
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/houbb/opencc4j)
-
-> [变更日志](CHANGELOG.md)
 
 ## Features 特點
 
@@ -30,9 +28,15 @@
 
 - 支持返回字符串中简体/繁体的列表信息 
 
-### 最新版本特性
+### v0.1.5 版本变更
 
-- 新增工具类常用方法
+- 新增 fast-forward 分词算法，并作为默认算法
+
+- 移除 ZhConverterUtil 中废弃的方法
+
+- 优化词库等代码实现
+
+> [变更日志](CHANGELOG.md)
 
 ## 测试代码
 
@@ -58,13 +62,28 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.4.0</version>
+    <version>1.5.0</version>
 </dependency>
 ```
 
-## 繁简体转换
+## api 概览
 
-对字符串进行繁简体转换，默认支持中文分词。
+工具类方法参见 [ZhConverterUtil]() 工具类。
+
+核心方法如下：
+
+| 序号 | api 方法 | 简介 |
+|:---|:---|:---|
+| 1 | toSimple(String) | 转为简体 |
+| 2 | toTraditional(String) | 转为繁体 |
+| 3 | simpleList(String) | 返回简体列表 |
+| 4 | traditionalList(String) | 返回繁体列表 |
+| 5 | isSimple(String) | 是否为简体 |
+| 6 | isTraditional(String) | 是否为繁体 |
+
+以上所有方法都有一个 Segment 参数，可以用于自定义[中文分词策略](#中文分词策略)。
+
+## 繁简体转换
 
 ### 转为简体
 
@@ -118,13 +137,15 @@ Assert.assertFalse(ZhConverterUtil.isTraditional(simplePhrase));
 
 返回字符串中繁简体对应的词、字列表，默认支持中文分词。
 
+繁简体列表返回的词组和分词策略紧密相关。
+
 ### 简体列表
 
 ```java
 final String original = "生命不息奋斗不止";
 final List<String> resultList = ZhConverterUtil.simpleList(original);
 
-Assert.assertEquals("[生命不息, 奋斗, 不止]", resultList.toString());
+Assert.assertEquals("[生, 命, 不, 息, 奋斗, 不, 止]", resultList.toString());
 ```
 
 ### 繁体列表
@@ -133,7 +154,7 @@ Assert.assertEquals("[生命不息, 奋斗, 不止]", resultList.toString());
 final String original = "生命不息奮鬥不止";
 final List<String> resultList = ZhConverterUtil.traditionalList(original);
 
-Assert.assertEquals("[奮鬥]", resultList.toString());
+Assert.assertEquals("[奮, 鬥]", resultList.toString());
 ```
 
 # 引导类方式
@@ -163,7 +184,8 @@ final String original = "生命不息，奮鬥不止";
 final String result = ZhConvertBootstrap.newInstance().toSimple(original);
 Assert.assertEquals("生命不息，奋斗不止", result);
 ```
-# 自定义分词方式
+
+# 中文分词策略
 
 ## 系统内置分词方式
 
@@ -171,8 +193,18 @@ Assert.assertEquals("生命不息，奋斗不止", result);
 
 | 序号 | 方法 | 准确性 | 性能 | 备注 |
 |:---|:---|:---|:---|:---|
-| 1 | defaults() | 高 | 一般 | 默认分词形式，暂时为结巴分词。 |
-| 2 | chars() | 低 | 高 | 将字符串转换为单个字符列表，一般不建议使用。 |
+| 1 | defaults() | 高 | 高 | 默认分词形式，暂时为 `fastForward` 策略 |
+| 2 | fastForward() | 较高 | 高 | fast-forward 分词策略 |
+| 3 | chars() | 低 | 高 | 将字符串转换为单个字符列表，一般不建议使用 |
+| 4 | huaBan() | 高 | 一般 | 花瓣的结巴分词策略 |
+
+### 花瓣结巴分词
+
+花瓣结巴分词在使用时，需要自行引入
+
+```xml
+
+```
 
 ## 自定义
 

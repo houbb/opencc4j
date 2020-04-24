@@ -36,7 +36,9 @@ public interface ZhConvert {
      * @param original 原始字符串
      * @return 字符串列表
      * @since 1.2.0
+     * @deprecated 1.5.0  分词不是本工具的核心，将在后续版本移除
      */
+    @Deprecated
     List<String> doSeg(final String original);
 
     /**

@@ -16,21 +16,6 @@ public class ZhConverterUtilTest {
 
     /**
      * 空内容测试
-     * Method: convertToSimple(original)
-     */
-    @Test
-    public void convertToSimpleEmptyTest() throws Exception {
-        String original = "";
-        String result = ZhConverterUtil.convertToSimple(original);
-        Assert.assertEquals("", result);
-
-        original = null;
-        result = ZhConverterUtil.convertToSimple(original);
-        Assert.assertNull(result);
-    }
-
-    /**
-     * 空内容测试
      * Method: toSimple(original)
      * @since 1.3.0
      */
@@ -46,16 +31,6 @@ public class ZhConverterUtilTest {
     }
 
     /**
-     * Method: convertToSimple(original)
-     */
-    @Test
-    public void convertToSimpleTest() throws Exception {
-        String original = "生命不息，奮鬥不止";
-        String result = ZhConverterUtil.convertToSimple(original);
-        Assert.assertEquals("生命不息，奋斗不止", result);
-    }
-
-    /**
      * Method: toSimple(original)
      * @since 1.3.0
      */
@@ -64,31 +39,6 @@ public class ZhConverterUtilTest {
         String original = "生命不息，奮鬥不止";
         String result = ZhConverterUtil.toSimple(original);
         Assert.assertEquals("生命不息，奋斗不止", result);
-    }
-
-    /**
-     * 使用简单的单词分开
-     * Method: convertToSimple(original)
-     */
-    @Test
-    public void convertToSimpleCharsTest() throws Exception {
-        String original = "生命不息，奮鬥不止";
-        String result = ZhConverterUtil.convertToSimple(original, false);
-        Assert.assertEquals("生命不息，奋斗不止", result);
-    }
-
-    /**
-     * Method: convertToTraditional(original)
-     */
-    @Test
-    public void convertToTraditionalEmptyTest() throws Exception {
-        String original = "";
-        String result = ZhConverterUtil.convertToTraditional(original);
-        Assert.assertEquals("", result);
-
-        original = null;
-        result = ZhConverterUtil.convertToTraditional(original);
-        Assert.assertNull(result);
     }
 
     /**
@@ -107,16 +57,6 @@ public class ZhConverterUtilTest {
     }
 
     /**
-     * Method: convertToTraditional(original)
-     */
-    @Test
-    public void convertToTraditionalTest() throws Exception {
-        String original = "生命不息，奋斗不止";
-        String result = ZhConverterUtil.convertToTraditional(original);
-        Assert.assertEquals("生命不息，奮鬥不止", result);
-    }
-
-    /**
      * Method: toTraditional(original)
      * @since 1.3.0
      */
@@ -124,16 +64,6 @@ public class ZhConverterUtilTest {
     public void toTraditionalTest() throws Exception {
         String original = "生命不息，奋斗不止";
         String result = ZhConverterUtil.toTraditional(original);
-        Assert.assertEquals("生命不息，奮鬥不止", result);
-    }
-
-    /**
-     * Method: convertToTraditional(original)
-     */
-    @Test
-    public void convertToTraditionalCharsTest() throws Exception {
-        String original = "生命不息，奋斗不止";
-        String result = ZhConverterUtil.convertToTraditional(original, false);
         Assert.assertEquals("生命不息，奮鬥不止", result);
     }
 
@@ -191,7 +121,7 @@ public class ZhConverterUtilTest {
         final String original = "生命不息奋斗不止";
         final List<String> resultList = ZhConverterUtil.simpleList(original);
 
-        Assert.assertEquals("[生命不息, 奋斗, 不止]", resultList.toString());
+        Assert.assertEquals("[生, 命, 不, 息, 奋斗, 不, 止]", resultList.toString());
     }
 
     /**
@@ -203,7 +133,7 @@ public class ZhConverterUtilTest {
         final String original = "生命不息奮鬥不止";
         final List<String> resultList = ZhConverterUtil.traditionalList(original);
 
-        Assert.assertEquals("[奮鬥]", resultList.toString());
+        Assert.assertEquals("[奮, 鬥]", resultList.toString());
     }
 
     /**

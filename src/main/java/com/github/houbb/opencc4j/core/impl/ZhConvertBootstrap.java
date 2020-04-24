@@ -10,13 +10,11 @@ import com.github.houbb.opencc4j.support.convert.context.impl.DefaultUnitConvert
 import com.github.houbb.opencc4j.support.convert.core.UnitConvert;
 import com.github.houbb.opencc4j.support.convert.core.impl.DefaultUnitConvert;
 import com.github.houbb.opencc4j.support.data.Data;
-import com.github.houbb.opencc4j.support.data.impl.STCharData;
-import com.github.houbb.opencc4j.support.data.impl.STPhraseData;
+import com.github.houbb.opencc4j.support.data.impl.OpenccDatas;
 import com.github.houbb.opencc4j.support.data.impl.TSCharData;
 import com.github.houbb.opencc4j.support.data.impl.TSPhraseData;
 import com.github.houbb.opencc4j.support.segment.Segment;
 import com.github.houbb.opencc4j.support.segment.impl.CharSegment;
-import com.github.houbb.opencc4j.support.segment.impl.HuaBanSegment;
 import com.github.houbb.opencc4j.support.segment.impl.Segments;
 
 import java.util.List;
@@ -34,7 +32,6 @@ public class ZhConvertBootstrap implements ZhConvert {
 
     /**
      * 指定分词实现
-     * 1. 默认使用花瓣分词。
      * @since 1.1.0
      */
     private Segment segment = Segments.defaults();
@@ -83,18 +80,25 @@ public class ZhConvertBootstrap implements ZhConvert {
     @Override
     public String toSimple(String original) {
         return this.convert(original, segment,
-                Instances.singleton(TSPhraseData.class).data().getDataMap(),
-                Instances.singleton(TSCharData.class).data().getDataMap());
+                OpenccDatas.tsPhrase().data().getDataMap(),
+                OpenccDatas.tsChar().data().getDataMap());
     }
 
     @Override
     public String toTraditional(String original) {
         return this.convert(original, segment,
-                Instances.singleton(STPhraseData.class).data().getDataMap(),
-                Instances.singleton(STCharData.class).data().getDataMap());
+                OpenccDatas.stPhrase().data().getDataMap(),
+                OpenccDatas.stChar().data().getDataMap());
     }
 
+    /**
+     * 分词
+     * @param original 原始字符串
+     * @return 分词结果
+     * @deprecated 0.1.5 分词不是本工具的核心能力，后续将移除（私有化）
+     */
     @Override
+    @Deprecated
     public List<String> doSeg(String original) {
         if(StringUtil.isEmpty(original)) {
             return Guavas.newArrayList();

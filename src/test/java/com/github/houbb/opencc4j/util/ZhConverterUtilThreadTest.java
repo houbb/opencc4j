@@ -14,23 +14,8 @@ import java.util.concurrent.Executors;
  * @version 1.0
  * @since 2018-02-12 08:49:43.949
  */
+@Ignore
 public class ZhConverterUtilThreadTest {
-
-    /**
-     * Method: convertToTraditional(original)
-     */
-    @Test
-    public void convertToTraditionalTest() throws Exception {
-        ExecutorService ts = Executors.newFixedThreadPool(8);
-        ts.execute(new Thread() {
-            @Override
-            public void run() {
-                final String randomStr = buildRandomString();
-                String result = ZhConverterUtil.convertToTraditional(randomStr);
-                System.out.println(result);
-            }
-        });
-    }
 
     /**
      * Method: toTraditional(original)
