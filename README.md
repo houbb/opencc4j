@@ -68,7 +68,7 @@
 
 ## api 概览
 
-工具类方法参见 [ZhConverterUtil]() 工具类。
+工具类方法参见 [ZhConverterUtil](https://github.com/houbb/opencc4j/blob/master/src/main/java/com/github/houbb/opencc4j/util/ZhConverterUtil.java) 工具类。
 
 核心方法如下：
 
@@ -200,10 +200,14 @@ Assert.assertEquals("生命不息，奋斗不止", result);
 
 ### 花瓣结巴分词
 
-花瓣结巴分词在使用时，需要自行引入
+花瓣结巴分词在使用时，需要自行引入结巴分词依赖。
 
 ```xml
-
+<dependency>
+    <groupId>com.huaban</groupId>
+    <artifactId>jieba-analysis</artifactId>
+    <version>1.0.2</version>
+</dependency>
 ```
 
 ## 自定义
@@ -235,8 +239,6 @@ public interface Segment {
 /**
  * 一个最简单的分词实现。
  * 注意：仅仅做演示，不可实际使用。
- * @author binbin.hou
- * @since 1.1.0
  */
 public class FooSegment implements Segment {
     @Override
