@@ -157,34 +157,6 @@ final List<String> resultList = ZhConverterUtil.traditionalList(original);
 Assert.assertEquals("[奮, 鬥]", resultList.toString());
 ```
 
-# 引导类方式
-
-## 为什么需要引导类
-
-v1.1.0 之后引入了类 [ZhConvertBootstrap](https://github.com/houbb/opencc4j/blob/master/src/main/java/com/github/houbb/opencc4j/core/impl/ZhConvertBootstrap.java) 可以提供更加灵活的功能，支持 fluent 语法。
-
-### 对比静态方法的优势
-
-工具类的静态方法使用起来很方便，但是不是很利于拓展变化。
-
-后期想添加更多的方法，就会发现静态方法开始有些不够优雅，方法数量也会变得较多。所以自定义分词没有暴露静态方法，
-
-建议用户根据 ZhConvertBootstrap 灵活创建属于自己的工具类。
-
-## 引导类使用
-
-和工具类保持相同的 api，降低学习成本。
-
-此处演示其中一个功能。
-
-### 转为简体
-
-```java
-final String original = "生命不息，奮鬥不止";
-final String result = ZhConvertBootstrap.newInstance().toSimple(original);
-Assert.assertEquals("生命不息，奋斗不止", result);
-```
-
 # 中文分词策略
 
 ## 系统内置分词方式
@@ -253,8 +225,11 @@ public class FooSegment implements Segment {
 我们自定义的分词，直接在默认添加“测试”这样的信息。
 
 ```java
-final String result2 = ZhConvertBootstrap.newInstance().segment(new FooSegment()).toTraditional(original);
-Assert.assertEquals("寥落古行宮，宮花寂寞紅。白頭宮女在，閒坐說玄宗。測試", result2);
+final String original = "寥落古行宫，宫花寂寞红。白头宫女在，闲坐说玄宗。";
+final Segment segment = new FooSegment();
+final String result = ZhConverterUtil.toTraditional(original, segment);
+
+Assert.assertEquals("寥落古行宮，宮花寂寞紅。白頭宮女在，閒坐說玄宗。測試", result);
 ```
 
 # 技术鸣谢

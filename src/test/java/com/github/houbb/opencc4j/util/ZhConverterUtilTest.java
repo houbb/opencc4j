@@ -1,5 +1,7 @@
 package com.github.houbb.opencc4j.util;
 
+import com.github.houbb.opencc4j.core.FooSegment;
+import com.github.houbb.opencc4j.support.segment.Segment;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -146,6 +148,19 @@ public class ZhConverterUtilTest {
         final String s = "项链";
 
         Assert.assertEquals(s, ZhConverterUtil.toSimple(t));
+    }
+
+    /**
+     * 自定义分词测试
+     * @since 0.1.5
+     */
+    @Test
+    public void defineSegmentTest() {
+        final String original = "寥落古行宫，宫花寂寞红。白头宫女在，闲坐说玄宗。";
+        final Segment segment = new FooSegment();
+        final String result = ZhConverterUtil.toTraditional(original, segment);
+
+        Assert.assertEquals("寥落古行宮，宮花寂寞紅。白頭宮女在，閒坐說玄宗。測試", result);
     }
 
 }
