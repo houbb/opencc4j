@@ -8,17 +8,19 @@
 [![](https://img.shields.io/badge/license-Apache2-FF0080.svg)](https://github.com/houbb/opencc4j/blob/master/LICENSE.txt)
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/houbb/opencc4j)
 
-## Features 特點
+[繁體中文](README-TRADITIONAL.md)
 
-- 嚴格區分「一簡對多繁」和「一簡對多異」。
+## Features 特点
 
-- 完全兼容異體字，可以實現動態替換。
+- 严格区分「一简对多繁」和「一简对多异」。
 
-- 嚴格審校一簡對多繁詞條，原則爲「能分則不合」。
+- 完全兼容异体字，可以实现动态替换。
 
-- 詞庫和函數庫完全分離，可以自由修改、導入、擴展。
+- 严格审校一简对多繁词条，原则为「能分则不合」。
 
-- 兼容 Windows、Linux、Mac 平臺。
+- 词库和函数库完全分离，可以自由修改、导入、扩展。
+
+- 兼容 Windows、Linux、Mac 平台。
 
 - 支持自定义分词
 
