@@ -36,12 +36,9 @@ final class DataUtil {
      * @see Collections#unmodifiableMap(Map) 保证字典数据不被外部修改
      */
     static Map<String, String> buildDataMap(final String path) {
-        try {
+        try(InputStream is = DataUtil.class.getResourceAsStream(path);
+            BufferedReader e = new BufferedReader(new InputStreamReader(is, Charset.forName(AppConstant.DEFAULT_CHARSET)))) {
             Map<String, String> map = new HashMap<>();
-            InputStream is = DataUtil.class.getResourceAsStream(path);
-            BufferedReader e = new BufferedReader(new InputStreamReader(is,
-                    Charset.forName(AppConstant.DEFAULT_CHARSET)));
-
             while (e.ready()) {
                 String entry = e.readLine();
                 if (StringUtil.isEmpty(entry)) {

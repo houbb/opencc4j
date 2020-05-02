@@ -30,13 +30,9 @@
 
 - 支持返回字符串中簡體/繁體的列表信息
 
-### v0.1.5 版本變更
+### v1.5.1 版本變更
 
-- 新增 fast-forward 分詞算法，並作為默認算法
-
-- 移除 ZhConverterUtil 中廢棄的方法
-
-- 優化詞庫等代碼實現
+- 修復 DataUtil.buildDataMap() 中流關閉問題 (Fixed [#12](https://github.com/houbb/opencc4j/issues/12))
 
 > [變更日誌](CHANGELOG.md)
 
@@ -64,7 +60,7 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.5.0</version>
+    <version>1.5.1</version>
 </dependency>
 ```
 
