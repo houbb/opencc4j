@@ -28,9 +28,9 @@
 
 - 支持返回字符串中簡體/繁體的列表信息
 
-### v1.5.1 版本變更
+### v1.5.2 版本變更
 
-- 修復 DataUtil.buildDataMap() 中流關閉問題 (Fixed [#12](https://github.com/houbb/opencc4j/issues/12))
+- 新增 IDataMap 接口，便於後期繁簡體轉換字典的拓展
 
 > [變更日誌](CHANGELOG.md)
 

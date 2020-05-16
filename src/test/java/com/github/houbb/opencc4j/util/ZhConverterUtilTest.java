@@ -163,4 +163,9 @@ public class ZhConverterUtilTest {
         Assert.assertEquals("寥落古行宮，宮花寂寞紅。白頭宮女在，閒坐說玄宗。測試", result);
     }
 
+    @Test
+    public void toTraditionalDocTest() {
+        System.out.println(ZhConverterUtil.toTraditional("新增 IDataMap 接口，便于后期繁简体转换字典的拓展"));
+    }
+
 }

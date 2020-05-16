@@ -13,6 +13,8 @@ import com.github.houbb.opencc4j.support.data.Data;
 import com.github.houbb.opencc4j.support.data.impl.OpenccDatas;
 import com.github.houbb.opencc4j.support.data.impl.TSCharData;
 import com.github.houbb.opencc4j.support.data.impl.TSPhraseData;
+import com.github.houbb.opencc4j.support.datamap.IDataMap;
+import com.github.houbb.opencc4j.support.datamap.impl.DataMaps;
 import com.github.houbb.opencc4j.support.segment.Segment;
 import com.github.houbb.opencc4j.support.segment.impl.CharSegment;
 import com.github.houbb.opencc4j.support.segment.impl.Segments;
@@ -35,6 +37,12 @@ public class ZhConvertBootstrap implements ZhConvert {
      * @since 1.1.0
      */
     private Segment segment = Segments.defaults();
+
+    /**
+     * 数据集合实现
+     * @since 1.5.2
+     */
+    private IDataMap dataMap = DataMaps.defaults();
 
     /**
      * 构造器私有化
@@ -79,16 +87,12 @@ public class ZhConvertBootstrap implements ZhConvert {
 
     @Override
     public String toSimple(String original) {
-        return this.convert(original, segment,
-                OpenccDatas.tsPhrase().data().getDataMap(),
-                OpenccDatas.tsChar().data().getDataMap());
+        return this.convert(original, segment, dataMap.tsPhrase(), dataMap.tsChar());
     }
 
     @Override
     public String toTraditional(String original) {
-        return this.convert(original, segment,
-                OpenccDatas.stPhrase().data().getDataMap(),
-                OpenccDatas.stChar().data().getDataMap());
+        return this.convert(original, segment, dataMap.stPhrase(), dataMap.stChar());
     }
 
     /**
@@ -152,11 +156,11 @@ public class ZhConvertBootstrap implements ZhConvert {
         final int length = charOrPhrase.length();
         //1. 是否为简体单个字
         if(length == 1) {
-            return dataKeyContains(TSCharData.class, charOrPhrase);
+            return dataKeyContains(dataMap.tsChar(), charOrPhrase);
         }
 
         //2. 如果超过1，则从词组中进行判断
-        boolean isTraditionalPhrase = dataKeyContains(TSPhraseData.class, charOrPhrase);
+        boolean isTraditionalPhrase = dataKeyContains(dataMap.tsPhrase(), charOrPhrase);
         if(isTraditionalPhrase) {
             return true;
         }
@@ -174,16 +178,14 @@ public class ZhConvertBootstrap implements ZhConvert {
 
     /**
      * 数据的 key 集合是否包含自定的单词或者词组
-     * @param dataClass 数据集合类
+     * @param dataMap 数据集合
      * @param charOrPhrase 单个字或者词组
      * @return 是否包含
      * @since 1.2.0
      */
-    private boolean dataKeyContains(final Class<? extends Data> dataClass,
+    private boolean dataKeyContains(final Map<String, String> dataMap,
                                     final String charOrPhrase) {
-        final Set<String> dataKeysSet = Instances.singleton(dataClass)
-                .data()
-                .getDataMap()
+        final Set<String> dataKeysSet = dataMap
                 .keySet();
 
         return dataKeysSet.contains(charOrPhrase);
