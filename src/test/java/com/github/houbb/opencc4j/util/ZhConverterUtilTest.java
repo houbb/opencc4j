@@ -168,4 +168,24 @@ public class ZhConverterUtilTest {
         System.out.println(ZhConverterUtil.toTraditional("新增 IDataMap 接口，便于后期繁简体转换字典的拓展"));
     }
 
+
+    /**
+     * 字符转为简体列表
+     * @since 1.6.0
+     */
+    @Test
+    public void charToSimpleTest() {
+        Assert.assertEquals("[测]", ZhConverterUtil.toSimple('測').toString());
+    }
+
+    /**
+     * 字符转为简体列表
+     * @since 1.6.0
+     */
+    @Test
+    public void charToTraditionalTest() {
+        Assert.assertEquals("[幹, 乾, 干]", ZhConverterUtil.toTraditional('干').toString());
+        Assert.assertEquals("[發, 髮]", ZhConverterUtil.toTraditional('发').toString());
+    }
+
 }

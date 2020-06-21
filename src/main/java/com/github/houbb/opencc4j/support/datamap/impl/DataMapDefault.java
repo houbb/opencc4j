@@ -4,6 +4,7 @@ import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.opencc4j.support.data.impl.OpenccDatas;
 import com.github.houbb.opencc4j.support.datamap.IDataMap;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,22 +19,22 @@ import java.util.Map;
 public class DataMapDefault implements IDataMap {
 
     @Override
-    public Map<String, String> tsPhrase() {
+    public Map<String, List<String>> tsPhrase() {
         return OpenccDatas.tsPhrase().data().getDataMap();
     }
 
     @Override
-    public Map<String, String> tsChar() {
+    public Map<String, List<String>> tsChar() {
         return OpenccDatas.tsChar().data().getDataMap();
     }
 
     @Override
-    public Map<String, String> stPhrase() {
+    public Map<String, List<String>> stPhrase() {
         return OpenccDatas.stPhrase().data().getDataMap();
     }
 
     @Override
-    public Map<String, String> stChar() {
+    public Map<String, List<String>> stChar() {
         return OpenccDatas.stChar().data().getDataMap();
     }
 

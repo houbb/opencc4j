@@ -1,5 +1,6 @@
 package com.github.houbb.opencc4j.support.datamap;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,28 +18,28 @@ public interface IDataMap {
      * @return 结果
      * @since 1.5.2
      */
-    Map<String, String> tsPhrase();
+    Map<String, List<String>> tsPhrase();
 
     /**
      * 繁体=》简体 单个字
      * @return 结果
      * @since 1.5.2
      */
-    Map<String, String> tsChar();
+    Map<String, List<String>> tsChar();
 
     /**
      * 简体=》繁体 词组
      * @return 结果
      * @since 1.5.2
      */
-    Map<String, String> stPhrase();
+    Map<String, List<String>> stPhrase();
 
     /**
      * 简体=》繁体 单个字
      * @return 结果
      * @since 1.5.2
      */
-    Map<String, String> stChar();
+    Map<String, List<String>> stChar();
 
 
 }

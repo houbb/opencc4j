@@ -155,4 +155,24 @@ public final class ZhConverterUtil {
         return toTraditional(original, Segments.defaults());
     }
 
+    /**
+     * 转换为繁体列表
+     * @param c 繁体字符
+     * @return 转换后的内容
+     * @since 1.6.0
+     */
+    public static List<String> toTraditional(final char c) {
+        return ZhConvertBootstrap.newInstance().toTraditional(c);
+    }
+
+    /**
+     * 转换为简体列表
+     * @param c 繁体字符
+     * @return 转换后的内容
+     * @since 1.6.0
+     */
+    public static List<String> toSimple(final char c) {
+        return ZhConvertBootstrap.newInstance().toSimple(c);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.github.houbb.opencc4j.model.data;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,7 +19,7 @@ public class DataInfo {
     /**
      * 文件数据
      */
-    private Map<String, String> dataMap;
+    private Map<String, List<String>> dataMap;
 
     public String getName() {
         return name;
@@ -28,11 +29,11 @@ public class DataInfo {
         this.name = name;
     }
 
-    public Map<String, String> getDataMap() {
+    public Map<String, List<String>> getDataMap() {
         return dataMap;
     }
 
-    public void setDataMap(Map<String, String> dataMap) {
+    public void setDataMap(Map<String, List<String>> dataMap) {
         this.dataMap = dataMap;
     }
 

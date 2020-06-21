@@ -176,6 +176,16 @@ public class ZhConvertBootstrap implements ZhConvert {
         return true;
     }
 
+    @Override
+    public List<String> toSimple(char c) {
+        return dataMap.tsChar().get(String.valueOf(c));
+    }
+
+    @Override
+    public List<String> toTraditional(char c) {
+        return dataMap.stChar().get(String.valueOf(c));
+    }
+
     /**
      * 数据的 key 集合是否包含自定的单词或者词组
      * @param dataMap 数据集合
@@ -183,7 +193,7 @@ public class ZhConvertBootstrap implements ZhConvert {
      * @return 是否包含
      * @since 1.2.0
      */
-    private boolean dataKeyContains(final Map<String, String> dataMap,
+    private boolean dataKeyContains(final Map<String, List<String>> dataMap,
                                     final String charOrPhrase) {
         final Set<String> dataKeysSet = dataMap
                 .keySet();
@@ -202,8 +212,8 @@ public class ZhConvertBootstrap implements ZhConvert {
      */
     private String convert(final String original,
                            final Segment segment,
-                           final Map<String, String> phraseData,
-                           final Map<String, String> charData) {
+                           final Map<String, List<String>> phraseData,
+                           final Map<String, List<String>> charData) {
         //1. fast-fail
         if(StringUtil.isEmpty(original)) {
             return original;

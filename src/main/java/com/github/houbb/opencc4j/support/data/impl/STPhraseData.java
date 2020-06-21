@@ -3,6 +3,7 @@ package com.github.houbb.opencc4j.support.data.impl;
 import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.opencc4j.model.data.DataInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +23,7 @@ public class STPhraseData extends AbstractData {
         synchronized (STPhraseData.class) {
             DATA_INFO = new DataInfo();
 
-            Map<String, String> data = DataUtil.buildDataMap("/data/dictionary/STPhrases.txt");
+            Map<String, List<String>> data = DataUtil.buildDataMap("/data/dictionary/STPhrases.txt");
             DATA_INFO.setDataMap(data);
             DATA_INFO.setName("简体转繁体词组数据");
         }

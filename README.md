@@ -28,9 +28,9 @@
 
 - 支持返回字符串中简体/繁体的列表信息 
 
-### v1.5.2 版本变更
+### v1.6.0 版本变更
 
-- 新增 IDataMap 接口，便于后期繁简体转换字典的拓展
+- 支持返回单个汉字的所有繁简体列表
 
 > [变更日志](CHANGELOG.md)
 
@@ -58,7 +58,7 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.5.2</version>
+    <version>1.6.0</version>
 </dependency>
 ```
 
@@ -72,10 +72,12 @@
 |:---|:---|:---|
 | 1 | toSimple(String) | 转为简体 |
 | 2 | toTraditional(String) | 转为繁体 |
-| 3 | simpleList(String) | 返回简体列表 |
-| 4 | traditionalList(String) | 返回繁体列表 |
+| 3 | simpleList(String) | 返回包含的简体列表 |
+| 4 | traditionalList(String) | 返回包含的繁体列表 |
 | 5 | isSimple(String) | 是否为简体 |
 | 6 | isTraditional(String) | 是否为繁体 |
+| 7 | toSimple(char) | 返回单个汉字对应的所有简体字列表 |
+| 8 | toTraditional(char) | 返回单个汉字对应的所有繁体字列表 |
 
 以上所有方法都有一个 Segment 参数，可以用于自定义[中文分词策略](#中文分词策略)。
 
@@ -129,7 +131,7 @@ Assert.assertFalse(ZhConverterUtil.isTraditional(simpleChar));
 Assert.assertFalse(ZhConverterUtil.isTraditional(simplePhrase));
 ```
 
-## 繁简体列表返回
+## 句子中包含的繁简体列表返回
 
 返回字符串中繁简体对应的词、字列表，默认支持中文分词。
 
@@ -151,6 +153,21 @@ final String original = "生命不息奮鬥不止";
 final List<String> resultList = ZhConverterUtil.traditionalList(original);
 
 Assert.assertEquals("[奮, 鬥]", resultList.toString());
+```
+
+## 单个汉字对应的繁简体列表
+
+### 繁体字列表
+
+```java
+Assert.assertEquals("[幹, 乾, 干]", ZhConverterUtil.toTraditional('干').toString());
+Assert.assertEquals("[發, 髮]", ZhConverterUtil.toTraditional('发').toString());
+```
+
+### 简体字列表
+
+```java
+Assert.assertEquals("[测]", ZhConverterUtil.toSimple('測').toString());
 ```
 
 # 中文分词策略

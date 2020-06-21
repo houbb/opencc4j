@@ -1,6 +1,7 @@
 package com.github.houbb.opencc4j.support.data.impl;
 
 import com.github.houbb.heaven.util.lang.StringUtil;
+import com.github.houbb.heaven.util.util.CollectionUtil;
 import com.github.houbb.opencc4j.constant.AppConstant;
 import com.github.houbb.opencc4j.exception.Opencc4jRuntimeException;
 
@@ -9,9 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 2018/2/11
@@ -35,22 +34,46 @@ final class DataUtil {
      * @return 返回数据集合
      * @see Collections#unmodifiableMap(Map) 保证字典数据不被外部修改
      */
-    static Map<String, String> buildDataMap(final String path) {
+    static Map<String, List<String>> buildDataMap(final String path) {
         try(InputStream is = DataUtil.class.getResourceAsStream(path);
             BufferedReader e = new BufferedReader(new InputStreamReader(is, Charset.forName(AppConstant.DEFAULT_CHARSET)))) {
-            Map<String, String> map = new HashMap<>();
+            Map<String, List<String>> map = new HashMap<>();
             while (e.ready()) {
                 String entry = e.readLine();
                 if (StringUtil.isEmpty(entry)) {
                     continue;
                 }
                 String[] strings = StringUtil.splitByAnyBlank(entry);
-                map.put(strings[0], strings[1]);
+
+                // 构建值
+                List<String> values = buildValueList(strings);
+                if(CollectionUtil.isNotEmpty(values)) {
+                    map.put(strings[0], values);
+                }
             }
             return Collections.unmodifiableMap(map);
         } catch (IOException e) {
             throw new Opencc4jRuntimeException("Dict 数据加载失败!", e);
         }
+    }
+
+    /**
+     * 构建值列表
+     * @param strings 字符串列表
+     * @return 结果列表
+     * @since 1.6.0
+     */
+    private static List<String> buildValueList(final String[] strings) {
+        List<String> resultList = new ArrayList<>();
+
+        for(int i = 1; i < strings.length; i++) {
+            String value = strings[i];
+            if(!AppConstant.EMPTY_RESULT.equals(value)) {
+                resultList.add(value);
+            }
+        }
+
+        return resultList;
     }
 
 }

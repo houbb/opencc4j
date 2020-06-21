@@ -2,6 +2,7 @@ package com.github.houbb.opencc4j.support.convert.context.impl;
 
 import com.github.houbb.opencc4j.support.convert.context.UnitConvertContext;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,12 +21,12 @@ public class DefaultUnitConvertContext implements UnitConvertContext {
     /**
      * 单个字符数据集
      */
-    private Map<String, String> charData;
+    private Map<String, List<String>> charData;
 
     /**
      * 单个词组数据集
      */
-    private Map<String, String> phraseData;
+    private Map<String, List<String>> phraseData;
 
     @Override
     public String getUnit() {
@@ -37,20 +38,20 @@ public class DefaultUnitConvertContext implements UnitConvertContext {
     }
 
     @Override
-    public Map<String, String> getCharData() {
+    public Map<String, List<String>> getCharData() {
         return charData;
     }
 
-    public void setCharData(Map<String, String> charData) {
+    public void setCharData(Map<String, List<String>> charData) {
         this.charData = charData;
     }
 
     @Override
-    public Map<String, String> getPhraseData() {
+    public Map<String, List<String>> getPhraseData() {
         return phraseData;
     }
 
-    public void setPhraseData(Map<String, String> phraseData) {
+    public void setPhraseData(Map<String, List<String>> phraseData) {
         this.phraseData = phraseData;
     }
 }

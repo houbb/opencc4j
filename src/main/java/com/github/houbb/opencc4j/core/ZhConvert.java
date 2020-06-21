@@ -81,4 +81,20 @@ public interface ZhConvert {
      */
     boolean isTraditional(final String charOrPhrase);
 
+    /**
+     * 返回单个汉字对应的简体汉字列表
+     * @param c 汉字
+     * @return 结果
+     * @since 1.6.0
+     */
+    List<String> toSimple(final char c);
+
+    /**
+     * 返回单个汉字对应的繁体汉字列表
+     * @param c 汉字
+     * @return 结果
+     * @since 1.6.0
+     */
+    List<String> toTraditional(final char c);
+
 }

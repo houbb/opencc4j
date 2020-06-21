@@ -2,10 +2,12 @@ package com.github.houbb.opencc4j.support.convert.core.impl;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
 import com.github.houbb.heaven.util.lang.StringUtil;
+import com.github.houbb.heaven.util.util.CollectionUtil;
 import com.github.houbb.opencc4j.constant.AppConstant;
 import com.github.houbb.opencc4j.support.convert.context.UnitConvertContext;
 import com.github.houbb.opencc4j.support.convert.core.UnitConvert;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,8 +21,8 @@ public class DefaultUnitConvert implements UnitConvert {
     @Override
     public String convert(UnitConvertContext context) {
         final String unit = context.getUnit();
-        final Map<String, String> charMap = context.getCharData();
-        final Map<String, String> phaseMap = context.getPhraseData();
+        final Map<String, List<String>> charMap = context.getCharData();
+        final Map<String, List<String>> phaseMap = context.getPhraseData();
         return this.getPhraseResult(unit, phaseMap, charMap);
     }
 
@@ -33,12 +35,12 @@ public class DefaultUnitConvert implements UnitConvert {
      * @return java.lang.String
      */
     private String getPhraseResult(final String original,
-                                   final Map<String, String> phraseMap,
-                                   final Map<String, String> charMap) {
-        String phrase = phraseMap.get(original);
-        if(StringUtil.isNotEmpty(phrase)
-                && !AppConstant.EMPTY_RESULT.equals(phrase)) {
-            return phrase;
+                                   final Map<String, List<String>> phraseMap,
+                                   final Map<String, List<String>> charMap) {
+        List<String> phraseList = phraseMap.get(original);
+        // 默认选择第一个，后期可以考虑优化
+        if(CollectionUtil.isNotEmpty(phraseList)) {
+            return phraseList.get(0);
         }
 
         char[] chars = original.toCharArray();
@@ -58,11 +60,10 @@ public class DefaultUnitConvert implements UnitConvert {
      * @param charMap 字符集合
      * @return java.lang.String
      */
-    private String getCharResult(final String original, final Map<String, String> charMap) {
-        String c = charMap.get(original);
-        if(StringUtil.isNotEmpty(c)
-                && !AppConstant.EMPTY_RESULT.equals(c)) {
-            return c;
+    private String getCharResult(final String original, final Map<String, List<String>> charMap) {
+        List<String> charList = charMap.get(original);
+        if(CollectionUtil.isNotEmpty(charList)) {
+            return charList.get(0);
         }
         return original;
     }

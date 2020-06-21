@@ -1,5 +1,6 @@
 package com.github.houbb.opencc4j.support.convert.context;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,12 +20,12 @@ public interface UnitConvertContext {
      * 获取字符数据
      * @return 数据
      */
-    Map<String, String> getCharData();
+    Map<String, List<String>> getCharData();
 
     /**
      * 获取词组数据
      * @return 词组数据
      */
-    Map<String, String> getPhraseData();
+    Map<String, List<String>> getPhraseData();
 
 }
