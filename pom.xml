@@ -33,7 +33,7 @@
 
         <!--other-->
         <jieba-analysis.version>1.0.2</jieba-analysis.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
 
     <dependencies>
