@@ -6,7 +6,7 @@
 
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.6.0</version>
+    <version>1.6.1</version>
 
     <properties>
         <!--============================== All PLUGINS START ==============================-->
@@ -28,8 +28,8 @@
 
         <!--============================== JAR START ==============================-->
         <!--inter-->
-        <heaven.version>0.1.106</heaven.version>
-        <nlp-common.version>0.0.2</nlp-common.version>
+        <heaven.version>0.1.129</heaven.version>
+        <nlp-common.version>0.0.4</nlp-common.version>
 
         <!--other-->
         <jieba-analysis.version>1.0.2</jieba-analysis.version>

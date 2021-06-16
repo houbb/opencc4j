@@ -28,10 +28,6 @@
 
 - 支持返回字符串中簡體/繁體的列表信息
 
-### v1.5.2 版本變更
-
-- 新增 IDataMap 接口，便於後期繁簡體轉換字典的拓展
-
 > [變更日誌](CHANGELOG.md)
 
 ## 測試代碼
@@ -58,7 +54,7 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.5.1</version>
+    <version>1.6.1</version>
 </dependency>
 ```
 
