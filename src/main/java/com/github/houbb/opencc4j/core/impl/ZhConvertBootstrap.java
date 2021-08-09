@@ -1,6 +1,7 @@
 package com.github.houbb.opencc4j.core.impl;
 
 import com.github.houbb.heaven.support.instance.impl.Instances;
+import com.github.houbb.heaven.support.tuple.impl.Pair;
 import com.github.houbb.heaven.util.common.ArgUtil;
 import com.github.houbb.heaven.util.guava.Guavas;
 import com.github.houbb.heaven.util.lang.StringUtil;
@@ -9,14 +10,9 @@ import com.github.houbb.opencc4j.core.ZhConvert;
 import com.github.houbb.opencc4j.support.convert.context.impl.DefaultUnitConvertContext;
 import com.github.houbb.opencc4j.support.convert.core.UnitConvert;
 import com.github.houbb.opencc4j.support.convert.core.impl.DefaultUnitConvert;
-import com.github.houbb.opencc4j.support.data.Data;
-import com.github.houbb.opencc4j.support.data.impl.OpenccDatas;
-import com.github.houbb.opencc4j.support.data.impl.TSCharData;
-import com.github.houbb.opencc4j.support.data.impl.TSPhraseData;
 import com.github.houbb.opencc4j.support.datamap.IDataMap;
 import com.github.houbb.opencc4j.support.datamap.impl.DataMaps;
 import com.github.houbb.opencc4j.support.segment.Segment;
-import com.github.houbb.opencc4j.support.segment.impl.CharSegment;
 import com.github.houbb.opencc4j.support.segment.impl.Segments;
 
 import java.util.List;
@@ -153,27 +149,37 @@ public class ZhConvertBootstrap implements ZhConvert {
             return false;
         }
 
-        final int length = charOrPhrase.length();
-        //1. 是否为简体单个字
-        if(length == 1) {
-            return dataKeyContains(dataMap.tsChar(), charOrPhrase);
-        }
+        //1. 分词
+        List<String> segments = StringUtil.toCharStringList(charOrPhrase);
 
-        //2. 如果超过1，则从词组中进行判断
-        boolean isTraditionalPhrase = dataKeyContains(dataMap.tsPhrase(), charOrPhrase);
-        if(isTraditionalPhrase) {
-            return true;
-        }
-
-        //3. 如果不是繁体的词组，则直接进行单个 char 的分词，如果每一个字都是繁体，则认为是繁体。
-        List<String> segList = Instances.singleton(CharSegment.class).seg(charOrPhrase);
-        for(String seg : segList) {
-            if(!isTraditional(seg)) {
-                return false;
+        //2. 计算
+        for(String word : segments) {
+            // 经过多次实验发现，这样反而是最符合直觉的。
+            // 因为部分人对于繁体比较敏感，但是对于繁简相同的字不敏感。
+            if(dataMap.tChars().contains(word)) {
+                return true;
             }
         }
 
-        return true;
+        //3. 返回
+        return false;
+    }
+
+    /**
+     * 是否为单个繁体字得分
+     *
+     * 1.1 繁体包含 && 简体不包含  1
+     * 1.2 繁体包含 && 简体包含   0
+     * 1.3 繁体不包含 && 简体包含  -1
+     * 1.4 繁体不包含 && 简体不包含 0
+     *
+     * @param word 单个字
+     * @since 1.6.2
+     * @return 繁体字的得分
+     */
+    @Deprecated
+    private double traditionalWordScore(final String word) {
+        return 0;
     }
 
     @Override
@@ -193,6 +199,7 @@ public class ZhConvertBootstrap implements ZhConvert {
      * @return 是否包含
      * @since 1.2.0
      */
+    @Deprecated
     private boolean dataKeyContains(final Map<String, List<String>> dataMap,
                                     final String charOrPhrase) {
         final Set<String> dataKeysSet = dataMap

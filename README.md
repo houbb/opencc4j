@@ -28,9 +28,9 @@
 
 - 支持返回字符串中简体/繁体的列表信息 
 
-### v1.6.1 版本变更
+### v1.6.2 版本变更
 
-- 支持是否输出初始化时间
+- 改进是否为繁体的判断，让其更加符合简体使用者的直觉。
 
 > [变更日志](CHANGELOG.md)
 
@@ -58,7 +58,7 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.6.1</version>
+    <version>1.6.2</version>
 </dependency>
 ```
 

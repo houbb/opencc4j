@@ -6,7 +6,7 @@
 
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.6.1</version>
+    <version>1.6.2</version>
 
     <properties>
         <!--============================== All PLUGINS START ==============================-->
@@ -28,7 +28,7 @@
 
         <!--============================== JAR START ==============================-->
         <!--inter-->
-        <heaven.version>0.1.129</heaven.version>
+        <heaven.version>0.1.143</heaven.version>
         <nlp-common.version>0.0.4</nlp-common.version>
 
         <!--other-->

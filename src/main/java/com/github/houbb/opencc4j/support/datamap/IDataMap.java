@@ -2,6 +2,7 @@ package com.github.houbb.opencc4j.support.datamap;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 数据 map 接口
@@ -41,5 +42,11 @@ public interface IDataMap {
      */
     Map<String, List<String>> stChar();
 
+    /**
+     * 简体字
+     * @return 简体字
+     * @since 1.6.2
+     */
+    Set<String> tChars();
 
 }
