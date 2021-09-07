@@ -23,4 +23,13 @@ public final class DataMaps {
         return Instances.singleton(DataMapDefault.class);
     }
 
+    /**
+     * 中国台湾繁简体转换实现策略
+     * @return 实现
+     * @since 1.7.0
+     */
+    public static IDataMap taiwan() {
+        return Instances.singleton(DataMapTaiwan.class);
+    }
+
 }

@@ -40,6 +40,15 @@ public final class Segments {
     }
 
     /**
+     * 快速向前算法-中国台湾
+     * @return 算法
+     * @since 1.7.0
+     */
+    public static Segment twFastForward() {
+        return Instances.singleton(TwFastForwardSegment.class);
+    }
+
+    /**
      * 默认分词形式
      * 1. 调整为使用 fast-forward
      * @return 默认分词

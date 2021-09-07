@@ -7,12 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 简写=》繁写 词组
+ * 中国台湾 繁体=》简体 词组
  * @author binbin.hou
- * @since 1.1.0
+ * @author jackychu0830
+ * @since 1.7.0
  */
 @ThreadSafe
-public class STPhraseData extends AbstractData {
+public class TwTSPhraseData extends AbstractData {
 
     /**
      * 数据对象
@@ -20,12 +21,14 @@ public class STPhraseData extends AbstractData {
     private static final DataInfo DATA_INFO;
 
     static {
-        synchronized (STPhraseData.class) {
+        synchronized (TwTSPhraseData.class) {
             DATA_INFO = new DataInfo();
 
-            Map<String, List<String>> data = DataUtil.buildDataMap("/data/dictionary/STPhrases.txt");
+            Map<String, List<String>> data = DataUtil.buildDataMap("/data/dictionary/TSPhrases.txt");
+            Map<String, List<String>> dataTw = DataUtil.buildDataMapReverse("/data/dictionary/TWPhrases.txt");
+            DataUtil.merge(data, dataTw);
             DATA_INFO.setDataMap(data);
-            DATA_INFO.setName("中国大陆简体转繁体词组数据");
+            DATA_INFO.setName("中国台湾繁体转简体词组数据");
         }
     }
 

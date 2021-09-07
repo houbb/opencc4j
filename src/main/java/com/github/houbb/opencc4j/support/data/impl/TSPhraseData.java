@@ -25,7 +25,7 @@ public class TSPhraseData extends AbstractData {
 
             Map<String, List<String>> data = DataUtil.buildDataMap("/data/dictionary/TSPhrases.txt");
             DATA_INFO.setDataMap(data);
-            DATA_INFO.setName("繁体转简体词组数据");
+            DATA_INFO.setName("中国大陆繁体转简体词组数据");
         }
     }
 

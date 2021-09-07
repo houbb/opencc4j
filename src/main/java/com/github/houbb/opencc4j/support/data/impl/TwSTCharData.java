@@ -7,12 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 简写=》繁写 字符
+ * 中国台湾 简写=》繁写 字符
  * @author binbin.hou
- * @since 1.1.0
+ * @author jackychu0830
+ * @since 1.7.0
  */
 @ThreadSafe
-public class STCharData extends AbstractData {
+public class TwSTCharData extends AbstractData {
 
     /**
      * 数据对象
@@ -22,8 +23,10 @@ public class STCharData extends AbstractData {
     static {
         DATA_INFO = new DataInfo();
         Map<String, List<String>> data = DataUtil.buildDataMap("/data/dictionary/STCharacters.txt");
+        Map<String, List<String>> dataTw = DataUtil.buildDataMap("/data/dictionary/TWVariants.txt");
+        DataUtil.merge(data, dataTw);
         DATA_INFO.setDataMap(data);
-        DATA_INFO.setName("中国大陆简体转繁体字符数据");
+        DATA_INFO.setName("中国台湾简体转繁体字符数据");
     }
 
     @Override

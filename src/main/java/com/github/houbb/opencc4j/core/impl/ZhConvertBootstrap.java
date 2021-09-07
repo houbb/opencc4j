@@ -81,6 +81,18 @@ public class ZhConvertBootstrap implements ZhConvert {
         return this;
     }
 
+    /**
+     * 设置数据集合，允许用户自定义
+     *
+     * @param dataMap 数据集合
+     * @return this
+     * @since 1.7.0
+     */
+    public ZhConvertBootstrap dataMap(IDataMap dataMap) {
+        this.dataMap = dataMap;
+        return this;
+    }
+
     @Override
     public String toSimple(String original) {
         return this.convert(original, segment, dataMap.tsPhrase(), dataMap.tsChar());

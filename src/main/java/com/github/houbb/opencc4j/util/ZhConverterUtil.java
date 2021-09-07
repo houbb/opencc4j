@@ -20,7 +20,7 @@ public final class ZhConverterUtil {
     /**
      *  zh converter util
      * @since 1.0.0
-     */    
+     */
     private ZhConverterUtil(){}
 
     /**
@@ -40,6 +40,7 @@ public final class ZhConverterUtil {
      * @return 是否
      * @since 1.4.0
      */
+    @Deprecated
     public static boolean isSimple(final String charOrPhrase,
                                    final Segment segment) {
         return ZhConvertBootstrap.newInstance().segment(segment).isSimple(charOrPhrase);
@@ -62,6 +63,7 @@ public final class ZhConverterUtil {
      * @return 是否
      * @since 1.5.0
      */
+    @Deprecated
     public static boolean isTraditional(final String charOrPhrase,
                                         final Segment segment) {
         return ZhConvertBootstrap.newInstance().segment(segment).isTraditional(charOrPhrase);
@@ -84,6 +86,7 @@ public final class ZhConverterUtil {
      * @return 简体字符列表
      * @since 1.5.0
      */
+    @Deprecated
     public static List<String> simpleList(final String original,
                                           final Segment segment) {
         return ZhConvertBootstrap.newInstance().segment(segment).simpleList(original);
@@ -106,6 +109,7 @@ public final class ZhConverterUtil {
      * @return 繁体字符列表
      * @since 1.5.0
      */
+    @Deprecated
     public static List<String> traditionalList(final String original,
                                                final Segment segment) {
         return ZhConvertBootstrap.newInstance().segment(segment).traditionalList(original);
@@ -128,6 +132,7 @@ public final class ZhConverterUtil {
      * @return 转换后的内容
      * @since 1.5.0
      */
+    @Deprecated
     public static String toSimple(final String original,
                                   final Segment segment) {
         return ZhConvertBootstrap.newInstance().segment(segment).toSimple(original);
