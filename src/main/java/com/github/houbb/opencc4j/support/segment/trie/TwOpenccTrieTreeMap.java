@@ -38,11 +38,9 @@ public class TwOpenccTrieTreeMap extends AbstractTrieTreeMap {
         Set<String> resultSet = Guavas.newHashSet();
 
         //1. 简体词组的 keys
-        resultSet.addAll(OpenccDatas.stPhrase().data().getDataMap().keySet());
         resultSet.addAll(OpenccDatas.twStPhrase().data().getDataMap().keySet());
 
         //2. 繁体词组的 keys
-        resultSet.addAll(OpenccDatas.tsPhrase().data().getDataMap().keySet());
         resultSet.addAll(OpenccDatas.twTsPhrase().data().getDataMap().keySet());
 
         return resultSet;
