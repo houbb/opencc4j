@@ -192,6 +192,11 @@ public class ZhConvertBootstrap implements ZhConvert {
         return dataMap.stChar().get(String.valueOf(c));
     }
 
+    @Override
+    public String toTwTraditional(String original) {
+        return this.convert(original, segment, dataMap.sTwPhrase(), dataMap.sTwChar());
+    }
+
     /**
      * 数据的 key 集合是否包含自定的单词或者词组
      * @param dataMap 数据集合

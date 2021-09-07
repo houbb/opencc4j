@@ -175,4 +175,27 @@ public final class ZhConverterUtil {
         return ZhConvertBootstrap.newInstance().toSimple(c);
     }
 
+    /**
+     * 轉換為台灣正體用詞
+     * @param original 原始繁體內容
+     * @param segment 分词策略
+     * @return 台灣正體用詞內容
+     * @since 1.6.3
+     */
+    public static String toTwTraditional(final String original,
+                                       final Segment segment) {
+        return ZhConvertBootstrap.newInstance().segment(segment).toTwTraditional(original);
+    }
+
+    /**
+     * 轉換為台灣正體用詞
+     * @param original 原始繁體內容
+     * @return 台灣正體用詞內容
+     * @since 1.6.3
+     */
+    public static String toTwTraditional(final String original) {
+        // 必需使用花辨分詞，快速分詞無法識別大部份詞組
+        // 例如 互联网 => 網際網路
+        return toTwTraditional(original, Segments.huaBan());
+    }
 }

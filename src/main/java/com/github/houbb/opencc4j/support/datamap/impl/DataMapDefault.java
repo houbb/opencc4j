@@ -5,7 +5,6 @@ import com.github.houbb.heaven.util.io.StreamUtil;
 import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.opencc4j.support.data.impl.OpenccDatas;
 import com.github.houbb.opencc4j.support.datamap.IDataMap;
-import org.omg.CORBA.portable.Streamable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -28,7 +27,7 @@ public class DataMapDefault implements IDataMap {
     static {
         tSet = new HashSet<>();
         List<String> allLines = StreamUtil.readAllLines("/data/dictionary/tc.txt");
-        for(String line : allLines) {
+        for (String line : allLines) {
             tSet.addAll(StringUtil.toCharStringList(line));
         }
     }
@@ -58,4 +57,13 @@ public class DataMapDefault implements IDataMap {
         return tSet;
     }
 
+    @Override
+    public Map<String, List<String>> sTwChar() {
+        return OpenccDatas.sTwChar().data().getDataMap();
+    }
+
+    @Override
+    public Map<String, List<String>> sTwPhrase() {
+        return OpenccDatas.sTwPhrase().data().getDataMap();
+    }
 }

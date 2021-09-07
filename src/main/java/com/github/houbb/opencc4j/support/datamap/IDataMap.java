@@ -49,4 +49,18 @@ public interface IDataMap {
      */
     Set<String> tChars();
 
+    /**
+     * 简体=》台灣異體字
+     * @return 结果
+     * @since 1.6.3
+     */
+    Map<String, List<String>> sTwChar();
+
+    /**
+     * 简体=》台灣正體用語 詞組
+     * @return 结果
+     * @since 1.5.2
+     */
+    Map<String, List<String>> sTwPhrase();
+
 }

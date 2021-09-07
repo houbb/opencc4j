@@ -97,4 +97,10 @@ public interface ZhConvert {
      */
     List<String> toTraditional(final char c);
 
+    /**
+     * 轉換繁體用詞, 返回台灣正體用詞
+     * @param original 原始繁體用詞
+     * @return 台灣正體用詞
+     */
+    String toTwTraditional(final String original);
 }

@@ -52,4 +52,22 @@ public final class OpenccDatas {
         return Instances.singleton(STPhraseData.class);
     }
 
+    /**
+     * 繁體轉台灣正體用語詞組
+     * @return 實作
+     * @since 1.6.3
+     */
+    public static Data sTwPhrase() {
+        return Instances.singleton(STwPhraseData.class);
+    }
+
+    /**
+     * 简体转台灣異體字
+     * @return 实现
+     * @since 0.1.5
+     */
+    public static Data sTwChar() {
+        return Instances.singleton(STwCharData.class);
+    }
+
 }

@@ -4,6 +4,7 @@ import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.heaven.util.util.CollectionUtil;
 import com.github.houbb.opencc4j.constant.AppConstant;
 import com.github.houbb.opencc4j.exception.Opencc4jRuntimeException;
+import com.github.houbb.opencc4j.util.ZhConverterUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -76,4 +77,19 @@ final class DataUtil {
         return resultList;
     }
 
+    /**
+     * 將 OpenCC 的台灣正體用語詞組新增至 STPhrases.
+     * OpenCC 的詞組檔為繁體對應繁體，但因不明原因，很多詞組無法辨試出來
+     * 所以重新建購詞組對應表，先將繁體詞組 key 轉成簡體
+     * @param originalData 原始詞組
+     * @param extendData 要附加的詞組
+     */
+    public static void merge(Map<String, List<String>>originalData, Map<String, List<String>>extendData) {
+        for (String key : extendData.keySet()) {
+            // 先將繁體轉回簡體
+            String newKey = ZhConverterUtil.toSimple(key);
+            // 再將詞組新增至原本 data map
+            originalData.put(newKey, extendData.get(key));
+        }
+    }
 }
