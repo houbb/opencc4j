@@ -8,8 +8,6 @@
 [![](https://img.shields.io/badge/license-Apache2-FF0080.svg)](https://github.com/houbb/opencc4j/blob/master/LICENSE.txt)
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/houbb/opencc4j)
 
-[繁體中文](README-TRADITIONAL.md)
-
 ## Features 特点
 
 - 严格区分「一简对多繁」和「一简对多异」。
@@ -30,11 +28,9 @@
 
 - 支持中国台湾地区繁简体转换
 
-### v1.7.0 版本变更
+### v1.7.1 版本变更
 
-- 内置支持中国台湾的繁简体转换
-
-- 引导类暴露 DataMap，允许用户自定义
+- 修正中国台湾地区的异体字转换错误
 
 > [变更日志](CHANGELOG.md)
 
@@ -62,13 +58,20 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.7.0</version>
+    <version>1.7.1</version>
 </dependency>
 ```
 
 ## api 概览
 
-工具类方法参见 [ZhConverterUtil](https://github.com/houbb/opencc4j/blob/master/src/main/java/com/github/houbb/opencc4j/util/ZhConverterUtil.java) 工具类。
+核心工具列表如下：
+
+| 序号 | 工具类 | 简介 |
+|:---|:---|:---|
+| 1 | ZhConverterUtil | 基础的繁简体转换 |
+| 2 | ZhTwConverterUtil | 台湾地区的繁简体转换 |
+
+所有的工具类方法具有相同的方法设计，便于记忆。
 
 核心方法如下：
 
@@ -255,10 +258,20 @@ Assert.assertEquals("寥落古行宮，宮花寂寞紅。白頭宮女在，閒�
 
 ## 测试用例
 
+简体到繁体：
+
 ```java
 String original = "使用互联网";
 String result = ZhTwConverterUtil.toTraditional(original);
 Assert.assertEquals("使用網際網路", result);
+```
+
+繁体到简体：
+
+```java
+String original = "使用網際網路";
+String result = ZhTwConverterUtil.toSimple(original);
+Assert.assertEquals("使用互联网", result);
 ```
 
 # 技术鸣谢

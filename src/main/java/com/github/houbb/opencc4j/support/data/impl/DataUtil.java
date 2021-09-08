@@ -120,13 +120,8 @@ final class DataUtil {
     private static List<String> buildValueListReverse(final String[] strings) {
         List<String> resultList = new ArrayList<>();
 
-        for(int i = strings.length-1; i > 0; i--) {
-            String value = strings[i];
-            if(!AppConstant.EMPTY_RESULT.equals(value)) {
-                resultList.add(value);
-            }
-        }
-
+        // 默认取第一个？
+        resultList.add(strings[0]);
         return resultList;
     }
 
