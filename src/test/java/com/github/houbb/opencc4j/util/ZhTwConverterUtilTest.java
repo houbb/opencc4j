@@ -54,7 +54,7 @@ public class ZhTwConverterUtilTest {
     public void testTwVariants() throws Exception {
         String original = "为什么嘴唇裂了";
         String result = ZhTwConverterUtil.toTraditional(original);
-        Assert.assertEquals("爲什麼嘴脣裂了", result);
+        Assert.assertEquals("為什麼嘴唇裂了", result);
     }
 
 }
