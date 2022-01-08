@@ -12,6 +12,7 @@ import java.util.List;
  * @author binbin.hou
  * @since 1.0.0
  */
+@Ignore
 public class DataTwTest {
 
     @Test

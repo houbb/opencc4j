@@ -28,9 +28,9 @@
 
 - 支持中国台湾地区繁简体转换
 
-### v1.7.1 版本变更
+### v1.7.2 版本变更
 
-- 修正中国台湾地区的异体字转换错误
+- 修正繁体=》简体映射缺失的情况
 
 > [变更日志](CHANGELOG.md)
 
@@ -58,7 +58,7 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.7.1</version>
+    <version>1.7.2</version>
 </dependency>
 ```
 

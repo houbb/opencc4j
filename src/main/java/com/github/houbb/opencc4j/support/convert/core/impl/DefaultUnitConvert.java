@@ -46,8 +46,15 @@ public class DefaultUnitConvert implements UnitConvert {
         char[] chars = original.toCharArray();
         StringBuilder stringBuilder = new StringBuilder();
         for(char c : chars) {
-            String result = getCharResult(Character.toString(c), charMap);
-            stringBuilder.append(result);
+            String charStr = Character.toString(c);
+            String result = getCharResult(charStr, charMap);
+
+            if(result.length() == 1) {
+                stringBuilder.append(result);
+            } else {
+                //fixed34: 如果映射缺失，则返回本身
+                stringBuilder.append(charStr);
+            }
         }
 
         return stringBuilder.toString();
