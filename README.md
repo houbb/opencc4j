@@ -30,10 +30,6 @@
 
 - 支持中国台湾地区繁简体转换
 
-## online 在线体验
-
-> [http://houbb.github.io/tools/nlp.html](http://houbb.github.io/tools/nlp.html)
-
 ### v1.7.2 版本变更
 
 - 修正繁体=》简体映射缺失的情况
