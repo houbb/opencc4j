@@ -1,9 +1,9 @@
 package com.github.houbb.opencc4j.core.impl;
 
 import com.github.houbb.heaven.support.instance.impl.Instances;
-import com.github.houbb.heaven.support.tuple.impl.Pair;
 import com.github.houbb.heaven.util.common.ArgUtil;
 import com.github.houbb.heaven.util.guava.Guavas;
+import com.github.houbb.heaven.util.lang.CharUtil;
 import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.heaven.util.util.CollectionUtil;
 import com.github.houbb.opencc4j.core.ZhConvert;
@@ -17,7 +17,6 @@ import com.github.houbb.opencc4j.support.segment.impl.Segments;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 中文转换器引导类
@@ -146,13 +145,62 @@ public class ZhConvertBootstrap implements ZhConvert {
     }
 
     @Override
+    public boolean isSimple(char c) {
+        if(!isChinese(c)) {
+            return false;
+        }
+
+        // 中文简体字符集中包含
+        if(dataMap.sChars().contains(c+"")) {
+            return true;
+        }
+
+        // 中文除去繁体的，认为是简体
+        return !isTraditional(c);
+    }
+
+    @Override
     public boolean isSimple(String charOrPhrase) {
         if(StringUtil.isEmpty(charOrPhrase)) {
             return false;
         }
 
-        // 不是繁体就认为是简体。
-        return !isTraditional(charOrPhrase);
+        //TODO: 这里可以抽象为 allMatch 和 anyMatch，避免写这么多次。下次优化.
+        // 将 isXXX 抽象为 condition 接口
+        char[] chars = charOrPhrase.toCharArray();
+        for(char c : chars) {
+            if(!isSimple(c)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean containsSimple(String charOrPhrase) {
+        if(StringUtil.isEmpty(charOrPhrase)) {
+            return false;
+        }
+
+        char[] chars = charOrPhrase.toCharArray();
+        for(char c : chars) {
+            if(isSimple(c)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean isTraditional(char c) {
+        if(!isChinese(c)) {
+            return false;
+        }
+
+        // 繁体字符包含
+        return this.dataMap.tChars().contains(c+"");
     }
 
     @Override
@@ -161,14 +209,26 @@ public class ZhConvertBootstrap implements ZhConvert {
             return false;
         }
 
-        //1. 分词
-        List<String> segments = StringUtil.toCharStringList(charOrPhrase);
+        char[] chars = charOrPhrase.toCharArray();
+        for(char c : chars) {
+            if(!isTraditional(c)) {
+                return false;
+            }
+        }
 
-        //2. 计算
-        for(String word : segments) {
-            // 经过多次实验发现，这样反而是最符合直觉的。
-            // 因为部分人对于繁体比较敏感，但是对于繁简相同的字不敏感。
-            if(dataMap.tChars().contains(word)) {
+        //3. 返回
+        return true;
+    }
+
+    @Override
+    public boolean containsTraditional(String charOrPhrase) {
+        if(StringUtil.isEmpty(charOrPhrase)) {
+            return false;
+        }
+
+        char[] chars = charOrPhrase.toCharArray();
+        for(char c : chars) {
+            if(isTraditional(c)) {
                 return true;
             }
         }
@@ -177,21 +237,43 @@ public class ZhConvertBootstrap implements ZhConvert {
         return false;
     }
 
-    /**
-     * 是否为单个繁体字得分
-     *
-     * 1.1 繁体包含 && 简体不包含  1
-     * 1.2 繁体包含 && 简体包含   0
-     * 1.3 繁体不包含 && 简体包含  -1
-     * 1.4 繁体不包含 && 简体不包含 0
-     *
-     * @param word 单个字
-     * @since 1.6.2
-     * @return 繁体字的得分
-     */
-    @Deprecated
-    private double traditionalWordScore(final String word) {
-        return 0;
+    @Override
+    public boolean isChinese(char c) {
+        return CharUtil.isChinese(c);
+    }
+
+    @Override
+    public boolean isChinese(String charOrPhrase) {
+        if(StringUtil.isEmpty(charOrPhrase)) {
+            return false;
+        }
+
+        // 遍历
+        char[] chars = charOrPhrase.toCharArray();
+        for(char c : chars) {
+            if(!this.isChinese(c)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean containsChinese(String charOrPhrase) {
+        if(StringUtil.isEmpty(charOrPhrase)) {
+            return false;
+        }
+
+        // 遍历
+        char[] chars = charOrPhrase.toCharArray();
+        for(char c : chars) {
+            if(this.isChinese(c)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
@@ -205,22 +287,6 @@ public class ZhConvertBootstrap implements ZhConvert {
     }
 
     /**
-     * 数据的 key 集合是否包含自定的单词或者词组
-     * @param dataMap 数据集合
-     * @param charOrPhrase 单个字或者词组
-     * @return 是否包含
-     * @since 1.2.0
-     */
-    @Deprecated
-    private boolean dataKeyContains(final Map<String, List<String>> dataMap,
-                                    final String charOrPhrase) {
-        final Set<String> dataKeysSet = dataMap
-                .keySet();
-
-        return dataKeysSet.contains(charOrPhrase);
-    }
-
-    /**
      * 指定转换
      * @param original 原始字符串
      * @param segment 分词实现
@@ -229,7 +295,7 @@ public class ZhConvertBootstrap implements ZhConvert {
      * @return 转换后的结果
      * @since 1.1.0
      */
-    private String convert(final String original,
+    protected String convert(final String original,
                            final Segment segment,
                            final Map<String, List<String>> phraseData,
                            final Map<String, List<String>> charData) {

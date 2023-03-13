@@ -43,10 +43,17 @@ public interface IDataMap {
     Map<String, List<String>> stChar();
 
     /**
-     * 简体字
-     * @return 简体字
+     * 繁体字所有字符
+     * @return 繁体字所有字符
      * @since 1.6.2
      */
     Set<String> tChars();
+
+    /**
+     * 简体字所有字符
+     * @return 繁体字所有字符
+     * @since 1.8.0
+     */
+    Set<String> sChars();
 
 }

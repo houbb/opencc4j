@@ -30,17 +30,13 @@
 
 - 支持中国台湾地区繁简体转换
 
-### v1.7.2 版本变更
+### v1.8.0 版本变更
 
-- 修正繁体=》简体映射缺失的情况
+- 丰富工具类方法
+
+- 优化繁简体判断逻辑
 
 > [变更日志](CHANGELOG.md)
-
-## 测试代码
-
-见 test 文件夹。
-
-可以用来学习相关方法的使用方式。
 
 ## 创作缘由
 
@@ -52,6 +48,54 @@
 
 [jopencc](https://github.com/carlostse/jopencc) 没有提供分词功能。
 
+------------------------------------------------------------------------------------------------------------------------
+
+* [快速开始](#快速开始)
+    * [maven 引入](#maven-引入)
+    * [api 概览](#api-概览)
+    * [繁简体转换](#繁简体转换)
+        * [转为简体 toSimple](#转为简体-tosimple)
+        * [转为繁体 toTraditional](#转为繁体-totraditional)
+    * [繁简体判断](#繁简体判断)
+        * [是否为简体 isSimple](#是否为简体-issimple)
+        * [是否包含简体 containsSimple](#是否包含简体-containssimple)
+        * [是否为繁体 isTraditional](#是否为繁体-istraditional)
+        * [是否包含繁体 containsTraditional](#是否包含繁体-containstraditional)
+    * [句子中包含的繁简体列表返回](#句子中包含的繁简体列表返回)
+        * [简体列表 simpleList](#简体列表-simplelist)
+        * [繁体列表 traditionalList](#繁体列表-traditionallist)
+    * [单个汉字对应的繁简体列表](#单个汉字对应的繁简体列表)
+        * [繁体字列表](#繁体字列表)
+        * [简体字列表](#简体字列表)
+    * [中文工具方法](#中文工具方法)
+        * [是否为中文 isChinese](#是否为中文-ischinese)
+        * [是否包含中文 containsChinese](#是否包含中文-containschinese)
+* [中国台湾繁简体转换](#中国台湾繁简体转换)
+    * [工具类](#工具类)
+    * [测试用例](#测试用例)
+* [配置引导类](#配置引导类)
+    * [引导类说明](#引导类说明)
+        * [默认配置](#默认配置)
+        * [中国台湾地区配置](#中国台湾地区配置)
+    * [中文分词策略](#中文分词策略)
+        * [系统内置分词方式](#系统内置分词方式)
+        * [花瓣结巴分词](#花瓣结巴分词)
+        * [自定义](#自定义)
+    * [测试代码](#测试代码)
+        * [自定义分词实现类](#自定义分词实现类)
+        * [分词测试](#分词测试)
+    * [数据接口自定义](#数据接口自定义)
+        * [接口说明](#接口说明)
+        * [自定义说明](#自定义说明)
+* [技术鸣谢](#技术鸣谢)
+    * [OpenCC](#opencc)
+    * [花瓣](#花瓣)
+* [Issues & Bugs](#issues--bugs)
+* [NLP 开源矩阵](#nlp-开源矩阵)
+* [后期 Road-Map](#后期-road-map)
+
+------------------------------------------------------------------------------------------------------------------------
+
 # 快速开始
 
 ## maven 引入
@@ -60,7 +104,7 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.7.2</version>
+    <version>1.8.0</version>
 </dependency>
 ```
 
@@ -77,20 +121,28 @@
 
 核心方法如下：
 
-| 序号 | api 方法 | 简介 |
-|:---|:---|:---|
-| 1 | toSimple(String) | 转为简体 |
-| 2 | toTraditional(String) | 转为繁体 |
-| 3 | simpleList(String) | 返回包含的简体列表 |
-| 4 | traditionalList(String) | 返回包含的繁体列表 |
-| 5 | isSimple(String) | 是否为简体 |
-| 6 | isTraditional(String) | 是否为繁体 |
-| 7 | toSimple(char) | 返回单个汉字对应的所有简体字列表 |
-| 8 | toTraditional(char) | 返回单个汉字对应的所有繁体字列表 |
+| 序号  | api 方法                      | 简介               |
+|:----|:----------------------------|:-----------------|
+| 1   | toSimple(String)            | 转为简体             |
+| 2   | toTraditional(String)       | 转为繁体             |
+| 3   | simpleList(String)          | 返回包含的简体列表        |
+| 4   | traditionalList(String)     | 返回包含的繁体列表        |
+| 5   | toSimple(char)              | 返回单个汉字对应的所有简体字列表 |
+| 6   | toTraditional(char)         | 返回单个汉字对应的所有繁体字列表 |
+| 7   | isSimple(String)            | 是否全部为简体          |
+| 8   | isSimple(char)              | 单个字符是否为简体        |
+| 9   | containsSimple(String)      | 字符中是否为包含简体       |
+| 10  | isTraditional(String)       | 是否全部为繁体          |
+| 11  | isTraditional(char)         | 单个字符是否为繁体        |
+| 12  | containsTraditional(String) | 字符中是否为包含繁体       |
+| 13  | isChinese(String)           | 是否全部为中文          |
+| 14  | isChinese(char)         | 单个字符是否为中文        |
+| 15  | containsChinese(char)         | 字符串中是否包含中文       |
+
 
 ## 繁简体转换
 
-### 转为简体
+### 转为简体 toSimple
 
 ```java
 String original = "生命不息，奮鬥不止";
@@ -98,7 +150,7 @@ String result = ZhConverterUtil.toSimple(original);
 Assert.assertEquals("生命不息，奋斗不止", result);
 ```
 
-### 转为繁体
+### 转为繁体 toTraditional
 
 ```java
 String original = "生命不息，奋斗不止";
@@ -110,32 +162,53 @@ Assert.assertEquals("生命不息，奮鬥不止", result);
 
 对单个字符或者词组进行繁简体判断。
 
-### 是否为简体
+### 是否为简体 isSimple
 
 ```java
-final String simpleChar = "奋";
-final String simplePhrase = "奋斗";
-final String traditionalChar = "奮";
-final String traditionalPhrase = "奮鬥";
+Assert.assertTrue(ZhConverterUtil.isSimple('奋'));
+Assert.assertTrue(ZhConverterUtil.isSimple("奋"));
+Assert.assertTrue(ZhConverterUtil.isSimple("奋斗"));
 
-Assert.assertTrue(ZhConverterUtil.isSimple(simpleChar));
-Assert.assertTrue(ZhConverterUtil.isSimple(simplePhrase));
-Assert.assertFalse(ZhConverterUtil.isSimple(traditionalChar));
-Assert.assertFalse(ZhConverterUtil.isSimple(traditionalPhrase));
+Assert.assertFalse(ZhConverterUtil.isSimple('奮'));
+Assert.assertFalse(ZhConverterUtil.isSimple("奮"));
+Assert.assertFalse(ZhConverterUtil.isSimple("奮鬥"));
+Assert.assertFalse(ZhConverterUtil.isSimple("奮斗"));
+Assert.assertFalse(ZhConverterUtil.isSimple("beef"));
 ```
 
-### 是否为繁体
+### 是否包含简体 containsSimple
 
 ```java
-final String simpleChar = "奋";
-final String simplePhrase = "奋斗";
-final String traditionalChar = "奮";
-final String traditionalPhrase = "奮鬥";
+Assert.assertTrue(ZhConverterUtil.containsSimple("奋"));
+Assert.assertTrue(ZhConverterUtil.containsSimple("奋斗"));
+Assert.assertTrue(ZhConverterUtil.containsSimple("奋斗2023"));
 
-Assert.assertTrue(ZhConverterUtil.isTraditional(traditionalChar));
-Assert.assertTrue(ZhConverterUtil.isTraditional(traditionalPhrase));
-Assert.assertFalse(ZhConverterUtil.isTraditional(simpleChar));
-Assert.assertFalse(ZhConverterUtil.isTraditional(simplePhrase));
+Assert.assertFalse(ZhConverterUtil.containsSimple("編"));
+Assert.assertFalse(ZhConverterUtil.containsSimple("編號"));
+```
+
+### 是否为繁体 isTraditional
+
+```java
+Assert.assertTrue(ZhConverterUtil.isTraditional('編'));
+Assert.assertTrue(ZhConverterUtil.isTraditional("編"));
+Assert.assertTrue(ZhConverterUtil.isTraditional("編號"));
+
+Assert.assertFalse(ZhConverterUtil.isTraditional('编'));
+Assert.assertFalse(ZhConverterUtil.isTraditional("编"));
+Assert.assertFalse(ZhConverterUtil.isTraditional("编号"));
+Assert.assertFalse(ZhConverterUtil.isTraditional("编號"));
+```
+
+### 是否包含繁体 containsTraditional
+
+```java
+Assert.assertTrue(ZhConverterUtil.containsTraditional("編"));
+Assert.assertTrue(ZhConverterUtil.containsTraditional("編號"));
+Assert.assertTrue(ZhConverterUtil.containsTraditional("編號2023"));
+
+Assert.assertFalse(ZhConverterUtil.containsTraditional("号"));
+Assert.assertFalse(ZhConverterUtil.containsTraditional("编号"));
 ```
 
 ## 句子中包含的繁简体列表返回
@@ -144,7 +217,7 @@ Assert.assertFalse(ZhConverterUtil.isTraditional(simplePhrase));
 
 繁简体列表返回的词组和分词策略紧密相关。
 
-### 简体列表
+### 简体列表 simpleList
 
 ```java
 final String original = "生命不息奋斗不止";
@@ -153,13 +226,15 @@ final List<String> resultList = ZhConverterUtil.simpleList(original);
 Assert.assertEquals("[生, 命, 不, 息, 奋斗, 不, 止]", resultList.toString());
 ```
 
-### 繁体列表
+### 繁体列表 traditionalList
+
+PS: 很多字是同体字。
 
 ```java
 final String original = "生命不息奮鬥不止";
 final List<String> resultList = ZhConverterUtil.traditionalList(original);
 
-Assert.assertEquals("[奮, 鬥]", resultList.toString());
+Assert.assertEquals("[生, 命, 不, 息, 奮, 鬥, 不, 止]", resultList.toString());
 ```
 
 ## 单个汉字对应的繁简体列表
@@ -177,9 +252,92 @@ Assert.assertEquals("[發, 髮]", ZhConverterUtil.toTraditional('发').toString(
 Assert.assertEquals("[测]", ZhConverterUtil.toSimple('測').toString());
 ```
 
-# 中文分词策略
+## 中文工具方法
 
-## 系统内置分词方式
+### 是否为中文 isChinese
+
+```java
+Assert.assertTrue(ZhConverterUtil.isChinese("你"));
+Assert.assertTrue(ZhConverterUtil.isChinese("你好"));
+Assert.assertTrue(ZhConverterUtil.isChinese('你'));
+
+Assert.assertFalse(ZhConverterUtil.isChinese("你0"));
+Assert.assertFalse(ZhConverterUtil.isChinese("10"));
+Assert.assertFalse(ZhConverterUtil.isChinese('0'));
+Assert.assertFalse(ZhConverterUtil.isChinese(""));
+Assert.assertFalse(ZhConverterUtil.isChinese(null));
+```
+
+### 是否包含中文 containsChinese
+
+```java
+Assert.assertTrue(ZhConverterUtil.containsChinese("你"));
+Assert.assertTrue(ZhConverterUtil.containsChinese("你好"));
+Assert.assertTrue(ZhConverterUtil.containsChinese("你0"));
+
+Assert.assertFalse(ZhConverterUtil.containsChinese("10"));
+Assert.assertFalse(ZhConverterUtil.containsChinese(""));
+Assert.assertFalse(ZhConverterUtil.containsChinese(null));
+```
+
+
+# 中国台湾繁简体转换
+
+## 工具类
+
+为保证方法的一致性，引入 `ZhTwConverterUtil` 工具类，支持方法和 `ZhConverterUtil` 保持一致。
+
+## 测试用例
+
+简体到繁体：
+
+```java
+String original = "使用互联网";
+String result = ZhTwConverterUtil.toTraditional(original);
+Assert.assertEquals("使用網際網路", result);
+```
+
+繁体到简体：
+
+```java
+String original = "使用網際網路";
+String result = ZhTwConverterUtil.toSimple(original);
+Assert.assertEquals("使用互联网", result);
+```
+
+
+
+# 配置引导类
+
+## 引导类说明
+
+主要的可配置项包含了分词和数据集合。
+
+二者都是可以配置，并且支持自定的。
+
+### 默认配置
+
+默认工具类等价于如下：
+
+```java
+ZhConvertBootstrap.newInstance()
+                .segment(Segments.defaults())
+                .dataMap(DataMaps.defaults());
+```
+
+### 中国台湾地区配置
+
+中国台湾地区配置等价于：
+
+```java
+ZhConvertBootstrap.newInstance()
+                .segment(Segments.defaults())
+                .dataMap(DataMaps.taiwan());
+```
+
+## 中文分词策略
+
+### 系统内置分词方式
 
 你可以通过 `Segments` 工具类获取系统内置的分词实现。
 
@@ -202,7 +360,7 @@ Assert.assertEquals("[测]", ZhConverterUtil.toSimple('測').toString());
 </dependency>
 ```
 
-## 自定义
+### 自定义
 
 你有时候可能除了上述的两种分词方式，会有更加适合自己业务的分词实现。
 
@@ -247,34 +405,82 @@ public class FooSegment implements Segment {
 ```java
 final String original = "寥落古行宫，宫花寂寞红。白头宫女在，闲坐说玄宗。";
 final Segment segment = new FooSegment();
-final String result = ZhConverterUtil.toTraditional(original, segment);
+
+final String result = ZhConvertBootstrap.newInstance()
+        .segment(segment)
+        .toTraditional(original);
 
 Assert.assertEquals("寥落古行宮，宮花寂寞紅。白頭宮女在，閒坐說玄宗。測試", result);
 ```
 
-# 中国台湾繁简体转换
+## 数据接口自定义
 
-## 工具类
+不同的地区，对应的转换规则是不同的。
 
-为保证方法的一致性，引入 `ZhTwConverterUtil` 工具类，支持方法和 `ZhConverterUtil` 保持一致。
+具体参考一下台湾地区的使用方式即可。
 
-## 测试用例
+### 接口说明
 
-简体到繁体：
-
-```java
-String original = "使用互联网";
-String result = ZhTwConverterUtil.toTraditional(original);
-Assert.assertEquals("使用網際網路", result);
-```
-
-繁体到简体：
+IDataMap 的接口如下。
 
 ```java
-String original = "使用網際網路";
-String result = ZhTwConverterUtil.toSimple(original);
-Assert.assertEquals("使用互联网", result);
+/**
+ * 数据 map 接口
+ * @author binbin.hou
+ * @since 1.5.2
+ */
+public interface IDataMap {
+
+    /**
+     * 繁体=》简体 词组
+     * @return 结果
+     * @since 1.5.2
+     */
+    Map<String, List<String>> tsPhrase();
+
+    /**
+     * 繁体=》简体 单个字
+     * @return 结果
+     * @since 1.5.2
+     */
+    Map<String, List<String>> tsChar();
+
+    /**
+     * 简体=》繁体 词组
+     * @return 结果
+     * @since 1.5.2
+     */
+    Map<String, List<String>> stPhrase();
+
+    /**
+     * 简体=》繁体 单个字
+     * @return 结果
+     * @since 1.5.2
+     */
+    Map<String, List<String>> stChar();
+
+    /**
+     * 繁体字所有字符
+     * @return 繁体字所有字符
+     * @since 1.6.2
+     */
+    Set<String> tChars();
+
+    /**
+     * 简体字所有字符
+     * @return 繁体字所有字符
+     * @since 1.8.0
+     */
+    Set<String> sChars();
+
+}
 ```
+
+### 自定义说明
+
+如果需要拓展对应的数据，建议继承原始的实现，然后添加额外的数据信息即可。
+
+ps: 后续考虑引入更加简单的实现方式，比如基于文本拓展，不过可扩展性没有接口灵活。
 
 # 技术鸣谢
 

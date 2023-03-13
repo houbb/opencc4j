@@ -1,15 +1,10 @@
 package com.github.houbb.opencc4j.support.datamap.impl;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
-import com.github.houbb.heaven.util.io.StreamUtil;
-import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.opencc4j.support.data.impl.OpenccDatas;
-import com.github.houbb.opencc4j.support.datamap.IDataMap;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 中国台湾数据 map 接口
@@ -21,17 +16,7 @@ import java.util.Set;
  * @since 1.7.0
  */
 @ThreadSafe
-public class DataMapTaiwan implements IDataMap {
-
-    private static final Set<String> tSet;
-
-    static {
-        tSet = new HashSet<>();
-        List<String> allLines = StreamUtil.readAllLines("/data/dictionary/tc.txt");
-        for(String line : allLines) {
-            tSet.addAll(StringUtil.toCharStringList(line));
-        }
-    }
+public class DataMapTaiwan extends AbstractDataMap {
 
     @Override
     public Map<String, List<String>> tsPhrase() {
@@ -51,11 +36,6 @@ public class DataMapTaiwan implements IDataMap {
     @Override
     public Map<String, List<String>> stChar() {
         return OpenccDatas.twStChar().data().getDataMap();
-    }
-
-    @Override
-    public Set<String> tChars() {
-        return tSet;
     }
 
 }

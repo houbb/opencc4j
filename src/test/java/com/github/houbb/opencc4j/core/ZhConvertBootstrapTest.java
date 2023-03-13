@@ -126,7 +126,7 @@ public class ZhConvertBootstrapTest {
         ZhConvertBootstrap zhConvertBootstrap = ZhConvertBootstrap.newInstance();
         final List<String> resultList = zhConvertBootstrap.traditionalList(original);
 
-        String expectToString = "[奮, 鬥]";
+        String expectToString = "[生, 命, 不, 息, 奮, 鬥, 不, 止]";
         Assert.assertEquals(expectToString, resultList.toString());
     }
 

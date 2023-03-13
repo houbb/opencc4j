@@ -60,9 +60,17 @@ public interface ZhConvert {
     List<String> traditionalList(final String original);
 
     /**
-     * 是否为简体
+     * 是否为简体中文字符
+     * @param c 字符
+     * @return 结果
+     * @since 1.8.0
+     */
+    boolean isSimple(final char c);
+
+    /**
+     * 是否全部为简体
      * （1）原始字符串为空，直接返回 false
-     * （2）其他情况，则和 {@link #isTraditional(String)} 取反
+     * （2）每一个字符都是简体中文
      * @param charOrPhrase 单个字或者词组
      * @return true: 是; false: 否
      * @since 1.2.0
@@ -70,16 +78,72 @@ public interface ZhConvert {
     boolean isSimple(final String charOrPhrase);
 
     /**
-     * 是否为繁体
+     * 是否包含简体
+     * （1）原始字符串为空，直接返回 false
+     * （2）任何一个字符都是简体中文
+     * @param charOrPhrase 单个字或者词组
+     * @return true: 是; false: 否
+     * @since 1.8.0
+     */
+    boolean containsSimple(final String charOrPhrase);
+
+    /**
+     * 是否为繁体中文字符
+     * @param c 字符
+     * @return 结果
+     * @since 1.8.0
+     */
+    boolean isTraditional(final char c);
+
+    /**
+     * 是否全部为繁体
      * 1. 原始字符串为空，直接返回 false
-     * 2. 如果长度为1，则根据繁体字列表中是否存在，直接返回结果
-     * 3. 如果长度大于1，则判断繁体词组类表中是否存在，如果为 true，则直接返回。
-     * 4. 如果 3 为 false，则继续判断分成单个字进行判断，如果每一个字都是繁体，则认为是繁体。
+     * 2. 每一个字符都是繁体
      * @param charOrPhrase 单个字或者词组
      * @return true: 是; false: 否
      * @since 1.2.0
      */
     boolean isTraditional(final String charOrPhrase);
+
+    /**
+     * 是否包含繁体
+     * 1. 原始字符串为空，直接返回 false
+     * 2. 任何一个字符都是繁体
+     * @param charOrPhrase 字符
+     * @return 结果
+     * @since 1.8.0
+     */
+    boolean containsTraditional(final String charOrPhrase);
+
+    /**
+     * 是否为中文字符
+     * @param c 字符
+     * @return 是否
+     * @since 1.8.0
+     */
+    boolean isChinese(final char c);
+
+    /**
+     * 是否全部为中文
+     * 1. 为空，则直接为 false
+     * 2. 要求每一个 char 都是中文才满足
+     *
+     * @param charOrPhrase 字符或者词组
+     * @return 结果
+     * @since 1.8.0
+     */
+    boolean isChinese(final String charOrPhrase);
+
+    /**
+     * 是否包含中文
+     *
+     * 1. 为空，则直接为 false
+     * 2. 任何一个 char 是中文即可满足
+     * @param charOrPhrase 字符或者数组
+     * @return 结果
+     * @since 1.8.0
+     */
+    boolean containsChinese(final String charOrPhrase);
 
     /**
      * 返回单个汉字对应的简体汉字列表

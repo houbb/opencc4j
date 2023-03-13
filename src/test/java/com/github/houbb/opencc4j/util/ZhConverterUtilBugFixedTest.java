@@ -44,11 +44,21 @@ public class ZhConverterUtilBugFixedTest {
         final String word6 = "家";
 
         Assert.assertTrue(ZhConverterUtil.isTraditional(word));
-        Assert.assertTrue(ZhConverterUtil.isTraditional(word2));
+        // 编 是简体
+        Assert.assertFalse(ZhConverterUtil.isTraditional(word2));
         Assert.assertTrue(ZhConverterUtil.isTraditional(word3));
         Assert.assertTrue(ZhConverterUtil.isTraditional(word4));
         Assert.assertTrue(ZhConverterUtil.isSimple(word5));
         Assert.assertTrue(ZhConverterUtil.isSimple(word6));
+    }
+
+    @Test
+    public void bugTest2() {
+        // 古今同体字
+        Assert.assertTrue(ZhConverterUtil.isSimple('支'));
+        Assert.assertTrue(ZhConverterUtil.isSimple('付'));
+        Assert.assertTrue(ZhConverterUtil.isTraditional('支'));
+        Assert.assertTrue(ZhConverterUtil.isTraditional('付'));
     }
 
     @Test
