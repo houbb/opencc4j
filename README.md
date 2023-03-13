@@ -480,6 +480,8 @@ public interface IDataMap {
 
 如果需要拓展对应的数据，建议继承原始的实现，然后添加额外的数据信息即可。
 
+可以参考 [中国台湾地区实现](https://github.com/houbb/opencc4j#%E4%B8%AD%E5%9B%BD%E5%8F%B0%E6%B9%BE%E5%9C%B0%E5%8C%BA%E9%85%8D%E7%BD%AE)
+
 ps: 后续考虑引入更加简单的实现方式，比如基于文本拓展，不过可扩展性没有接口灵活。
 
 # 技术鸣谢
