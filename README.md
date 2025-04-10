@@ -30,9 +30,11 @@
 
 - 支持中国台湾地区繁简体转换
 
-### v1.8.1 版本变更
+### v1.9.0 自定义拓展词典优化
 
-- 修正 `梁` 的转换问题
+- 支持自定义拓展类 dataMap
+- 支持基于 dataMap 的分词策略
+
 
 > [变更日志](CHANGELOG.md)
 
@@ -481,6 +483,82 @@ public interface IDataMap {
 可以参考 [中国台湾地区实现](https://github.com/houbb/opencc4j#%E4%B8%AD%E5%9B%BD%E5%8F%B0%E6%B9%BE%E5%9C%B0%E5%8C%BA%E9%85%8D%E7%BD%AE)
 
 ps: 后续考虑引入更加简单的实现方式，比如基于文本拓展，不过可扩展性没有接口灵活。
+
+# 实际的拓展例子
+
+用于用户参考，可以自定义实现自己的实现，更加符合实际业务。
+
+## 基于基本DataMap的拓展例子
+
+v1.9.0 开始支持，方便用户拓展。
+
+比如首先自定义一个 dataMap 类，集成 AbstractDataMapExtra 可以在指定的 IDataMap 基础上额外指定词组等信息。
+
+```java
+public class MyFooDataMapExtra extends AbstractDataMapExtra {
+
+    public MyFooDataMapExtra(IDataMap baseDataMap) {
+        super(baseDataMap);
+    }
+
+    // 默认在基本的繁简体基础上拓展
+    public MyFooDataMapExtra() {
+        this(DataMaps.defaults());
+    }
+
+    private Map<String, List<String>> of(String key, List<String> list) {
+        Map<String, List<String>> map = new HashMap<>();
+        map.put(key, list);
+
+        return map;
+    }
+
+    @Override
+    protected Map<String, List<String>> tsPhraseExtra() {
+        // 估计写了个错的，用来演示
+        return of("風玥", Arrays.asList("风月"));
+    }
+
+    @Override
+    protected Map<String, List<String>> tsCharExtra() {
+        return null;
+    }
+
+    @Override
+    protected Map<String, List<String>> stPhraseExtra() {
+        // 估计写了个错的
+        return of("风月", Arrays.asList("風玥"));
+    }
+
+    @Override
+    protected Map<String, List<String>> stCharExtra() {
+        return null;
+    }
+
+}
+```
+
+### 测试
+
+我们只需要在引导类 ZhConvertBootstrap 指定我们的 dataMap 和对应的分词策略，即可。
+
+```java
+// 1.1自定义的额外数据集
+final IDataMap dataMap = new MyFooDataMapExtra();
+// 1.2 指定分词策略
+final Segment segment = new DataMapFastForwardSegment(dataMap);
+
+// 2. 指定
+ZhConvertBootstrap bs = ZhConvertBootstrap.newInstance()
+        .dataMap(dataMap)
+        .segment(segment)
+        ;
+
+// 3. 使用
+        Assert.assertEquals(bs.toTraditional("人生自是有情痴,此恨不关风月"), "人生自是有情癡,此恨不關風玥");
+        Assert.assertEquals(bs.toSimple("人生自是有情癡,此恨不關風玥"), "人生自是有情痴,此恨不关风月");
+```
+
 
 # 技术鸣谢
 

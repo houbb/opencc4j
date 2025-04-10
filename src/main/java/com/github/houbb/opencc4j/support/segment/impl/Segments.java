@@ -1,6 +1,7 @@
 package com.github.houbb.opencc4j.support.segment.impl;
 
 import com.github.houbb.heaven.support.instance.impl.Instances;
+import com.github.houbb.opencc4j.support.datamap.IDataMap;
 import com.github.houbb.opencc4j.support.segment.Segment;
 
 /**
@@ -56,6 +57,16 @@ public final class Segments {
      */
     public static Segment defaults() {
         return fastForward();
+    }
+
+    /**
+     * 默认分词形式
+     * 1. 调整为使用 fast-forward
+     * @return 默认分词
+     * @since 1.9.0
+     */
+    public static Segment dataMapFastForward(final IDataMap dataMap) {
+        return new DataMapFastForwardSegment(dataMap);
     }
 
 }
