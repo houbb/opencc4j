@@ -577,9 +577,9 @@ V1.11.0 版本支持。
 | simpleAll()           | 满足全部简体   | isSimple 判断时，默认策略      |
 | simpleAny()           | 满足任一简体   | -                      |
 | simpleOverHalf()      | 满足超过一半简体 | -                      |
-| traditionalAll()      | 满足全部简体   | isTraditional 判断时，默认策略 |
-| traditionalAny()      | 满足任一简体   | -                      |
-| traditionalOverHalf() | 满足超过一半简体   | -                      |
+| traditionalAll()      | 满足全部繁体   | isTraditional 判断时，默认策略 |
+| traditionalAny()      | 满足任一繁体   | -                      |
+| traditionalOverHalf() | 满足超过一半繁体 | -                      |
 
 ## 例子
 
