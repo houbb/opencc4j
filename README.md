@@ -104,7 +104,7 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.8.1</version>
+    <version>1.9.0</version>
 </dependency>
 ```
 
@@ -331,7 +331,7 @@ ZhConvertBootstrap.newInstance()
 
 ```java
 ZhConvertBootstrap.newInstance()
-                .segment(Segments.defaults())
+                .segment(Segments.twFastForward())
                 .dataMap(DataMaps.taiwan());
 ```
 
