@@ -27,7 +27,7 @@ public final class ZhConverterUtil {
      * 默认引导类
      * @since 1.8.0
      */
-    private static final ZhConvertBootstrap DEFAULT_BOOTSTRAP = ZhConvertBootstrap.newInstance();
+    private static final ZhConvertBootstrap DEFAULT_BOOTSTRAP = ZhConvertBootstrap.newInstance().init();
 
     /**
      * 是否为中文字符

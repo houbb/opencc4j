@@ -32,6 +32,7 @@ public class ZhConvertBsMyDataMapTest {
         ZhConvertBootstrap bs = ZhConvertBootstrap.newInstance()
                 .dataMap(dataMap)
                 .segment(segment)
+                .init()
                 ;
 
         // 3. 使用

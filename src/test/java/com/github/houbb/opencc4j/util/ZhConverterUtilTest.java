@@ -246,7 +246,9 @@ public class ZhConverterUtilTest {
 
         final String result = ZhConvertBootstrap.newInstance()
                 .segment(segment)
-                .toTraditional(original);
+                .init()
+                .toTraditional(original)
+                ;
 
         Assert.assertEquals("寥落古行宮，宮花寂寞紅。白頭宮女在，閒坐說玄宗。測試", result);
     }

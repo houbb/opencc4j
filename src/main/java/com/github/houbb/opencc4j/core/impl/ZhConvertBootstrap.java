@@ -1,23 +1,21 @@
 package com.github.houbb.opencc4j.core.impl;
 
-import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.heaven.util.common.ArgUtil;
 import com.github.houbb.heaven.util.guava.Guavas;
-import com.github.houbb.heaven.util.lang.CharUtil;
 import com.github.houbb.heaven.util.lang.StringUtil;
-import com.github.houbb.heaven.util.util.CollectionUtil;
 import com.github.houbb.opencc4j.core.ZhConvert;
-import com.github.houbb.opencc4j.support.convert.context.impl.DefaultUnitConvertContext;
+import com.github.houbb.opencc4j.core.ZhConvertCore;
+import com.github.houbb.opencc4j.core.ZhConvertCoreContext;
+import com.github.houbb.opencc4j.support.chars.ZhChar;
+import com.github.houbb.opencc4j.support.chars.ZhChars;
 import com.github.houbb.opencc4j.support.convert.core.UnitConvert;
-import com.github.houbb.opencc4j.support.convert.core.impl.DefaultUnitConvert;
+import com.github.houbb.opencc4j.support.convert.core.UnitConverts;
 import com.github.houbb.opencc4j.support.datamap.IDataMap;
 import com.github.houbb.opencc4j.support.datamap.impl.DataMaps;
 import com.github.houbb.opencc4j.support.segment.Segment;
 import com.github.houbb.opencc4j.support.segment.impl.Segments;
-import com.github.houbb.opencc4j.util.InnerCharUtils;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 中文转换器引导类
@@ -39,6 +37,30 @@ public class ZhConvertBootstrap implements ZhConvert {
      * @since 1.5.2
      */
     private IDataMap dataMap = DataMaps.defaults();
+
+    /**
+     * 中文字符策略
+     * @since 1.10.0
+     */
+    private ZhChar zhChar = ZhChars.defaults();
+
+    /**
+     * 单元转换策略
+     * @since 1.10.0
+     */
+    private UnitConvert unitConvert = UnitConverts.defaults();
+
+    /**
+     * 核心实现
+     * @since 1.10.0
+     */
+    private ZhConvertCore zhConvertCore = new ZhConvertCoreDefault();
+
+    /**
+     * 上下文
+     * @since 1.10.0
+     */
+    private ZhConvertCoreContext context;
 
     /**
      * 构造器私有化
@@ -66,7 +88,6 @@ public class ZhConvertBootstrap implements ZhConvert {
     public static ZhConvertBootstrap newInstance(final Segment segment) {
         ZhConvertBootstrap bs = newInstance();
         bs.segment(segment);
-
         return bs;
     }
 
@@ -89,28 +110,48 @@ public class ZhConvertBootstrap implements ZhConvert {
      * @since 1.7.0
      */
     public ZhConvertBootstrap dataMap(IDataMap dataMap) {
+        ArgUtil.notNull(dataMap, "dataMap");
+
         this.dataMap = dataMap;
         return this;
     }
 
+    public ZhConvertBootstrap zhChar(ZhChar zhChar) {
+        ArgUtil.notNull(zhChar, "zhChar");
+
+        this.zhChar = zhChar;
+        return this;
+    }
+
+    public ZhConvertBootstrap unitConvert(UnitConvert unitConvert) {
+        ArgUtil.notNull(unitConvert, "unitConvert");
+
+        this.unitConvert = unitConvert;
+        return this;
+    }
+
     /**
-     * 转字符串列表
-     * @param original 原始文本
-     * @return 正确的切分字符结果
-     * @since 1.9.1
+     * 初始化
+     * @return this
      */
-    private List<String> toCharList(String original) {
-        return InnerCharUtils.toCharList(original);
+    public ZhConvertBootstrap init() {
+        this.context = ZhConvertCoreContext
+                .newInstance()
+                .zhChars(zhChar)
+                .segment(segment)
+                .unitConvert(unitConvert)
+                .dataMap(dataMap);
+        return this;
     }
 
     @Override
     public String toSimple(String original) {
-        return this.convert(original, segment, dataMap.tsPhrase(), dataMap.tsChar());
+        return zhConvertCore.toSimple(original, context);
     }
 
     @Override
     public String toTraditional(String original) {
-        return this.convert(original, segment, dataMap.stPhrase(), dataMap.stChar());
+        return zhConvertCore.toTraditional(original, context);
     }
 
     /**
@@ -131,220 +172,67 @@ public class ZhConvertBootstrap implements ZhConvert {
 
     @Override
     public List<String> simpleList(String original) {
-        List<String> simpleList = Guavas.newArrayList();
-
-        List<String> segList = this.doSeg(original);
-        for(String seg : segList) {
-            if(isSimple(seg)) {
-                simpleList.add(seg);
-            }
-        }
-        return simpleList;
+        return zhConvertCore.simpleList(original, context);
     }
 
     @Override
     public List<String> traditionalList(String original) {
-        List<String> traditionalList = Guavas.newArrayList();
-
-        List<String> segList = this.doSeg(original);
-        for(String seg : segList) {
-            if(isTraditional(seg)) {
-                traditionalList.add(seg);
-            }
-        }
-        return traditionalList;
+        return zhConvertCore.traditionalList(original, context);
     }
 
     @Override
     public boolean isSimple(char c) {
-        String sc = String.valueOf(c);
-        return isSimpleForSingle(sc);
-    }
-
-    private boolean isSimpleForSingle(String c) {
-        if(!isChinese(c)) {
-            return false;
-        }
-
-        // 中文简体字符集中包含
-        if(dataMap.sChars().contains(c)) {
-            return true;
-        }
-
-        // 中文除去繁体的，认为是简体
-        return !isTraditional(c);
+        return zhConvertCore.isSimple(c, context);
     }
 
     @Override
     public boolean isSimple(String charOrPhrase) {
-        if(StringUtil.isEmpty(charOrPhrase)) {
-            return false;
-        }
-
-        //TODO: 这里可以抽象为 allMatch 和 anyMatch，避免写这么多次。下次优化.
-        // 将 isXXX 抽象为 condition 接口
-        List<String> chars = toCharList(charOrPhrase);
-        for(String c : chars) {
-            if(!isSimpleForSingle(c)) {
-                return false;
-            }
-        }
-
-        return true;
+        return zhConvertCore.isSimple(charOrPhrase, context);
     }
 
     @Override
     public boolean containsSimple(String charOrPhrase) {
-        if(StringUtil.isEmpty(charOrPhrase)) {
-            return false;
-        }
-
-        List<String> chars = toCharList(charOrPhrase);
-        for(String c : chars) {
-            if(isSimple(c)) {
-                return true;
-            }
-        }
-
-        return false;
+        return zhConvertCore.containsSimple(charOrPhrase, context);
     }
 
     @Override
     public boolean isTraditional(char c) {
-        String sc = String.valueOf(c);
-        return isTraditionalForSingle(sc);
-    }
-
-    private boolean isTraditionalForSingle(String c) {
-        if(!isChinese(c)) {
-            return false;
-        }
-
-        // 繁体字符包含
-        return this.dataMap.tChars().contains(c);
+        return zhConvertCore.isTraditional(c, context);
     }
 
     @Override
     public boolean isTraditional(String charOrPhrase) {
-        if(StringUtil.isEmpty(charOrPhrase)) {
-            return false;
-        }
-
-        List<String> chars = toCharList(charOrPhrase);
-        for(String c : chars) {
-            if(!isTraditionalForSingle(c)) {
-                return false;
-            }
-        }
-
-        //3. 返回
-        return true;
+        return zhConvertCore.isTraditional(charOrPhrase, context);
     }
 
     @Override
     public boolean containsTraditional(String charOrPhrase) {
-        if(StringUtil.isEmpty(charOrPhrase)) {
-            return false;
-        }
-
-        List<String> chars = toCharList(charOrPhrase);
-        for(String c : chars) {
-            if(isTraditional(c)) {
-                return true;
-            }
-        }
-
-        //3. 返回
-        return false;
+        return zhConvertCore.containsTraditional(charOrPhrase, context);
     }
 
     @Override
     public boolean isChinese(char c) {
-        // 单个字符，直接简单判断
-        return CharUtil.isChinese(c);
+        return zhConvertCore.isChinese(c, context);
     }
 
     @Override
     public boolean isChinese(String charOrPhrase) {
-        if(StringUtil.isEmpty(charOrPhrase)) {
-            return false;
-        }
-
-        // 遍历
-        List<String> chars = toCharList(charOrPhrase);
-        for(String c : chars) {
-            // 兼容双字符
-            if(!InnerCharUtils.isChineseForSingle(c)) {
-                return false;
-            }
-        }
-
-        return true;
+        return zhConvertCore.isChinese(charOrPhrase, context);
     }
 
     @Override
     public boolean containsChinese(String charOrPhrase) {
-        if(StringUtil.isEmpty(charOrPhrase)) {
-            return false;
-        }
-
-        // 遍历
-        List<String> chars = toCharList(charOrPhrase);
-        for(String c : chars) {
-            if(this.isChinese(c)) {
-                return true;
-            }
-        }
-
-        return false;
+        return zhConvertCore.containsChinese(charOrPhrase, context);
     }
 
     @Override
     public List<String> toSimple(char c) {
-        return dataMap.tsChar().get(String.valueOf(c));
+        return zhConvertCore.toSimple(c, context);
     }
 
     @Override
     public List<String> toTraditional(char c) {
-        return dataMap.stChar().get(String.valueOf(c));
-    }
-
-    /**
-     * 指定转换
-     * @param original 原始字符串
-     * @param segment 分词实现
-     * @param charData 单个词数据
-     * @param phraseData 词组数据
-     * @return 转换后的结果
-     * @since 1.1.0
-     */
-    protected String convert(final String original,
-                           final Segment segment,
-                           final Map<String, List<String>> phraseData,
-                           final Map<String, List<String>> charData) {
-        //1. fast-fail
-        if(StringUtil.isEmpty(original)) {
-            return original;
-        }
-        List<String> stringList = segment.seg(original);
-        if(CollectionUtil.isEmpty(stringList)) {
-            return original;
-        }
-
-        //2. 转换对象构建
-        final UnitConvert unitConvert = Instances.singleton(DefaultUnitConvert.class);
-        final DefaultUnitConvertContext unitConvertContext = new DefaultUnitConvertContext();
-        unitConvertContext.setPhraseData(phraseData);
-        unitConvertContext.setCharData(charData);
-
-        //3. 构建结果
-        StringBuilder stringBuilder = new StringBuilder();
-        for(String string : stringList) {
-            unitConvertContext.setUnit(string);
-            String result = unitConvert.convert(unitConvertContext);
-            stringBuilder.append(result);
-        }
-        return stringBuilder.toString();
+        return zhConvertCore.toTraditional(c, context);
     }
 
 }

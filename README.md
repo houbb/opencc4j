@@ -22,7 +22,7 @@
 
 - 兼容 Windows、Linux、Mac 平台。
 
-- 支持自定义分词
+- 支持自定义分词、引导类，优雅实现
 
 - 支持判断单个字（词）是否为简体/繁体
 
@@ -100,7 +100,7 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.9.1</version>
+    <version>1.10.0</version>
 </dependency>
 ```
 
@@ -309,7 +309,7 @@ Assert.assertEquals("使用互联网", result);
 
 主要的可配置项包含了分词和数据集合。
 
-二者都是可以配置，并且支持自定的。
+二者都是可以配置，并且支持自定义的。
 
 ### 默认配置
 
@@ -318,7 +318,7 @@ Assert.assertEquals("使用互联网", result);
 ```java
 ZhConvertBootstrap.newInstance()
                 .segment(Segments.defaults())
-                .dataMap(DataMaps.defaults());
+                .dataMap(DataMaps.defaults()).init();
 ```
 
 ### 中国台湾地区配置
@@ -328,7 +328,7 @@ ZhConvertBootstrap.newInstance()
 ```java
 ZhConvertBootstrap.newInstance()
                 .segment(Segments.twFastForward())
-                .dataMap(DataMaps.taiwan());
+                .dataMap(DataMaps.taiwan()).init();
 ```
 
 ## 中文分词策略
@@ -404,6 +404,7 @@ final Segment segment = new FooSegment();
 
 final String result = ZhConvertBootstrap.newInstance()
         .segment(segment)
+        .init()
         .toTraditional(original);
 
 Assert.assertEquals("寥落古行宮，宮花寂寞紅。白頭宮女在，閒坐說玄宗。測試", result);
@@ -548,6 +549,7 @@ final Segment segment = new DataMapFastForwardSegment(dataMap);
 ZhConvertBootstrap bs = ZhConvertBootstrap.newInstance()
         .dataMap(dataMap)
         .segment(segment)
+        .init()
         ;
 
 // 3. 使用

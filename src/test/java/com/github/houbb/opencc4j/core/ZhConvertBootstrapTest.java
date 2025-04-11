@@ -21,7 +21,7 @@ public class ZhConvertBootstrapTest {
     @Test
     public void toSimpleTest() {
         final String original = "生命不息，奮鬥不止";
-        final String result = ZhConvertBootstrap.newInstance().toSimple(original);
+        final String result = ZhConvertBootstrap.newInstance().init().toSimple(original);
         Assert.assertEquals("生命不息，奋斗不止", result);
     }
 
@@ -32,7 +32,7 @@ public class ZhConvertBootstrapTest {
     @Test
     public void toTraditionalTest() {
         final String original = "生命不息，奋斗不止";
-        final String result = ZhConvertBootstrap.newInstance().toTraditional(original);
+        final String result = ZhConvertBootstrap.newInstance().init().toTraditional(original);
         Assert.assertEquals("生命不息，奮鬥不止", result);
     }
 
@@ -43,10 +43,10 @@ public class ZhConvertBootstrapTest {
     @Test
     public void segmentTest() {
         final String original = "寥落古行宫，宫花寂寞红。白头宫女在，闲坐说玄宗。";
-        final String result = ZhConvertBootstrap.newInstance().toTraditional(original);
+        final String result = ZhConvertBootstrap.newInstance().init().toTraditional(original);
         Assert.assertEquals("寥落古行宮，宮花寂寞紅。白頭宮女在，閒坐說玄宗。", result);
 
-        final String result2 = ZhConvertBootstrap.newInstance().segment(new FooSegment()).toTraditional(original);
+        final String result2 = ZhConvertBootstrap.newInstance().segment(new FooSegment()).init().toTraditional(original);
         Assert.assertEquals("寥落古行宮，宮花寂寞紅。白頭宮女在，閒坐說玄宗。測試", result2);
     }
 
@@ -59,7 +59,7 @@ public class ZhConvertBootstrapTest {
     @Test
     public void segment2Test() {
         final String original = "寥落古行宫，宫花寂寞红。白头宫女在，闲坐说玄宗。";
-        final String result = ZhConvertBootstrap.newInstance(new FooSegment()).toTraditional(original);
+        final String result = ZhConvertBootstrap.newInstance(new FooSegment()).init().toTraditional(original);
         Assert.assertEquals("寥落古行宮，宮花寂寞紅。白頭宮女在，閒坐說玄宗。測試", result);
     }
 
@@ -74,7 +74,7 @@ public class ZhConvertBootstrapTest {
         final String traditionalChar = "奮";
         final String traditionalPhrase = "奮鬥";
 
-        ZhConvertBootstrap convertBootstrap = ZhConvertBootstrap.newInstance();
+        ZhConvertBootstrap convertBootstrap = ZhConvertBootstrap.newInstance().init();
 
         Assert.assertTrue(convertBootstrap.isSimple(simpleChar));
         Assert.assertTrue(convertBootstrap.isSimple(simplePhrase));
@@ -93,7 +93,7 @@ public class ZhConvertBootstrapTest {
         final String traditionalChar = "奮";
         final String traditionalPhrase = "奮鬥";
 
-        ZhConvertBootstrap convertBootstrap = ZhConvertBootstrap.newInstance();
+        ZhConvertBootstrap convertBootstrap = ZhConvertBootstrap.newInstance().init();
 
         Assert.assertTrue(convertBootstrap.isTraditional(traditionalChar));
         Assert.assertTrue(convertBootstrap.isTraditional(traditionalPhrase));
@@ -109,7 +109,7 @@ public class ZhConvertBootstrapTest {
     @Ignore
     public void simpleListTest() {
         final String original = "生命不息奋斗不止";
-        ZhConvertBootstrap zhConvertBootstrap = ZhConvertBootstrap.newInstance();
+        ZhConvertBootstrap zhConvertBootstrap = ZhConvertBootstrap.newInstance().init();
         final List<String> resultList = zhConvertBootstrap.simpleList(original);
 
         String expectToString = "[生, 命, 不, 息, 奋斗, 不, 止]";
@@ -123,7 +123,7 @@ public class ZhConvertBootstrapTest {
     @Test
     public void traditionalListTest() {
         final String original = "生命不息奮鬥不止";
-        ZhConvertBootstrap zhConvertBootstrap = ZhConvertBootstrap.newInstance();
+        ZhConvertBootstrap zhConvertBootstrap = ZhConvertBootstrap.newInstance().init();
         final List<String> resultList = zhConvertBootstrap.traditionalList(original);
 
         String expectToString = "[生, 命, 不, 息, 奮, 鬥, 不, 止]";

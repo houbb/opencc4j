@@ -21,7 +21,8 @@ public class ZhConvertBsTest {
     public void defaultConfigTest() {
         ZhConvertBootstrap.newInstance()
                 .segment(Segments.defaults())
-                .dataMap(DataMaps.defaults());
+                .dataMap(DataMaps.defaults())
+                .init();
     }
 
     /**
@@ -31,7 +32,8 @@ public class ZhConvertBsTest {
     public void zhTwConfigTest() {
         ZhConvertBootstrap.newInstance()
                 .segment(Segments.defaults())
-                .dataMap(DataMaps.taiwan());
+                .dataMap(DataMaps.taiwan())
+                .init();
     }
 
     /**
@@ -45,6 +47,7 @@ public class ZhConvertBsTest {
 
         final String result = ZhConvertBootstrap.newInstance()
                 .segment(segment)
+                .init()
                 .toTraditional(original);
 
         Assert.assertEquals("寥落古行宮，宮花寂寞紅。白頭宮女在，閒坐說玄宗。測試", result);

@@ -29,7 +29,8 @@ public final class ZhTwConverterUtil {
     private static final ZhConvertBootstrap DEFAULT_BOOTSTRAP = ZhConvertBootstrap
             .newInstance()
             .segment(Segments.twFastForward())
-            .dataMap(DataMaps.taiwan());
+            .dataMap(DataMaps.taiwan())
+            .init();
     /**
      * 是否为中文字符
      * @param c 字符
