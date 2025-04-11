@@ -8,5 +8,5 @@ import com.github.houbb.opencc4j.support.data.Data;
  * @author binbin.hou
  * @since 1.1.0
  */
-abstract class AbstractData implements Data {
+public abstract class AbstractData implements Data {
 }

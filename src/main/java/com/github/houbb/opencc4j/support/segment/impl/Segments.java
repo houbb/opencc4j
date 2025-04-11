@@ -2,6 +2,8 @@ package com.github.houbb.opencc4j.support.segment.impl;
 
 import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.opencc4j.support.datamap.IDataMap;
+import com.github.houbb.opencc4j.support.datamap.impl.DataMapChains;
+import com.github.houbb.opencc4j.support.datamap.impl.DataMaps;
 import com.github.houbb.opencc4j.support.segment.Segment;
 
 /**
@@ -68,6 +70,24 @@ public final class Segments {
      */
     public static Segment dataMapFastForward(final IDataMap dataMap) {
         return new DataMapFastForwardSegment(dataMap);
+    }
+
+    /**
+     * 香港快速策略
+     * @return 结果
+     * @since 1.12.0
+     */
+    public static Segment hkFastForward() {
+        return new DataMapFastForwardSegment(DataMaps.hongKong());
+    }
+
+    /**
+     * 香港快速策略
+     * @return 结果
+     * @since 1.12.0
+     */
+    public static Segment hkSelfFastForward() {
+        return new DataMapFastForwardSegment(DataMaps.hongKongSelf());
     }
 
 }

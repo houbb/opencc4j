@@ -22,7 +22,7 @@ import java.util.*;
  * @version 1.0
  * @since 1.7
  */
-final class DataUtil {
+public final class DataUtil {
 
     private DataUtil(){}
 
@@ -35,7 +35,7 @@ final class DataUtil {
      * @return 返回数据集合
      * @see Collections#unmodifiableMap(Map) 保证字典数据不被外部修改
      */
-    static Map<String, List<String>> buildDataMap(final String path) {
+    public static Map<String, List<String>> buildDataMap(final String path) {
         try(InputStream is = DataUtil.class.getResourceAsStream(path);
             BufferedReader e = new BufferedReader(new InputStreamReader(is, Charset.forName(AppConstant.DEFAULT_CHARSET)))) {
             Map<String, List<String>> map = new HashMap<>();
@@ -87,7 +87,7 @@ final class DataUtil {
      * @see Collections#unmodifiableMap(Map) 保证字典数据不被外部修改
      * @since 1.7.0
      */
-    static Map<String, List<String>> buildDataMapReverse(final String path) {
+    public static Map<String, List<String>> buildDataMapReverse(final String path) {
         try(InputStream is = DataUtil.class.getResourceAsStream(path);
             BufferedReader e = new BufferedReader(new InputStreamReader(is, Charset.forName(AppConstant.DEFAULT_CHARSET)))) {
             Map<String, List<String>> map = new HashMap<>();
@@ -133,6 +133,7 @@ final class DataUtil {
      * @since 1.7.0
      * @author jackychu0830
      */
+    @Deprecated
     public static void merge(Map<String, List<String>> data,
                              Map<String, List<String>> dataOther) {
         if(MapUtil.isEmpty(dataOther)) {
@@ -143,5 +144,105 @@ final class DataUtil {
             data.put(entry.getKey(), entry.getValue());
         }
     }
+
+    /**
+     * 链式合并
+     *
+     * @param data 第一组数据
+     * @param dataOther 其他多个字段
+     * @since 1.12.0
+     */
+    public static Map<String, List<String>> mergeChains(
+            final Map<String, List<String>> data,
+            final Map<String, List<String>>... dataOther) {
+
+        if (dataOther == null || dataOther.length == 0) {
+            return data;
+        }
+
+        Map<String, List<String>> current = data;
+
+        for (int i = 0; i < dataOther.length; i++) {
+            Map<String, List<String>> nextDict = dataOther[i];
+            Map<String, List<String>> merged = new HashMap<>();
+
+            for (Map.Entry<String, List<String>> entry : current.entrySet()) {
+                String key = entry.getKey();
+                List<String> values = entry.getValue();
+
+                // 用 Set 去重
+                Set<String> nextCandidatesSet = new LinkedHashSet<>();
+
+                for (int j = 0; j < values.size(); j++) {
+                    String midValue = values.get(j);
+                    List<String> nextList = nextDict.get(midValue);
+                    if (nextList != null && !nextList.isEmpty()) {
+                        nextCandidatesSet.addAll(nextList);
+                    } else {
+                        // 如果下一层没有匹配，也保留中间词
+                        nextCandidatesSet.add(midValue);
+                    }
+                }
+
+                // 转回 List
+                List<String> deduped = new ArrayList<>(nextCandidatesSet);
+                merged.put(key, deduped);
+            }
+
+            current = merged;
+        }
+
+        return current;
+    }
+
+    /**
+     * @since 1.12.0
+     * @param dictChain chain
+     * @return 结果
+     */
+    public static Map<String, List<String>> mergeChains(
+            final Collection<Map<String, List<String>>> dictChain) {
+
+        if (dictChain == null || dictChain.isEmpty()) {
+            return new HashMap<String, List<String>>();
+        }
+
+        Iterator<Map<String, List<String>>> iterator = dictChain.iterator();
+
+        // 第一层词典作为起始数据
+        Map<String, List<String>> current = iterator.next();
+
+        // 后续层词典按顺序合并
+        while (iterator.hasNext()) {
+            Map<String, List<String>> nextDict = iterator.next();
+            Map<String, List<String>> merged = new HashMap<String, List<String>>();
+
+            for (Map.Entry<String, List<String>> entry : current.entrySet()) {
+                String key = entry.getKey();
+                List<String> values = entry.getValue();
+
+                Set<String> nextCandidatesSet = new LinkedHashSet<String>();
+
+                for (int i = 0; i < values.size(); i++) {
+                    String midValue = values.get(i);
+                    List<String> nextList = nextDict.get(midValue);
+                    if (nextList != null && !nextList.isEmpty()) {
+                        nextCandidatesSet.addAll(nextList);
+                    } else {
+                        // 没有映射时保留原中间值
+                        nextCandidatesSet.add(midValue);
+                    }
+                }
+
+                List<String> deduped = new ArrayList<String>(nextCandidatesSet);
+                merged.put(key, deduped);
+            }
+
+            current = merged;
+        }
+
+        return current;
+    }
+
 
 }
