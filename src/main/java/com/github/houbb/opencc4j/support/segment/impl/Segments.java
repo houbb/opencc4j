@@ -62,6 +62,7 @@ public final class Segments {
     /**
      * 默认分词形式
      * 1. 调整为使用 fast-forward
+     * @param dataMap 数据集合
      * @return 默认分词
      * @since 1.9.0
      */
