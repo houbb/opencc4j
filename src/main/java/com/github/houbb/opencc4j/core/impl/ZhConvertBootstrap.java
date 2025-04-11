@@ -12,6 +12,8 @@ import com.github.houbb.opencc4j.support.convert.core.UnitConvert;
 import com.github.houbb.opencc4j.support.convert.core.UnitConverts;
 import com.github.houbb.opencc4j.support.datamap.IDataMap;
 import com.github.houbb.opencc4j.support.datamap.impl.DataMaps;
+import com.github.houbb.opencc4j.support.match.ZhMatch;
+import com.github.houbb.opencc4j.support.match.ZhMatches;
 import com.github.houbb.opencc4j.support.segment.Segment;
 import com.github.houbb.opencc4j.support.segment.impl.Segments;
 
@@ -55,6 +57,18 @@ public class ZhConvertBootstrap implements ZhConvert {
      * @since 1.10.0
      */
     private ZhConvertCore zhConvertCore = new ZhConvertCoreDefault();
+
+    /**
+     * 是否为简体
+     * @since 1.11.0
+     */
+    private ZhMatch isSimpleMatch = ZhMatches.simpleAll();
+
+    /**
+     * 是否为繁体
+     * @since 1.11.0
+     */
+    private ZhMatch isTraditionalMatch = ZhMatches.traditionalAll();
 
     /**
      * 上下文
@@ -130,6 +144,20 @@ public class ZhConvertBootstrap implements ZhConvert {
         return this;
     }
 
+    public ZhConvertBootstrap isSimpleMatch(ZhMatch isSimpleMatch) {
+        ArgUtil.notNull(isSimpleMatch, "isSimpleMatch");
+
+        this.isSimpleMatch = isSimpleMatch;
+        return this;
+    }
+
+    public ZhConvertBootstrap isTraditionalMatch(ZhMatch isTraditionalMatch) {
+        ArgUtil.notNull(isTraditionalMatch, "isTraditionalMatch");
+
+        this.isTraditionalMatch = isTraditionalMatch;
+        return this;
+    }
+
     /**
      * 初始化
      * @return this
@@ -140,7 +168,10 @@ public class ZhConvertBootstrap implements ZhConvert {
                 .zhChars(zhChar)
                 .segment(segment)
                 .unitConvert(unitConvert)
-                .dataMap(dataMap);
+                .dataMap(dataMap)
+                .isSimpleMatch(isSimpleMatch)
+                .isTraditionalMatch(isTraditionalMatch);
+
         return this;
     }
 

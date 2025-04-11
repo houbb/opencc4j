@@ -62,40 +62,13 @@ public class ZhConvertCoreDefault implements ZhConvertCore {
     @Override
     public boolean isSimple(char c, ZhConvertCoreContext context) {
         String sc = String.valueOf(c);
-        return isSimpleForSingle(sc, context);
+
+        return isSimple(sc, context);
     }
 
     @Override
     public boolean isSimple(String charOrPhrase, ZhConvertCoreContext context) {
-        if(StringUtil.isEmpty(charOrPhrase)) {
-            return false;
-        }
-
-        //TODO: 这里可以抽象为 allMatch 和 anyMatch，避免写这么多次。下次优化.
-        // 将 isXXX 抽象为 condition 接口
-        List<String> chars = context.zhChars().chars(charOrPhrase);
-        for(String c : chars) {
-            if(!isSimpleForSingle(c, context)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private boolean isSimpleForSingle(String c, ZhConvertCoreContext context) {
-        if(!isChinese(c, context)) {
-            return false;
-        }
-
-        // 中文简体字符集中包含
-        final IDataMap dataMap = context.dataMap();
-        if(dataMap.sChars().contains(c)) {
-            return true;
-        }
-
-        // 中文除去繁体的，认为是简体
-        return !isTraditional(c, context);
+        return context.isSimpleMatch().match(charOrPhrase, context);
     }
 
     @Override
@@ -117,33 +90,12 @@ public class ZhConvertCoreDefault implements ZhConvertCore {
     @Override
     public boolean isTraditional(char c, ZhConvertCoreContext context) {
         String sc = String.valueOf(c);
-        return isTraditionalForSingle(sc, context);
+        return isTraditional(sc, context);
     }
 
     @Override
     public boolean isTraditional(String charOrPhrase, ZhConvertCoreContext context) {
-        if(StringUtil.isEmpty(charOrPhrase)) {
-            return false;
-        }
-
-        List<String> chars = context.zhChars().chars(charOrPhrase);
-        for(String c : chars) {
-            if(!isTraditionalForSingle(c, context)) {
-                return false;
-            }
-        }
-
-        //3. 返回
-        return true;
-    }
-
-    private boolean isTraditionalForSingle(String c, final ZhConvertCoreContext context) {
-        if(!isChinese(c, context)) {
-            return false;
-        }
-
-        // 繁体字符包含
-        return context.dataMap().tChars().contains(c);
+        return context.isTraditionalMatch().match(charOrPhrase, context);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.github.houbb.opencc4j.core;
 import com.github.houbb.opencc4j.support.chars.ZhChar;
 import com.github.houbb.opencc4j.support.convert.core.UnitConvert;
 import com.github.houbb.opencc4j.support.datamap.IDataMap;
+import com.github.houbb.opencc4j.support.match.ZhMatch;
 import com.github.houbb.opencc4j.support.segment.Segment;
 
 /**
@@ -32,6 +33,18 @@ public class ZhConvertCoreContext {
      * 中文字符策略
      */
     private ZhChar zhChars;
+
+    /**
+     * 是否为简体
+     * @since 1.11.0
+     */
+    private ZhMatch isSimpleMatch;
+
+    /**
+     * 是否为繁体
+     * @since 1.11.0
+     */
+    private ZhMatch isTraditionalMatch;
 
     public static ZhConvertCoreContext newInstance() {
         return new ZhConvertCoreContext();
@@ -70,6 +83,24 @@ public class ZhConvertCoreContext {
 
     public ZhConvertCoreContext zhChars(ZhChar zhChars) {
         this.zhChars = zhChars;
+        return this;
+    }
+
+    public ZhMatch isSimpleMatch() {
+        return isSimpleMatch;
+    }
+
+    public ZhConvertCoreContext isSimpleMatch(ZhMatch isSimpleMatch) {
+        this.isSimpleMatch = isSimpleMatch;
+        return this;
+    }
+
+    public ZhMatch isTraditionalMatch() {
+        return isTraditionalMatch;
+    }
+
+    public ZhConvertCoreContext isTraditionalMatch(ZhMatch isTraditionalMatch) {
+        this.isTraditionalMatch = isTraditionalMatch;
         return this;
     }
 }

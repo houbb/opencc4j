@@ -100,7 +100,7 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.10.0</version>
+    <version>1.11.0</version>
 </dependency>
 ```
 
@@ -557,6 +557,67 @@ ZhConvertBootstrap bs = ZhConvertBootstrap.newInstance()
         Assert.assertEquals(bs.toSimple("人生自是有情癡,此恨不關風玥"), "人生自是有情痴,此恨不关风月");
 ```
 
+
+# 是否为繁简体判断
+
+## 说明
+
+V1.11.0 版本支持。
+
+有时候我们需要判断一个字符串是否为繁简体，isSimple()、isTraditional() 默认要求全部匹配，无法满足全部场景。
+
+这里允许用户自定义相关的策略。
+
+## 内置实现
+
+内置策略见 `ZhMatches` 工具方法。
+
+| 策略                    | 说明       | 备注                     |
+|:----------------------|:---------|:-----------------------|
+| simpleAll()           | 满足全部简体   | isSimple 判断时，默认策略      |
+| simpleAny()           | 满足任一简体   | -                      |
+| simpleOverHalf()      | 满足超过一半简体 | -                      |
+| traditionalAll()      | 满足全部简体   | isTraditional 判断时，默认策略 |
+| traditionalAny()      | 满足任一简体   | -                      |
+| traditionalOverHalf() | 满足超过一半简体   | -                      |
+
+## 例子
+
+### 简体
+
+```java
+// 全部
+ZhConvertBootstrap bs = ZhConvertBootstrap.newInstance()
+        .isSimpleMatch(ZhMatches.simpleAll())
+        .init();
+String text = "123我456";
+Assert.assertFalse(bs.isSimple(text));
+
+// 任一
+bs.isSimpleMatch(ZhMatches.simpleAny()).init();
+Assert.assertTrue(bs.isSimple(text));
+```
+
+### 繁体
+
+```java
+// 全部
+ZhConvertBootstrap bs = ZhConvertBootstrap.newInstance()
+        .isTraditionalMatch(ZhMatches.traditionalAll())
+        .init();
+String text = "123俺們456";
+Assert.assertFalse(bs.isTraditional(text));
+
+// 任一
+bs.isTraditionalMatch(ZhMatches.traditionalAny()).init();
+Assert.assertTrue(bs.isTraditional(text));;
+```
+
+## 自定义
+
+如果系统内置的策略不满足，你可以自定义。
+
+实现 ZhMatch 接口，引导类中指定即可使用。
 
 # 技术鸣谢
 
