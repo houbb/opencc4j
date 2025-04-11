@@ -14,6 +14,7 @@ import com.github.houbb.opencc4j.support.datamap.IDataMap;
 import com.github.houbb.opencc4j.support.datamap.impl.DataMaps;
 import com.github.houbb.opencc4j.support.segment.Segment;
 import com.github.houbb.opencc4j.support.segment.impl.Segments;
+import com.github.houbb.opencc4j.util.InnerCharUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -92,6 +93,16 @@ public class ZhConvertBootstrap implements ZhConvert {
         return this;
     }
 
+    /**
+     * 转字符串列表
+     * @param original 原始文本
+     * @return 正确的切分字符结果
+     * @since 1.9.1
+     */
+    private List<String> toCharList(String original) {
+        return InnerCharUtils.toCharList(original);
+    }
+
     @Override
     public String toSimple(String original) {
         return this.convert(original, segment, dataMap.tsPhrase(), dataMap.tsChar());
@@ -146,12 +157,17 @@ public class ZhConvertBootstrap implements ZhConvert {
 
     @Override
     public boolean isSimple(char c) {
+        String sc = String.valueOf(c);
+        return isSimpleForSingle(sc);
+    }
+
+    private boolean isSimpleForSingle(String c) {
         if(!isChinese(c)) {
             return false;
         }
 
         // 中文简体字符集中包含
-        if(dataMap.sChars().contains(c+"")) {
+        if(dataMap.sChars().contains(c)) {
             return true;
         }
 
@@ -167,9 +183,9 @@ public class ZhConvertBootstrap implements ZhConvert {
 
         //TODO: 这里可以抽象为 allMatch 和 anyMatch，避免写这么多次。下次优化.
         // 将 isXXX 抽象为 condition 接口
-        char[] chars = charOrPhrase.toCharArray();
-        for(char c : chars) {
-            if(!isSimple(c)) {
+        List<String> chars = toCharList(charOrPhrase);
+        for(String c : chars) {
+            if(!isSimpleForSingle(c)) {
                 return false;
             }
         }
@@ -183,8 +199,8 @@ public class ZhConvertBootstrap implements ZhConvert {
             return false;
         }
 
-        char[] chars = charOrPhrase.toCharArray();
-        for(char c : chars) {
+        List<String> chars = toCharList(charOrPhrase);
+        for(String c : chars) {
             if(isSimple(c)) {
                 return true;
             }
@@ -195,12 +211,17 @@ public class ZhConvertBootstrap implements ZhConvert {
 
     @Override
     public boolean isTraditional(char c) {
+        String sc = String.valueOf(c);
+        return isTraditionalForSingle(sc);
+    }
+
+    private boolean isTraditionalForSingle(String c) {
         if(!isChinese(c)) {
             return false;
         }
 
         // 繁体字符包含
-        return this.dataMap.tChars().contains(c+"");
+        return this.dataMap.tChars().contains(c);
     }
 
     @Override
@@ -209,9 +230,9 @@ public class ZhConvertBootstrap implements ZhConvert {
             return false;
         }
 
-        char[] chars = charOrPhrase.toCharArray();
-        for(char c : chars) {
-            if(!isTraditional(c)) {
+        List<String> chars = toCharList(charOrPhrase);
+        for(String c : chars) {
+            if(!isTraditionalForSingle(c)) {
                 return false;
             }
         }
@@ -226,8 +247,8 @@ public class ZhConvertBootstrap implements ZhConvert {
             return false;
         }
 
-        char[] chars = charOrPhrase.toCharArray();
-        for(char c : chars) {
+        List<String> chars = toCharList(charOrPhrase);
+        for(String c : chars) {
             if(isTraditional(c)) {
                 return true;
             }
@@ -239,6 +260,7 @@ public class ZhConvertBootstrap implements ZhConvert {
 
     @Override
     public boolean isChinese(char c) {
+        // 单个字符，直接简单判断
         return CharUtil.isChinese(c);
     }
 
@@ -249,9 +271,10 @@ public class ZhConvertBootstrap implements ZhConvert {
         }
 
         // 遍历
-        char[] chars = charOrPhrase.toCharArray();
-        for(char c : chars) {
-            if(!this.isChinese(c)) {
+        List<String> chars = toCharList(charOrPhrase);
+        for(String c : chars) {
+            // 兼容双字符
+            if(!InnerCharUtils.isChineseForSingle(c)) {
                 return false;
             }
         }
@@ -266,8 +289,8 @@ public class ZhConvertBootstrap implements ZhConvert {
         }
 
         // 遍历
-        char[] chars = charOrPhrase.toCharArray();
-        for(char c : chars) {
+        List<String> chars = toCharList(charOrPhrase);
+        for(String c : chars) {
             if(this.isChinese(c)) {
                 return true;
             }

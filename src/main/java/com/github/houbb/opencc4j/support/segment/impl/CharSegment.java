@@ -1,8 +1,8 @@
 package com.github.houbb.opencc4j.support.segment.impl;
 
 import com.github.houbb.heaven.annotation.ThreadSafe;
+import com.github.houbb.opencc4j.util.InnerCharUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,12 +20,7 @@ public class CharSegment extends AbstractSegment {
 
     @Override
     protected List<String> doSeg(final String original) {
-        char[] chars = original.toCharArray();
-        List<String> stringList = new ArrayList<>();
-        for(char c : chars) {
-            stringList.add(String.valueOf(c));
-        }
-        return stringList;
+        return InnerCharUtils.toCharList(original);
     }
 
 }

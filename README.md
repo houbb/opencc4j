@@ -30,11 +30,7 @@
 
 - 支持中国台湾地区繁简体转换
 
-### v1.9.0 自定义拓展词典优化
-
-- 支持自定义拓展类 dataMap
-- 支持基于 dataMap 的分词策略
-
+- 兼容双字符汉字，【𨦟】【𪡃】等
 
 > [变更日志](CHANGELOG.md)
 
@@ -104,7 +100,7 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.9.0</version>
+    <version>1.9.1</version>
 </dependency>
 ```
 

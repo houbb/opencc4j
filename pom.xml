@@ -6,7 +6,7 @@
 
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.9.0</version>
+    <version>1.9.1</version>
 
     <properties>
         <!--============================== All PLUGINS START ==============================-->
