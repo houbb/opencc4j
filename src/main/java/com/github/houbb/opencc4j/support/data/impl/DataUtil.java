@@ -1,8 +1,8 @@
 package com.github.houbb.opencc4j.support.data.impl;
 
 import com.github.houbb.heaven.util.lang.StringUtil;
+import com.github.houbb.heaven.util.util.ArrayUtil;
 import com.github.houbb.heaven.util.util.CollectionUtil;
-import com.github.houbb.heaven.util.util.MapUtil;
 import com.github.houbb.opencc4j.constant.AppConstant;
 import com.github.houbb.opencc4j.exception.Opencc4jRuntimeException;
 
@@ -126,23 +126,40 @@ public final class DataUtil {
     }
 
     /**
-     * 合并： 用其他数据合并当前的数据
-     *
-     * @param data 数据
-     * @param dataOther 其他数据
-     * @since 1.7.0
-     * @author jackychu0830
+     * 直接合并
+     * @param firstMap 数据集合
+     * @param others 其他的
+     * @since 1.12.0
      */
-    @Deprecated
-    public static void merge(Map<String, List<String>> data,
-                             Map<String, List<String>> dataOther) {
-        if(MapUtil.isEmpty(dataOther)) {
-            return;
+    public static Map<String, List<String>> merge(Map<String, List<String>> firstMap, Map<String, List<String>>... others) {
+        if(ArrayUtil.isEmpty(others)) {
+            return firstMap;
         }
 
-        for(Map.Entry<String,List<String>> entry : dataOther.entrySet()) {
-            data.put(entry.getKey(), entry.getValue());
+        List<Map<String, List<String>>> allList = new ArrayList<>();
+        allList.add(firstMap);
+        allList.addAll(Arrays.asList(others));
+        return merge(allList);
+    }
+
+    /**
+     * 直接合并
+     * @param allDataMap 数据集合
+     * @since 1.12.0
+     */
+    public static Map<String, List<String>> merge(List<Map<String, List<String>>> allDataMap) {
+        if(CollectionUtil.isEmpty(allDataMap)) {
+            return Collections.emptyMap();
         }
+        if(allDataMap.size() == 1) {
+            return allDataMap.get(0);
+        }
+
+        Map<String, List<String>> resultMap = new HashMap<>();
+        for(Map<String, List<String>> map : allDataMap) {
+            resultMap.putAll(map);
+        }
+        return resultMap;
     }
 
     /**
@@ -152,59 +169,28 @@ public final class DataUtil {
      * @param dataOther 其他多个字段
      * @since 1.12.0
      */
-    public static Map<String, List<String>> mergeChains(
+    public static Map<String, List<String>> chains(
             final Map<String, List<String>> data,
             final Map<String, List<String>>... dataOther) {
-
-        if (dataOther == null || dataOther.length == 0) {
-            return data;
+        List<Map<String, List<String>>> allList = new ArrayList<>();
+        allList.add(data);
+        if(ArrayUtil.isNotEmpty(dataOther)) {
+            allList.addAll(Arrays.asList(dataOther));
         }
-
-        Map<String, List<String>> current = data;
-
-        for (int i = 0; i < dataOther.length; i++) {
-            Map<String, List<String>> nextDict = dataOther[i];
-            Map<String, List<String>> merged = new HashMap<>();
-
-            for (Map.Entry<String, List<String>> entry : current.entrySet()) {
-                String key = entry.getKey();
-                List<String> values = entry.getValue();
-
-                // 用 Set 去重
-                Set<String> nextCandidatesSet = new LinkedHashSet<>();
-
-                for (int j = 0; j < values.size(); j++) {
-                    String midValue = values.get(j);
-                    List<String> nextList = nextDict.get(midValue);
-                    if (nextList != null && !nextList.isEmpty()) {
-                        nextCandidatesSet.addAll(nextList);
-                    } else {
-                        // 如果下一层没有匹配，也保留中间词
-                        nextCandidatesSet.add(midValue);
-                    }
-                }
-
-                // 转回 List
-                List<String> deduped = new ArrayList<>(nextCandidatesSet);
-                merged.put(key, deduped);
-            }
-
-            current = merged;
-        }
-
-        return current;
+        return chains(allList);
     }
 
     /**
+     * 链式合并
      * @since 1.12.0
      * @param dictChain chain
      * @return 结果
      */
-    public static Map<String, List<String>> mergeChains(
+    public static Map<String, List<String>> chains(
             final Collection<Map<String, List<String>>> dictChain) {
 
         if (dictChain == null || dictChain.isEmpty()) {
-            return new HashMap<String, List<String>>();
+            return new HashMap<>();
         }
 
         Iterator<Map<String, List<String>>> iterator = dictChain.iterator();
@@ -244,5 +230,32 @@ public final class DataUtil {
         return current;
     }
 
+    /**
+     * 链式合并+直接合并
+     * 1. 基础的部分链式处理
+     * 2. 剩余的部分直接再合并一次
+     *
+     * 比如 户=》戶=》户
+     * @since 1.12.0
+     * @param list 列表
+     * @return 结果
+     */
+    public static Map<String, List<String>> chainsAndMerge(
+            final List<Map<String, List<String>>> list) {
+        if(CollectionUtil.isEmpty(list)) {
+            return Collections.emptyMap();
+        }
+
+        Map<String, List<String>> dataMap = chains(list);
+
+        // 剩余的直接合并
+        List<Map<String, List<String>>> newMergeList = new ArrayList<>();
+        newMergeList.add(dataMap);
+        for(int i = 1; i < list.size(); i++) {
+            newMergeList.add(list.get(i));
+        }
+
+        return merge(newMergeList);
+    }
 
 }

@@ -28,7 +28,9 @@
 
 - 支持返回字符串中简体/繁体的列表信息 
 
-- 支持中国台湾地区繁简体转换
+- 支持中国台湾地区和大陆简体繁简体转换
+
+- 支持中国香港地区和大陆简体繁简体转换
 
 - 兼容双字符汉字，【𨦟】【𪡃】等
 
@@ -100,7 +102,7 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.11.0</version>
+    <version>1.12.0</version>
 </dependency>
 ```
 
@@ -108,10 +110,11 @@
 
 核心工具列表如下：
 
-| 序号 | 工具类 | 简介 |
-|:---|:---|:---|
-| 1 | ZhConverterUtil | 基础的繁简体转换 |
-| 2 | ZhTwConverterUtil | 台湾地区的繁简体转换 |
+| 序号 | 工具类               | 简介              |
+|:---|:------------------|:----------------|
+| 1  | ZhConverterUtil   | 基础的繁简体转换        |
+| 2  | ZhTwConverterUtil | 中国台湾地区与大陆的繁简体转换 |
+| 3  | ZhHkConverterUtil | 中国香港地区与大陆的繁简体转换    |
 
 所有的工具类方法具有相同的方法设计，便于记忆。
 
@@ -301,7 +304,38 @@ String result = ZhTwConverterUtil.toSimple(original);
 Assert.assertEquals("使用互联网", result);
 ```
 
+# 中国香港繁体和大陆简体转换
 
+## 说明
+
+v1.12.0 版本支持。
+
+为保证方法的一致性，引入 `ZhHkConverterUtil` 工具类，支持方法和 `ZhConverterUtil` 保持一致。
+
+## 例子
+
+```java
+/**
+ * 大陆简体==>香港正體
+ * @since 1.12.0
+ */
+@Test
+public void testHkTraditional() {
+    String original = "千家万户瞳瞳日 总把新桃换旧符";
+    String result = ZhHkConverterUtil.toTraditional(original);
+    Assert.assertEquals("千家萬户瞳瞳日 總把新桃換舊符", result);
+}
+
+/**
+ * 香港正體==>大陆简体
+ */
+@Test
+public void testHkSimple() {
+    String original = "千家萬户瞳瞳日 總把新桃換舊符";
+    String result = ZhHkConverterUtil.toSimple(original);
+    Assert.assertEquals("千家万户瞳瞳日 总把新桃换旧符", result);
+}
+```
 
 # 配置引导类
 

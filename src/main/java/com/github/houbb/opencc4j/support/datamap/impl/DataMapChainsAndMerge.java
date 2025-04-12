@@ -13,11 +13,11 @@ import java.util.Map;
  * @author binbin.hou
  * @since 1.12.0
  */
-public class DataMapChains extends AbstractDataMap {
+public class DataMapChainsAndMerge extends AbstractDataMap {
 
     private final List<IDataMap> dataMaps;
 
-    public DataMapChains(List<IDataMap> dataMaps) {
+    public DataMapChainsAndMerge(List<IDataMap> dataMaps) {
         this.dataMaps = dataMaps;
     }
 
@@ -27,7 +27,7 @@ public class DataMapChains extends AbstractDataMap {
         for(IDataMap dataMap : dataMaps) {
             list.add(dataMap.tsPhrase());
         }
-        return DataUtil.chains(list);
+        return DataUtil.chainsAndMerge(list);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class DataMapChains extends AbstractDataMap {
         for(IDataMap dataMap : dataMaps) {
             list.add(dataMap.tsChar());
         }
-        return DataUtil.chains(list);
+        return DataUtil.chainsAndMerge(list);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class DataMapChains extends AbstractDataMap {
         for(IDataMap dataMap : dataMaps) {
             list.add(dataMap.stPhrase());
         }
-        return DataUtil.chains(list);
+        return DataUtil.chainsAndMerge(list);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class DataMapChains extends AbstractDataMap {
         for(IDataMap dataMap : dataMaps) {
             list.add(dataMap.stChar());
         }
-        return DataUtil.chains(list);
+        return DataUtil.chainsAndMerge(list);
     }
 
 }

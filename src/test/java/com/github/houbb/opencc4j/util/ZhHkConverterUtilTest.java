@@ -11,27 +11,25 @@ import org.junit.Test;
  */
 public class ZhHkConverterUtilTest {
 
-
     /**
-     * 轉換香港正體 IT 用詞
+     * 大陆简体==>香港正體
      * @since 1.12.0
      */
     @Test
-    public void testHkIt() throws Exception {
-        String original = "他坐出租车去超市买了方便面和卫生纸";
+    public void testHkTraditional() {
+        String original = "千家万户瞳瞳日 总把新桃换旧符";
         String result = ZhHkConverterUtil.toTraditional(original);
-        Assert.assertEquals("他坐出租車去超市買了方便麪和衞生紙", result);
+        Assert.assertEquals("千家萬户瞳瞳日 總把新桃換舊符", result);
     }
 
     /**
-     * 香港正體==>简体 IT 用詞
+     * 香港正體==>大陆简体
      */
     @Test
-    public void testHkItSimple() throws Exception {
-        String original = "他坐出租車去超市買了方便麪和衞生紙";
+    public void testHkSimple() {
+        String original = "千家萬户瞳瞳日 總把新桃換舊符";
         String result = ZhHkConverterUtil.toSimple(original);
-        // TODO... 没转换回来？？
-        Assert.assertEquals("他坐出租车去超市买了方便面和衞生纸", result);
+        Assert.assertEquals("千家万户瞳瞳日 总把新桃换旧符", result);
     }
 
 }

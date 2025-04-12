@@ -28,9 +28,8 @@ public class TwSTCharData extends AbstractData {
         DATA_INFO = new DataInfo();
         Map<String, List<String>> data = DataUtil.buildDataMap("/data/dictionary/STCharacters.txt");;
         Map<String, List<String>> dataTw = DataUtil.buildDataMap("/data/dictionary/TWVariants.txt");
-        DataUtil.merge(data, dataTw);
-
-        DATA_INFO.setDataMap(data);
+        Map<String, List<String>> fullData = DataUtil.merge(data, dataTw);
+        DATA_INFO.setDataMap(fullData);
         DATA_INFO.setName("中国台湾简体转繁体字符数据");
     }
 

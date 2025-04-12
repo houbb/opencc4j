@@ -26,8 +26,8 @@ public class TwTSPhraseData extends AbstractData {
 
             Map<String, List<String>> data = DataUtil.buildDataMap("/data/dictionary/TSPhrases.txt");
             Map<String, List<String>> dataTw = DataUtil.buildDataMapReverse("/data/dictionary/TWPhrases.txt");
-            DataUtil.merge(data, dataTw);
-            DATA_INFO.setDataMap(data);
+            Map<String, List<String>> fullData = DataUtil.merge(data, dataTw);
+            DATA_INFO.setDataMap(fullData);
             DATA_INFO.setName("中国台湾繁体转简体词组数据");
         }
     }

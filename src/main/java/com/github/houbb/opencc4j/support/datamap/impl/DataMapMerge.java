@@ -8,16 +8,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 抽象数据数据 map 接口-拓展接口
+ * 抽象数据数据 map 接口-数据简单的 merge 合并
  *
  * @author binbin.hou
  * @since 1.12.0
  */
-public class DataMapChains extends AbstractDataMap {
+public class DataMapMerge extends AbstractDataMap {
 
     private final List<IDataMap> dataMaps;
 
-    public DataMapChains(List<IDataMap> dataMaps) {
+    public DataMapMerge(List<IDataMap> dataMaps) {
         this.dataMaps = dataMaps;
     }
 
@@ -27,7 +27,7 @@ public class DataMapChains extends AbstractDataMap {
         for(IDataMap dataMap : dataMaps) {
             list.add(dataMap.tsPhrase());
         }
-        return DataUtil.chains(list);
+        return DataUtil.merge(list);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class DataMapChains extends AbstractDataMap {
         for(IDataMap dataMap : dataMaps) {
             list.add(dataMap.tsChar());
         }
-        return DataUtil.chains(list);
+        return DataUtil.merge(list);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class DataMapChains extends AbstractDataMap {
         for(IDataMap dataMap : dataMaps) {
             list.add(dataMap.stPhrase());
         }
-        return DataUtil.chains(list);
+        return DataUtil.merge(list);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class DataMapChains extends AbstractDataMap {
         for(IDataMap dataMap : dataMaps) {
             list.add(dataMap.stChar());
         }
-        return DataUtil.chains(list);
+        return DataUtil.merge(list);
     }
 
 }

@@ -20,7 +20,7 @@ public class DataUtilTest {
         t2hk.put("計程車", Arrays.asList("的士"));
         t2hk.put("麵條", Arrays.asList("麵條"));
 
-        Map<String, List<String>> result = DataUtil.mergeChains(s2t, t2hk);
+        Map<String, List<String>> result = DataUtil.chains(s2t, t2hk);
 
         // 输出验证
         Assert.assertEquals(result.get("出租车").toString(), "[的士]");

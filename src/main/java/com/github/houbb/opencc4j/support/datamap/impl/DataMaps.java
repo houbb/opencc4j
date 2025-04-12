@@ -73,18 +73,46 @@ public final class DataMaps {
      */
     public static IDataMap chains(final IDataMap dataMap,
                                   final IDataMap ... others) {
-        if(ArrayUtil.isEmpty(others)) {
-            return dataMap;
-        }
-
-        List<IDataMap> dataMapList = new ArrayList<>();
-        dataMapList.add(dataMap);
-
-        if(ArrayUtil.isNotEmpty(others)) {
-            dataMapList.addAll(Arrays.asList(others));
-        }
+        List<IDataMap> dataMapList = buildDataMapList(dataMap, others);
 
         return new DataMapChains(dataMapList);
     }
 
+    /**
+     * 合并
+     * @param dataMap 数据
+     * @param others 其他
+     * @return 结果
+     * @since 1.12.0
+     */
+    public static IDataMap merge(final IDataMap dataMap,
+                                  final IDataMap ... others) {
+        List<IDataMap> dataMapList = buildDataMapList(dataMap, others);
+
+        return new DataMapMerge(dataMapList);
+    }
+
+    /**
+     * 合并
+     * @param dataMap 数据
+     * @param others 其他
+     * @return 结果
+     * @since 1.12.0
+     */
+    public static IDataMap chainsAndMerge(final IDataMap dataMap,
+                                 final IDataMap ... others) {
+        List<IDataMap> dataMapList = buildDataMapList(dataMap, others);
+
+        return new DataMapChainsAndMerge(dataMapList);
+    }
+
+    private static List<IDataMap> buildDataMapList(final IDataMap dataMap,
+                                            final IDataMap ... others) {
+        List<IDataMap> resultList = new ArrayList<>();
+        resultList.add(dataMap);
+        if(ArrayUtil.isNotEmpty(others)) {
+            resultList.addAll(Arrays.asList(others));
+        }
+        return resultList;
+    }
 }
