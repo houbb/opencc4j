@@ -130,6 +130,7 @@ public final class DataUtil {
      * @param firstMap 数据集合
      * @param others 其他的
      * @since 1.12.0
+     * @return 合并后的结果
      */
     public static Map<String, List<String>> merge(Map<String, List<String>> firstMap, Map<String, List<String>>... others) {
         if(ArrayUtil.isEmpty(others)) {
@@ -146,6 +147,7 @@ public final class DataUtil {
      * 直接合并
      * @param allDataMap 数据集合
      * @since 1.12.0
+     * @return 合并后的结果
      */
     public static Map<String, List<String>> merge(List<Map<String, List<String>>> allDataMap) {
         if(CollectionUtil.isEmpty(allDataMap)) {
@@ -168,6 +170,7 @@ public final class DataUtil {
      * @param data 第一组数据
      * @param dataOther 其他多个字段
      * @since 1.12.0
+     * @return 合并后的结果
      */
     public static Map<String, List<String>> chains(
             final Map<String, List<String>> data,
@@ -185,6 +188,7 @@ public final class DataUtil {
      * @since 1.12.0
      * @param dictChain chain
      * @return 结果
+     * @return 合并后的结果
      */
     public static Map<String, List<String>> chains(
             final Collection<Map<String, List<String>>> dictChain) {
