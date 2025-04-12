@@ -175,7 +175,7 @@ public final class ZhJpConverterUtil {
 
     /**
      * 转换为繁体
-     * 简体=>标准繁体=>日文
+     * 简体=标准繁体=日文
      * @param original 原始内容
      * @return 转换后的内容
      * @since 1.13.0
