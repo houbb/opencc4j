@@ -90,4 +90,22 @@ public final class Segments {
         return new DataMapFastForwardSegment(DataMaps.hongKongSelf());
     }
 
+    /**
+     * 标准繁体与日文
+     * @return 结果
+     * @since 1.13.0
+     */
+    public static Segment jpSelfFastForward() {
+        return new DataMapFastForwardSegment(DataMaps.japanSelf());
+    }
+
+    /**
+     * 简体=》标准繁体=》日文
+     * @return 结果
+     * @since 1.13.0
+     */
+    public static Segment jpFastForward() {
+        return new DataMapFastForwardSegment(DataMaps.japan());
+    }
+
 }

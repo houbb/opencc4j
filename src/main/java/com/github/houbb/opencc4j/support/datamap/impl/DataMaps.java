@@ -65,6 +65,26 @@ public final class DataMaps {
     }
 
     /**
+     * 中文简体==》繁体标准==》日本
+     * @return 实现
+     * @since 1.13.0
+     */
+    public static IDataMap japan() {
+        return chains(defaults(), japanSelf());
+    }
+
+    /**
+     * 繁体标准==》日本
+     * @return 实现
+     * @since 1.13.0
+     */
+    public static IDataMap japanSelf() {
+        return new DataMapJpSelf();
+    }
+
+    //----------------------------------------------------------------------
+
+    /**
      * 链式
      * @param dataMap 数据
      * @param others 其他

@@ -32,6 +32,8 @@
 
 - 支持中国香港地区和大陆简体繁简体转换
 
+- 支持日文新字和大陆简体繁简体转换
+
 - 兼容双字符汉字，【𨦟】【𪡃】等
 
 > [变更日志](CHANGELOG.md)
@@ -98,7 +100,7 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.12.0</version>
+    <version>1.13.0</version>
 </dependency>
 ```
 
@@ -110,7 +112,8 @@
 |:---|:------------------|:----------------|
 | 1  | ZhConverterUtil   | 基础的繁简体转换        |
 | 2  | ZhTwConverterUtil | 中国台湾地区与大陆的繁简体转换 |
-| 3  | ZhHkConverterUtil | 中国香港地区与大陆的繁简体转换    |
+| 3  | ZhHkConverterUtil | 中国香港地区与大陆的繁简体转换 |
+| 4  | ZhJpConverterUtil | 日文新字与大陆的繁简体转换   |
 
 所有的工具类方法具有相同的方法设计，便于记忆。
 
@@ -330,6 +333,41 @@ public void testHkSimple() {
     String original = "千家萬户瞳瞳日 總把新桃換舊符";
     String result = ZhHkConverterUtil.toSimple(original);
     Assert.assertEquals("千家万户瞳瞳日 总把新桃换旧符", result);
+}
+```
+
+
+# 日文新字和大陆简体转换
+
+## 说明
+
+v1.13.0 版本支持。
+
+为保证方法的一致性，引入 `ZhJpConverterUtil` 工具类，支持方法和 `ZhConverterUtil` 保持一致。
+
+实际流程：简体==》标准繁体==》日文新字
+
+## 例子
+
+```java
+/**
+ * 大陆简体==>标准繁体=》日文
+ */
+@Test
+public void testJpTraditional() {
+    String original = "我在日本学习音乐，并学习了龙的字。";
+    String result = ZhJpConverterUtil.toTraditional(original);
+    Assert.assertEquals("我在日本学習音楽，並学習了竜的字。", result);
+}
+
+/**
+ * 日文=>标准繁体=>简体
+ */
+@Test
+public void testJpSimple() {
+    String original = "我在日本学習音楽，並学習了竜的字。";
+    String result = ZhJpConverterUtil.toSimple(original);
+    Assert.assertEquals("我在日本学习音乐，并学习了龙的字。", result);
 }
 ```
 
