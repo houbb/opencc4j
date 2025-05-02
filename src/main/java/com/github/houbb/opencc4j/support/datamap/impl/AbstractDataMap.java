@@ -18,17 +18,17 @@ public abstract class AbstractDataMap implements IDataMap {
     /**
      * 繁体字符
      */
-    private static volatile Set<String> tSet = new HashSet<>();
+    private volatile Set<String> tSet = new HashSet<>();
     /**
      * 简体字符
      */
-    private static volatile Set<String> sSet = new HashSet<>();
+    private volatile Set<String> sSet = new HashSet<>();
 
     // 当今大陆习惯使用简体，所以人们对繁体比较敏感
     // 为了便于拓展，暂时不写死。不做提前生成，降低初始化耗时，换来一定的灵活性。
     // 把所有的繁体放在里面，其他的中文但不是繁体认为是简体。
     @Override
-    public Set<String> tChars() {
+    public synchronized Set<String> tChars() {
         //DLC-保证只初始化一次
         if(CollectionUtil.isNotEmpty(tSet)) {
             return tSet;
@@ -71,7 +71,7 @@ public abstract class AbstractDataMap implements IDataMap {
     }
 
     @Override
-    public Set<String> sChars() {
+    public synchronized Set<String> sChars() {
         //DLC-保证只初始化一次
         if(CollectionUtil.isNotEmpty(sSet)) {
             return sSet;

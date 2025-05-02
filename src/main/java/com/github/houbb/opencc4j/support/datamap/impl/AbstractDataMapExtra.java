@@ -17,6 +17,15 @@ public abstract class AbstractDataMapExtra extends AbstractDataMap {
 
     private final IDataMap baseDataMap;
 
+    /**
+     * 避免多次初始化
+     * @since 0.13.1
+     */
+    private volatile Map<String, List<String>> tsPhrase;
+    private volatile Map<String, List<String>> tsChar;
+    private volatile Map<String, List<String>> stPhrase;
+    private volatile Map<String, List<String>> stChar;
+
     public AbstractDataMapExtra(IDataMap baseDataMap) {
         this.baseDataMap = baseDataMap;
     }
@@ -45,23 +54,45 @@ public abstract class AbstractDataMapExtra extends AbstractDataMap {
 
 
     @Override
-    public Map<String, List<String>> tsPhrase() {
-        return buildAllMap(baseDataMap.tsPhrase(), tsPhraseExtra());
+    public synchronized Map<String, List<String>> tsPhrase() {
+        if(tsPhrase != null) {
+            return tsPhrase;
+        }
+
+        tsPhrase = buildAllMap(baseDataMap.tsPhrase(), tsPhraseExtra());
+
+        return tsPhrase;
     }
 
     @Override
-    public Map<String, List<String>> tsChar() {
-        return buildAllMap(baseDataMap.tsChar(), tsCharExtra());
+    public synchronized Map<String, List<String>> tsChar() {
+        if(tsChar != null) {
+            return tsChar;
+        }
+
+        tsChar = buildAllMap(baseDataMap.tsChar(), tsCharExtra());
+        return tsChar;
     }
 
     @Override
-    public Map<String, List<String>> stPhrase() {
-        return buildAllMap(baseDataMap.stPhrase(), stPhraseExtra());
+    public synchronized Map<String, List<String>> stPhrase() {
+        if(stPhrase != null) {
+            return stPhrase;
+        }
+
+        stPhrase = buildAllMap(baseDataMap.stPhrase(), stPhraseExtra());
+
+        return stPhrase;
     }
 
     @Override
-    public Map<String, List<String>> stChar() {
-        return buildAllMap(baseDataMap.stChar(), stCharExtra());
+    public synchronized Map<String, List<String>> stChar() {
+        if(stChar != null) {
+            return stChar;
+        }
+
+        stChar = buildAllMap(baseDataMap.stChar(), stCharExtra());
+        return stChar;
     }
 
     protected Map<String, List<String>> buildAllMap(Map<String, List<String>> base, Map<String, List<String>> extra) {
