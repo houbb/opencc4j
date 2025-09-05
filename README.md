@@ -52,7 +52,7 @@
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>opencc4j</artifactId>
-    <version>1.13.1</version>
+    <version>1.14.0</version>
 </dependency>
 ```
 
